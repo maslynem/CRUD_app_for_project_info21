@@ -162,3 +162,5 @@ To do this, you need to pack in docker containers:
 - web application itself
 
 Prepare docker-compose to run the entire application. Only the docker-container containing Nginx should look "outside".
+
+💡 [Нажми тут](https://forms.yandex.ru/cloud/6418261943f74f275bd68a2f/), **чтобы поделиться с нами обратной связью на этот проект**. Это анонимно и поможет команде Педаго сделать твоё обучение лучше.
