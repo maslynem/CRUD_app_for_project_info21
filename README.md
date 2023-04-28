@@ -132,7 +132,7 @@ You need to implement a web-application for the SQL2 project
 
 - The *"Operations"* section must contain components:
   - The block containing all possible queries from the SQL2 project, the name/short description of the query
-  - Block allowing the user to enter the SQL-query by himself
+  - Block allowing the user to enter the SQL-query to manipulate data in the database by himself
 
 - The *"Operations"* section must contain subsections that allow you to support the following functionality through the GUI:
   - Selection of the desired procedure / function / query from the developed in the project SQL2 with the result output and the ability to export the result to a .csv file
