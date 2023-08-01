@@ -2,10 +2,7 @@ package ru.s21school.peerDto;
 
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 
 @Data
@@ -26,5 +23,6 @@ public class Peer {
     @Email(message = "Email should be valid")
     private String email;
 
+    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{1,3}", message = "Your address should be in this form: City, Street, House")
     private String address;
 }
