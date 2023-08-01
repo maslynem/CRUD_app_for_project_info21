@@ -1,46 +1,46 @@
 package ru.s21school.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.s21school.peerDto.Peer;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Component
 public class PeerDao {
-    private int PEOPLE_COUNT;
-    private final List<Peer> peers;
 
-    public PeerDao() {
-        peers = new ArrayList<>();
-        peers.add(new Peer(++PEOPLE_COUNT, "Tom","Smith", "tom@mail.ru"));
-        peers.add(new Peer(++PEOPLE_COUNT, "Bob","Ivanov", "bob@mail.ru"));
-        peers.add(new Peer(++PEOPLE_COUNT, "Mike","Smirnov", "mike@mail.ru"));
-        peers.add(new Peer(++PEOPLE_COUNT, "Nike","Clark", "nike@mail.ru"));
-        peers.add(new Peer(++PEOPLE_COUNT, "Katy","Brown", "katy@mail.ru"));
+    private final JdbcTemplate jdbcTemplate;
+    private final BeanPropertyRowMapper<Peer> beanPropertyRowMapper;
+
+    public PeerDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        beanPropertyRowMapper = new BeanPropertyRowMapper<>(Peer.class);
     }
 
     public List<Peer> getAllPeer() {
-        return peers;
+        String SQL = "SELECT * FROM peer";
+        return jdbcTemplate.query(SQL, beanPropertyRowMapper);
     }
 
     public Peer getById(int id) {
-        return peers.stream().filter(peer -> peer.getId() == id).findAny().orElse(null);
+        String SQL = "SELECT * FROM peer WHERE id = ?";
+        return jdbcTemplate.query(SQL, beanPropertyRowMapper, id).stream().findAny().orElse(null);
     }
 
     public void save(Peer peer) {
-        peer.setId(++PEOPLE_COUNT);
-        peers.add(peer);
+        String SQL = "INSERT INTO peer(name, age, email) VALUES (?, ?, ?)";
+        jdbcTemplate.update(SQL, peer.getName(), peer.getAge(), peer.getEmail());
     }
 
-    public void update(int id, Peer updatedPerson) {
-        Peer peer = getById(id);
-        peer.setName(updatedPerson.getName());
-        peer.setSurname(updatedPerson.getSurname());
-        peer.setEmail(updatedPerson.getEmail());
+    public void update(int id, Peer peer) {
+        String SQL = "UPDATE peer set name = ?, age = ?, email = ? WHERE id = ?";
+        jdbcTemplate.update(SQL, peer.getName(), peer.getAge(), peer.getEmail(), id);
     }
 
     public void delete(int id) {
-        peers.removeIf(peer -> peer.getId() == id);
+        String SQL = "DELETE FROM peer WHERE id = ?";
+        jdbcTemplate.update(SQL, id);
     }
 }

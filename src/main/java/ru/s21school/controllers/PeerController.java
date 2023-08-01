@@ -3,9 +3,13 @@ package ru.s21school.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.s21school.dao.PeerDao;
 import ru.s21school.peerDto.Peer;
+
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/peers")
@@ -37,7 +41,10 @@ public class PeerController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("peer") Peer peer) {
+    public String create(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "peer/new";
+        }
         peerDao.save(peer);
         return "redirect:/peers";
     }
@@ -49,7 +56,11 @@ public class PeerController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("peer") Peer peer, @PathVariable("id") int id) {
+    public String update(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "peer/edit";
+        }
         peerDao.update(id, peer);
         return "redirect:/peers";
     }
