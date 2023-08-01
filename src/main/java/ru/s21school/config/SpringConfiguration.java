@@ -2,6 +2,7 @@ package ru.s21school.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +15,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
 @ComponentScan("ru.s21school")
+@PropertySource("classpath:application.properties")
 @EnableWebMvc
 public class SpringConfiguration implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;

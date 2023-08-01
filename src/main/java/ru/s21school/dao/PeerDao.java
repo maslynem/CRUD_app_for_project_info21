@@ -32,4 +32,15 @@ public class PeerDao {
         peer.setId(++PEOPLE_COUNT);
         peers.add(peer);
     }
+
+    public void update(int id, Peer updatedPerson) {
+        Peer peer = getById(id);
+        peer.setName(updatedPerson.getName());
+        peer.setSurname(updatedPerson.getSurname());
+        peer.setEmail(updatedPerson.getEmail());
+    }
+
+    public void delete(int id) {
+        peers.removeIf(peer -> peer.getId() == id);
+    }
 }

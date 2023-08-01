@@ -42,10 +42,21 @@ public class PeerController {
         return "redirect:/peers";
     }
 
-    @ModelAttribute("headerMessage")
-    public String populateHeaderMessage() {
-        return "Welcome to our website!";
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("peer", peerDao.getById(id));
+        return "peer/edit";
     }
 
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("peer") Peer peer, @PathVariable("id") int id) {
+        peerDao.update(id, peer);
+        return "redirect:/peers";
+    }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        peerDao.delete(id);
+        return "redirect:/peers";
+    }
 }
