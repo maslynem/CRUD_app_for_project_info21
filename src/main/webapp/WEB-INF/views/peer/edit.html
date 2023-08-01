@@ -5,7 +5,7 @@
     <title>Update person</title>
 </head>
 <body>
-
+<div>Hello</div>
 <form th:method="PATCH" th:action="@{/peers/{id}(id=${peer.getId()})}" th:object="${peer}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
@@ -22,6 +22,12 @@
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">ERROR_TEXT</div>
+
+    <br/>
+
+    <label for="address">Enter address: </label>
+    <input type="text" th:field="*{address}" id="address"/>
+    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">ERROR_TEXT</div>
 
     <br/>
 

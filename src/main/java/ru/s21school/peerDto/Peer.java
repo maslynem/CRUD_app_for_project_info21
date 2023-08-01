@@ -26,4 +26,5 @@ public class Peer {
     @Email(message = "Email should be valid")
     private String email;
 
+    private String address;
 }

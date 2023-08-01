@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.s21school.dao.PeerDao;
 import ru.s21school.peerDto.Peer;
+import ru.s21school.util.PeerValidator;
 
 import javax.validation.Valid;
 
@@ -16,10 +17,12 @@ import javax.validation.Valid;
 public class PeerController {
 
     private final PeerDao peerDao;
+    private final PeerValidator peerValidator;
 
     @Autowired
-    public PeerController(PeerDao peerDao) {
+    public PeerController(PeerDao peerDao, PeerValidator peerValidator) {
         this.peerDao = peerDao;
+        this.peerValidator = peerValidator;
     }
 
     @GetMapping()
@@ -30,7 +33,7 @@ public class PeerController {
 
     @GetMapping("/{id}")
     public String showPeer(@PathVariable("id") int id, Model model) {
-        model.addAttribute("peer", peerDao.getById(id));
+        model.addAttribute("peer", peerDao.getById(id).orElse(null));
         return "peer/show";
     }
 
@@ -42,6 +45,7 @@ public class PeerController {
 
     @PostMapping()
     public String create(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult) {
+        peerValidator.validate(peer,bindingResult);
         if (bindingResult.hasErrors()) {
             return "peer/new";
         }
@@ -51,13 +55,14 @@ public class PeerController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("peer", peerDao.getById(id));
+        model.addAttribute("peer", peerDao.getById(id).orElse(null));
         return "peer/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        peerValidator.validate(peer,bindingResult);
         if (bindingResult.hasErrors()) {
             return "peer/edit";
         }
