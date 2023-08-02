@@ -75,4 +75,5 @@ public class PeerController {
         peerDao.delete(id);
         return "redirect:/peers";
     }
+
 }
