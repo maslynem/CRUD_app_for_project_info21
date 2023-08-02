@@ -1,9 +1,14 @@
 package ru.s21school.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.querydsl.jpa.impl.JPAQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.s21school.peerDto.Peer;
+import org.springframework.transaction.annotation.Transactional;
+import ru.s21school.entity.Peer;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,43 +16,44 @@ import java.util.Optional;
 
 @Component
 public class PeerDao {
+    private final SessionFactory sessionFactory;
 
-    private final JdbcTemplate jdbcTemplate;
-    private final BeanPropertyRowMapper<Peer> beanPropertyRowMapper;
-
-
-    public PeerDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        beanPropertyRowMapper = new BeanPropertyRowMapper<>(Peer.class);
+    @Autowired
+    public PeerDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
+    @Transactional(readOnly = true)
     public List<Peer> getAllPeer() {
-        String SQL = "SELECT * FROM peer";
-        return jdbcTemplate.query(SQL, beanPropertyRowMapper);
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select p from Peer p", Peer.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Peer> getById(int id) {
-        String SQL = "SELECT * FROM peer WHERE id = ?";
-        return jdbcTemplate.query(SQL, beanPropertyRowMapper, id).stream().findAny();
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Peer.class, id));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Peer> getByEmail(String email) {
-        String SQL = "SELECT * FROM peer WHERE email = ?";
-        return jdbcTemplate.query(SQL, beanPropertyRowMapper, email).stream().findAny();
+        Session session = sessionFactory.getCurrentSession();
+        Query<Peer> query = session.createQuery("select p from Peer p WHERE p.email = ?1", Peer.class);
+        query.setParameter(1, email);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
+    @Transactional
     public void save(Peer peer) {
-        String SQL = "INSERT INTO peer(name, age, email, address) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(SQL, peer.getName(), peer.getAge(), peer.getEmail(), peer.getAddress());
+        sessionFactory.getCurrentSession().save(peer);
     }
 
+    @Transactional
     public void update(int id, Peer peer) {
-        String SQL = "UPDATE peer set name = ?, age = ?, email = ? WHERE id = ?";
-        jdbcTemplate.update(SQL, peer.getName(), peer.getAge(), peer.getEmail(), id);
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(peer);
     }
 
     public void delete(int id) {
-        String SQL = "DELETE FROM peer WHERE id = ?";
-        jdbcTemplate.update(SQL, id);
+        sessionFactory.getCurrentSession().remove(id);
     }
 }

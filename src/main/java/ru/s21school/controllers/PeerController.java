@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.s21school.dao.PeerDao;
-import ru.s21school.peerDto.Peer;
+import ru.s21school.entity.Peer;
 import ru.s21school.util.PeerValidator;
 
 import javax.validation.Valid;

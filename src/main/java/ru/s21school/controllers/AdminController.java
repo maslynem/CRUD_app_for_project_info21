@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.s21school.dao.PeerDao;
-import ru.s21school.peerDto.Peer;
+import ru.s21school.entity.Peer;
 
 @Controller
 @RequestMapping("/admin")

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.s21school.dao.PeerDao;
-import ru.s21school.peerDto.Peer;
+import ru.s21school.entity.Peer;
 
 import java.util.Optional;
 
