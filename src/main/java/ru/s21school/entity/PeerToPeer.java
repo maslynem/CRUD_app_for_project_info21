@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.TypeDef;
+import ru.s21school.entity.Peer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,8 +16,8 @@ import java.time.LocalTime;
 @Builder
 @Entity
 @Table(name = "p2p")
-@TypeDef(typeClass = EnumType.class, defaultForType = State.class)
-public class PeerToPeer {
+//@TypeDef(typeClass = EnumType.class, defaultForType = State.class)
+public class PeerToPeer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,14 +25,15 @@ public class PeerToPeer {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
     @NotNull
-    private Checks checks;
+    private Check check;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checking_peer")
     @NotNull
-    private Peers checkingPeer;
+    private Peer checkingPeer;
 
     @Column
+    @Enumerated(EnumType.STRING)
     @NotNull
     private State state;
 

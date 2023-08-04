@@ -22,10 +22,11 @@ public class Verter {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
-    private Checks checks;
+    private Check check;
 
     @Column
     @NotNull
+    @Enumerated(EnumType.STRING)
     State state;
 
     @Column

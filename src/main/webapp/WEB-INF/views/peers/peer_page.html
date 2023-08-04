@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Peer</title>
+</head>
+<body>
+
+<p th:text="${peer.getNickname()()}">VALUE</p>
+<p th:text="${peer.getBirthday()}">VALUE</p>
+
+
+<a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
+    <input type="button" value="Update" />
+</a>
+
+<form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+</body>
+</html>

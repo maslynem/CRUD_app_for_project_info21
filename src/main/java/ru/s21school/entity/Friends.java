@@ -22,11 +22,11 @@ public class Friends {
     @OneToOne
     @JoinColumn(name = "peer1")
     @NotNull
-    Peers peer1;
+    Peer peer1;
 
     @OneToOne
     @JoinColumn(name = "peer2")
     @NotNull
-    Peers peer2;
+    Peer peer2;
 
 }

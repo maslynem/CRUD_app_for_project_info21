@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -15,13 +14,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tasks")
 @ToString(exclude = "parentTask")
 @Check(constraints = "parent_task != title")
-public class Tasks {
+public class Task  {
     @Id
     private String title;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_task")
-    private Tasks parentTask;
+    private Task parentTask;
 
     @Column(name = "max_xp")
     @NotNull

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.s21school.entity.Peer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,10 +24,10 @@ public class Recommendations {
     @OneToOne
     @JoinColumn(name = "peer")
     @NotNull
-    Peers peer;
+    Peer peer;
 
     @OneToOne
     @JoinColumn(name = "recommended_peer")
     @NotNull
-    Peers recommendedPeer;
+    Peer recommendedPeer;
 }

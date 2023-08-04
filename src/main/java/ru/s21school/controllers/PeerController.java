@@ -1,33 +1,52 @@
 package ru.s21school.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.s21school.dto.PeerDto;
+import ru.s21school.service.PeerService;
+
+import javax.validation.Valid;
 
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/peers")
 public class PeerController {
 
-//    private final PeerDao peerDao;
-//    private final PeerValidator peerValidator;
+    private final PeerService peerService;
+
+    @GetMapping()
+    public String peersPage(Model model) {
+        model.addAttribute("peers", peerService.findAll());
+        return "peers/peers";
+    }
 //
-//    @Autowired
-//    public PeerController(PeerDao peerDao, PeerValidator peerValidator) {
-//        this.peerDao = peerDao;
-//        this.peerValidator = peerValidator;
+//    @GetMapping("/{nickname}")
+//    public String showPeer(@PathVariable String nickname, Model model) {
+//        model.addAttribute("peer", peerService.findByNickname(nickname));
+//        return "peers/peer_page";
 //    }
 //
-//    @GetMapping()
-//    public String showAllPeers(Model model) {
-//        model.addAttribute("peers", peerDao.getAllPeer());
-//        return "peer/all";
+//    @GetMapping("/{nickname}/edit")
+//    public String edit(Model model, @PathVariable String nickname) {
+//        model.addAttribute("peer", peerService.findByNickname(nickname));
+//        return "peers/edit";
 //    }
 //
-//    @GetMapping("/{id}")
-//    public String showPeer(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("peer", peerDao.getById(id).orElse(null));
-//        return "peer/show";
+//    @PatchMapping("/{nickname}")
+//    public String update(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult,
+//                         @PathVariable String nickname) {
+//        if (bindingResult.hasErrors()) {
+//            return "peer/edit";
+//        }
+//        peerService.update(peer);
+//        return "redirect:/peers";
 //    }
+
+
 //
 //    @GetMapping("/new")
 //    public String newPeer(Model model) {
@@ -45,22 +64,9 @@ public class PeerController {
 //        return "redirect:/peers";
 //    }
 //
-//    @GetMapping("/{id}/edit")
-//    public String edit(Model model, @PathVariable("id") int id) {
-//        model.addAttribute("peer", peerDao.getById(id).orElse(null));
-//        return "peer/edit";
-//    }
+
 //
-//    @PatchMapping("/{id}")
-//    public String update(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult,
-//                         @PathVariable("id") int id) {
-//        peerValidator.validate(peer,bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "peer/edit";
-//        }
-//        peerDao.update(id, peer);
-//        return "redirect:/peers";
-//    }
+
 //
 //    @DeleteMapping("/{id}")
 //    public String delete(@PathVariable("id") int id) {

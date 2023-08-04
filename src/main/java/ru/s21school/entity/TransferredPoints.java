@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.s21school.entity.Peer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "transferredPoints")
-public class TransferredPoints {
+@Table(name = "transferred_points")
+public class TransferredPoints  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,12 +23,12 @@ public class TransferredPoints {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checking_peer")
     @NotNull
-    private Peers checkingPeer;
+    private Peer checkingPeer;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checked_peer")
     @NotNull
-    private Peers checkedPeer;
+    private Peer checkedPeer;
 
     @Column(name = "points_amount")
     @NotNull

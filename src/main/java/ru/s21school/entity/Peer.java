@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @Table(name = "peers")
-public class Peers {
+public class Peer {
     @Id
     @Column
     @NotNull

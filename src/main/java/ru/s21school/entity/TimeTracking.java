@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.s21school.entity.Peer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -17,7 +18,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "TimeTracking")
+@Table(name = "time_tracking")
 public class TimeTracking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public class TimeTracking {
     @OneToOne
     @JoinColumn(name = "peer")
     @NotNull
-    Peers peer;
+    Peer peer;
 
     @Column
     @NotNull

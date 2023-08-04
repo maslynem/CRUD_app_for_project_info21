@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Entity
 @Table(name = "xp")
-public class Experience {
+public class Experience  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,7 @@ public class Experience {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
     @NotNull
-    private Checks checks;
+    private Check check;
 
     @Column(name = "xp_amount")
     @NotNull
