@@ -1,0 +1,27 @@
+header {
+    position: relative;
+}
+
+.name {
+    position: absolute;
+    top: 30%;
+    left: 46%;
+    color: white;
+    font-family: SB Sans Display, serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.peer_ref {
+    text-decoration: none;
+    font-family: SB Sans Display, serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: #1D2633;
+}
+
+.peer_ref:hover {
+    color: deepskyblue;
+}

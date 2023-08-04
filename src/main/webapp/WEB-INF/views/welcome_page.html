@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello my friend</title>
-    <link rel="stylesheet" href="/resources/css/welcome.css">
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/welcome_page.css">
     <link
             rel="stylesheet"
             href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"
     />
 </head>
 <body>
-<div class="div1">
-    <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="30%" height="30%"></a>
 
-    <div class="data_ref">
-        <a class="text_ref" href="/peers/">Data</a>
+<header>
+    <div class="logo">
+        <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="94px" height="88px"></a>
     </div>
-    <div class="operations_ref">
-        <a class="text_ref" href="/peers/">Operations</a>
-    </div>
+    <nav class="dws-menu">
+        <ul>
+            <li><a href="/peers/">Data</a>
+                <ul>
+                    <li><a href="/peers">Peers</a></li>
+                    <li><a href="#">Tasks</a></li>
+                    <li><a href="#">Checks</a></li>
+                    <li><a href="#">Verter</a></li>
+                    <li><a href="#">XP</a></li>
+                    <li><a href="#">P2P</a></li>
+                    <li><a href="#">TransferredPoints</a></li>
+                    <li><a href="#">Friends</a></li>
+                    <li><a href="#">Recommendations</a></li>
+                    <li><a href="#">TimeTracking</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/peers/">Operations</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-</div>
+
 </body>
 </html>
