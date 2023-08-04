@@ -32,9 +32,8 @@ public class PeerService {
         return byId.map(peerReadMapper::map).orElse(null);
     }
 
+    @Transactional
     public void update(PeerDto peerUpdate) {
-        Optional<Peer> byId = peerRepository.findById(peerUpdate.getNickname());
-        byId.get().setBirthday(peerUpdate.getBirthday());
-        peerRepository.flush();
+        peerRepository.save(peerUpdateMapper.map(peerUpdate));
     }
 }

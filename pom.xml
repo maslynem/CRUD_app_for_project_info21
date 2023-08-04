@@ -75,6 +75,11 @@
             <version>3.1.2.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
 
         <!-- javax.servlet-api -->
         <dependency>

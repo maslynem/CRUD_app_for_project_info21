@@ -5,7 +5,7 @@
     <title>Update person</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/peers/{nickname}(id=${peer.getNickname()})}" th:object="${peer}">
+<form th:method="PATCH" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}" th:object="${peer}">
     <div th:text="${peer.getNickname()}">nickname</div>
 
     <label for="age">Enter birthday: </label>

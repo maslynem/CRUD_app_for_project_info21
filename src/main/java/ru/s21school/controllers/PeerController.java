@@ -23,28 +23,28 @@ public class PeerController {
         model.addAttribute("peers", peerService.findAll());
         return "peers/peers";
     }
-//
-//    @GetMapping("/{nickname}")
-//    public String showPeer(@PathVariable String nickname, Model model) {
-//        model.addAttribute("peer", peerService.findByNickname(nickname));
-//        return "peers/peer_page";
-//    }
-//
-//    @GetMapping("/{nickname}/edit")
-//    public String edit(Model model, @PathVariable String nickname) {
-//        model.addAttribute("peer", peerService.findByNickname(nickname));
-//        return "peers/edit";
-//    }
-//
-//    @PatchMapping("/{nickname}")
-//    public String update(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult,
-//                         @PathVariable String nickname) {
-//        if (bindingResult.hasErrors()) {
-//            return "peer/edit";
-//        }
-//        peerService.update(peer);
-//        return "redirect:/peers";
-//    }
+
+    @GetMapping("/{nickname}")
+    public String showPeer(@PathVariable String nickname, Model model) {
+        PeerDto peer = peerService.findByNickname(nickname);
+        model.addAttribute("peer", peer);
+        return "peers/peer_page";
+    }
+
+    @GetMapping("/{nickname}/edit")
+    public String edit(Model model, @PathVariable String nickname) {
+        model.addAttribute("peer", peerService.findByNickname(nickname));
+        return "peers/edit";
+    }
+
+    @PatchMapping("/{nickname}")
+    public String update(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "peers/edit";
+        }
+        peerService.update(peer);
+        return "redirect:/peers";
+    }
 
 
 //
