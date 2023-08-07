@@ -32,7 +32,7 @@ public class PeerService {
 
     public PagePeerDto findAllPageable(Pageable pageable) {
         Page<Peer> all = peerRepository.findAll(pageable);
-        return new PagePeerDto(all.getContent(), all.getTotalPages(), peerReadMapper);
+        return new PagePeerDto(all.getContent(), all.getTotalPages(), all.getTotalElements(), peerReadMapper);
     }
 
     public PeerDto findByNickname(String nickname) {

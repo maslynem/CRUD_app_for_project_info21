@@ -29,8 +29,10 @@ public class PeerController {
         if (limit == null) limit = 10;
         if (offset == null) offset = 0;
         PagePeerDto pagePeerDto = peerService.findAllPageable(PageRequest.of(offset, limit));
-        model.addAttribute("peers", pagePeerDto);
-        model.addAttribute("offset", offset);
+        model.addAttribute("peers", pagePeerDto.getPeersDto());
+        model.addAttribute("currentPage", offset);
+        model.addAttribute("totalPages", pagePeerDto.getTotalPages());
+        model.addAttribute("totalItems", pagePeerDto.getTotalElements());
         model.addAttribute("limit", limit);
         return "peers/peers";
     }

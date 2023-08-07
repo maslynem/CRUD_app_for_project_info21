@@ -13,11 +13,13 @@ import java.util.stream.Collectors;
 public class PagePeerDto {
     List<PeerDto> peersDto;
     long totalPages;
+    long totalElements;
 
-    public PagePeerDto(List<Peer> peers, long totalPages, Mapper<Peer, PeerDto> peerReadMapper) {
+    public PagePeerDto(List<Peer> peers, long totalPages, long totalElements , Mapper<Peer, PeerDto> peerReadMapper) {
         this.peersDto = peers.stream()
                 .map(peerReadMapper::map)
                 .collect(Collectors.toList());
         this.totalPages = totalPages;
+        this.totalElements = totalElements;
     }
 }
