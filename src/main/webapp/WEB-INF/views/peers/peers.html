@@ -72,70 +72,43 @@
 </table>
 <hr>
 <div class="container_row">
-    <div class="row_item">
-        <div class="item_text">Строк на странице</div>
-        <select class='auto-send-select' data-action='/peers' name='select'>
-            <option>1</option>
-            <option>5</option>
-            <option>10</option>
-        </select>
-        <div class="item_text">
-            Страница: <span th:text="${currentPage} + 1">offset</span> из <span
-                th:text="${totalPages}">total</span>
+    <div class="row_items">
+        <div class="row_item">
+            <div class="item_text">Строк на странице</div>
+            <select class='auto-send-select' data-action='/peers' name='select'>
+                <option>1</option>
+                <option>5</option>
+                <option>10</option>
+            </select>
+            <div class="item_text">
+                Страница: <span th:text="${currentPage} + 1">offset</span> из <span
+                    th:text="${totalPages}">total</span>
+            </div>
         </div>
-
-        <div class="text-center m-1">
-            <span>Showing peers # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
-        </div>
-        <div th:if="${totalPages > 1}">
-            <nav>
-                <ul class="pagination justify-content-center flex-wrap">
-                    <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
-                        <a th:href="@{/peers(limit=${limit}, offset=${0})}" class="page-link">First</a>
-                    </li>
-                    <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
-                        <a th:href="@{/peers(limit=${limit}, offset=${currentPage} - 1)}" class="page-link">Previous</a>
-                    </li>
-                    <li th:each="i: ${#numbers.sequence(1, totalPages)}"
-                        th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
+        <div class="row_item">
+            <div th:if="${totalPages > 1}">
+                <nav>
+                    <ul class="pagination">
+                        <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
+                            <a th:href="@{/peers(limit=${limit}, offset=${0})}" class="page-link">First</a>
+                        </li>
+                        <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
+                            <a th:href="@{/peers(limit=${limit}, offset=${currentPage} - 1)}" class="page-link">Previous</a>
+                        </li>
+                        <li th:each="i: ${#numbers.sequence(1, totalPages)}"
+                            th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
                             <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
-                    </li>
-                    <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
-                        <a th:href="@{/peers(limit=${limit}, offset=${currentPage} + 1)}" class="page-link">Next</a>
-                    </li>
-                    <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
-                        <a th:href="@{/peers(limit=${limit}, offset=${totalPages - 1})}" class="page-link">Last</a>
-                    </li>
-                </ul>
-            </nav>
+                        </li>
+                        <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
+                            <a th:href="@{/peers(limit=${limit}, offset=${currentPage} + 1)}" class="page-link">Next</a>
+                        </li>
+                        <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
+                            <a th:href="@{/peers(limit=${limit}, offset=${totalPages - 1})}" class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-
-
-        <!--        <div class="item_image">-->
-        <!--            <div th:if="${offset} - 1 < 0">-->
-        <!--                <a class="left" href="#" th:disabled="true">-->
-        <!--                    <img src="/resources/img/btm_left.png" alt="" width="40px" height="40px">-->
-        <!--                </a>-->
-        <!--            </div>-->
-        <!--            <div th:if="${offset} - 1 >= 0">-->
-        <!--                <a class="left" th:href="@{/peers(limit=${limit}, offset=${offset}-1)}" th:disabled="false">-->
-        <!--                    <img src="/resources/img/btm_left.png" alt="" width="40px" height="40px">-->
-        <!--                </a>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        <div class="item_image">-->
-
-        <!--            <div th:if="${offset} + 1 >= ${peers.getTotalPages()}">-->
-        <!--                <a class="right" href="#" th:disabled="true">-->
-        <!--                    <img src="/resources/img/btm_right.png" alt="" width="40px" height="40px">-->
-        <!--                </a>-->
-        <!--            </div>-->
-        <!--            <div th:if="${offset} + 1 < ${peers.getTotalPages()}">-->
-        <!--                <a class="right" th:href="@{/peers(limit=${limit}, offset=${offset}+1)}" th:disabled="false">-->
-        <!--                    <img src="/resources/img/btm_right.png" alt="" width="40px" height="40px">-->
-        <!--                </a>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </div>
 <script th:inline="javascript" type="text/javascript" src="/resources/js/script.js"></script>

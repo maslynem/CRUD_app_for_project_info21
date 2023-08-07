@@ -1,19 +1,20 @@
 .container_row {
+}
+.row_items {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
 }
+
 .row_item {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    margin: 4px 0;
 }
 
 .item_text {
     font-family: "Arial", serif;
     padding: 0 8px;
-}
-
-.item_image {
-
 }
 
 .left {
