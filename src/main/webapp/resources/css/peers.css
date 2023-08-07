@@ -1,27 +1,29 @@
-header {
-    position: relative;
+.container_row {
+    display: flex;
+    justify-content: flex-end;
+}
+.row_item {
+    display: flex;
+    align-items: center;
 }
 
-.name {
-    position: absolute;
-    top: 30%;
-    left: 46%;
-    color: white;
-    font-family: SB Sans Display, serif;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 400;
+.item_text {
+    font-family: "Arial", serif;
+    padding: 0 8px;
 }
 
-.peer_ref {
-    text-decoration: none;
-    font-family: SB Sans Display, serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    color: #1D2633;
+.item_image {
+
 }
 
-.peer_ref:hover {
-    color: deepskyblue;
+.left {
+    padding: 0 8px 0 0;
+}
+
+.right {
+    padding: 0 8px;
+}
+
+.auto-send-select {
+    font-family: "Arial", serif;
 }

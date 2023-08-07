@@ -1,14 +1,18 @@
 package ru.s21school.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.s21school.dto.PagePeerDto;
 import ru.s21school.dto.PeerDto;
 import ru.s21school.service.PeerService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -19,8 +23,15 @@ public class PeerController {
     private final PeerService peerService;
 
     @GetMapping()
-    public String peersPage(Model model) {
-        model.addAttribute("peers", peerService.findAll());
+    public String peersPage(@RequestParam(required = false) Integer limit,
+                            @RequestParam(required = false) Integer offset,
+                            Model model) {
+        if (limit == null) limit = 10;
+        if (offset == null) offset = 0;
+        PagePeerDto pagePeerDto = peerService.findAllPageable(PageRequest.of(offset, limit));
+        model.addAttribute("peers", pagePeerDto);
+        model.addAttribute("offset", offset);
+        model.addAttribute("limit", limit);
         return "peers/peers";
     }
 

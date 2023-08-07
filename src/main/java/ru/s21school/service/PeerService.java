@@ -1,8 +1,11 @@
 package ru.s21school.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.s21school.dto.PagePeerDto;
 import ru.s21school.dto.PeerDto;
 import ru.s21school.entity.Peer;
 import ru.s21school.mapper.PeerReadMapper;
@@ -25,6 +28,11 @@ public class PeerService {
         return peerRepository.findAll().stream()
                 .map(peerReadMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    public PagePeerDto findAllPageable(Pageable pageable) {
+        Page<Peer> all = peerRepository.findAll(pageable);
+        return new PagePeerDto(all.getContent(), all.getTotalPages(), peerReadMapper);
     }
 
     public PeerDto findByNickname(String nickname) {

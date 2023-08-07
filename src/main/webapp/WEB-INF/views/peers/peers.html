@@ -4,44 +4,54 @@
     <meta charset="UTF-8">
     <title>Peers</title>
 
-    <link
-            rel="stylesheet"
-            href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/resources/css/header.css">
+
     <link rel="stylesheet" href="/resources/css/peers.css">
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="94px" height="88px"></a>
+    <div class="container">
+        <div class="row1">
+            <div class="logo">
+                <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="94px" height="88px"></a>
+            </div>
+            <div class="title">Peers</div>
+        </div>
+        <div class="row2">
+            <div class="columns__row">
+                <div class="column_item">
+                    <div class="item__ref data">
+                        <a href="/peers?limit=30&offset=0">Data
+                            <ul class="submenu">
+                                <li><a href="/peers?limit=30&offset=0">Peers</a></li>
+                                <li><a href="#">Tasks</a></li>
+                                <li><a href="#">Checks</a></li>
+                                <li><a href="#">Verter</a></li>
+                                <li><a href="#">XP</a></li>
+                                <li><a href="#">P2P</a></li>
+                                <li><a href="#">TransferredPoints</a></li>
+                                <li><a href="#">Friends</a></li>
+                                <li><a href="#">Recommendations</a></li>
+                                <li><a href="#">TimeTracking</a></li>
+                            </ul>
+                        </a>
+                    </div>
+                </div>
+                <div class="column_item">
+                    <div class="item__ref">
+                        <a href="/peers/">Operations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="name">Peer</div>
-    <nav class="dws-menu">
-        <ul>
-            <li><a href="/peers/">Data</a>
-                <ul>
-                    <li><a href="/peers">Peers</a></li>
-                    <li><a href="#">Tasks</a></li>
-                    <li><a href="#">Checks</a></li>
-                    <li><a href="#">Verter</a></li>
-                    <li><a href="#">XP</a></li>
-                    <li><a href="#">P2P</a></li>
-                    <li><a href="#">TransferredPoints</a></li>
-                    <li><a href="#">Friends</a></li>
-                    <li><a href="#">Recommendations</a></li>
-                    <li><a href="#">TimeTracking</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/peers/">Operations</a>
-            </li>
-        </ul>
-    </nav>
 </header>
+
 <hr>
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -51,7 +61,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="person : ${peers}">
+    <tr th:each="person : ${peers.getPeersDto()}">
         <td>
             <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${person.getNickname()})}"
                th:text="${person.getNickname()}"></a>
@@ -60,5 +70,47 @@
     </tr>
     </tbody>
 </table>
+<hr>
+<div class="container_row">
+    <div class="row_item">
+        <div class="item_text">Строк на странице</div>
+        <select class='auto-send-select' data-action='/peers' name='select'>
+            <option>1</option>
+            <option>5</option>
+            <option>10</option>
+        </select>
+        <div class="item_text">
+            Страница: <span th:text="${offset} + 1">offset</span> из <span
+                th:text="${peers.getTotalPages()}">total</span>
+        </div>
+
+        <div class="item_image">
+            <div th:if="${offset} - 1 < 0">
+                <a class="left" href="#" th:disabled="true">
+                    <img  src="/resources/img/btm_left.png" alt="" width="40px" height="40px">
+                </a>
+            </div>
+            <div th:if="${offset} - 1 >= 0">
+                <a class="left" th:href="@{/peers(limit=${limit}, offset=${offset}-1)}" th:disabled="false">
+                    <img  src="/resources/img/btm_left.png" alt="" width="40px" height="40px">
+                </a>
+            </div>
+        </div>
+        <div class="item_image">
+
+            <div th:if="${offset} + 1 >= ${peers.getTotalPages()}">
+                <a class="right" href="#" th:disabled="true">
+                    <img src="/resources/img/btm_right.png" alt="" width="40px" height="40px">
+                </a>
+            </div>
+            <div th:if="${offset} + 1 < ${peers.getTotalPages()}">
+                <a class="right" th:href="@{/peers(limit=${limit}, offset=${offset}+1)}" th:disabled="false">
+                    <img src="/resources/img/btm_right.png" alt="" width="40px" height="40px">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript" type="text/javascript" src="/resources/js/script.js"></script>
 </body>
 </html>
