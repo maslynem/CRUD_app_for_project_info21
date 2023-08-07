@@ -76,9 +76,9 @@
         <div class="row_item">
             <div class="item_text">Строк на странице</div>
             <select class='auto-send-select' data-action='/peers' name='select'>
-                <option>1</option>
-                <option>5</option>
-                <option>10</option>
+                <option>30</option>
+                <option>50</option>
+                <option>100</option>
             </select>
             <div class="item_text">
                 Страница: <span th:text="${currentPage} + 1">offset</span> из <span
@@ -95,10 +95,44 @@
                         <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
                             <a th:href="@{/peers(limit=${limit}, offset=${currentPage} - 1)}" class="page-link">Previous</a>
                         </li>
+
+                        <th:block th:if="${totalPages <= 10}">
                         <li th:each="i: ${#numbers.sequence(1, totalPages)}"
                             th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
                             <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
                         </li>
+                        </th:block>
+
+                        <th:block th:if="${totalPages > 10}">
+                            <th:block th:if="${currentPage + 1 <= 5 || currentPage + 1 >= totalPages - 4}">
+                                <li th:each="i: ${#numbers.sequence(1, 5)}"
+                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
+                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
+                                </li>
+
+                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage + 5})}" class="page-link">...</a>
+
+                                <li th:each="i: ${#numbers.sequence(totalPages - 4, totalPages)}"
+                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
+                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
+                                </li>
+                            </th:block>
+
+                            <th:block th:if="${currentPage + 1 > 5 && currentPage + 1 < totalPages - 4}">
+                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage - 5})}" class="page-link">...</a>
+
+                                <li th:each="i: ${#numbers.sequence(currentPage - 3, currentPage + 5)}"
+                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
+                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
+                                </li>
+
+                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage + 5})}" class="page-link">...</a>
+                            </th:block>
+
+                        </th:block>
+
+
+
                         <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
                             <a th:href="@{/peers(limit=${limit}, offset=${currentPage} + 1)}" class="page-link">Next</a>
                         </li>
