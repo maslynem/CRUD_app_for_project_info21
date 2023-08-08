@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Hello my friend</title>
     <link rel="stylesheet" href="/resources/css/header.css">
-    <link rel="stylesheet" href="/resources/css/welcome_page.css">
     <link
             rel="stylesheet"
             href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"
@@ -13,43 +12,14 @@
 <body>
 
 <header>
-    <div class="container">
-        <div class="row1">
-            <div class="logo">
-                <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="94px" height="88px"></a>
-            </div>
-            <div class="title">Peers</div>
-        </div>
-        <div class="row2">
-            <div class="columns__row">
-                <div class="column_item">
-                    <div class="item__ref data">
-                        <a href="/peers/">Data
-                            <ul class="submenu">
-                                <li><a href="/peers?limit=30&offset=0">Peers</a></li>
-                                <li><a href="#">Tasks</a></li>
-                                <li><a href="#">Checks</a></li>
-                                <li><a href="#">Verter</a></li>
-                                <li><a href="#">XP</a></li>
-                                <li><a href="#">P2P</a></li>
-                                <li><a href="#">TransferredPoints</a></li>
-                                <li><a href="#">Friends</a></li>
-                                <li><a href="#">Recommendations</a></li>
-                                <li><a href="#">TimeTracking</a></li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-                <div class="column_item">
-                    <div class="item__ref">
-                        <a href="/peers?limit=30&offset=0">Operations</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="header_container">
+
     </div>
 </header>
 
-
+<script src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('');
+</script>
 </body>
 </html>

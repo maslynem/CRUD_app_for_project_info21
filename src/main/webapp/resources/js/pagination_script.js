@@ -1,40 +1,54 @@
-var params = window
+let params = window
     .location
     .search
-    .replace('?','')
+    .replace('?', '')
     .split('&')
     .reduce(
-        function(p,e){
-            var a = e.split('=');
-            p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+        function (p, e) {
+            let a = e.split('=');
+            p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
             return p;
         },
         {}
     );
 
-const selector = document.querySelector('.auto-send-select');
-selector.value = params['limit'];
+function onSelectionChange(select) {
+    let selectedOption = select.options[select.selectedIndex];
+    window.location.href = `/peers?limit=${selectedOption.value}&offset=${0}`;
+}
 
-selector.addEventListener('change', e => {
-    const select = e.target;
-    window.location.href = `/peers?limit=${select.value}&offset=${0}`;
-});
+function createSelector(totalPages, currentPage) {
+    const element = document.querySelector(".selector");
 
-const element = document.querySelector(".pagination ul");
-function createPagination(limit, totalPages, page, path){
+    element.innerHTML = '<div class="item_text">Строк на странице</div> ' +
+        '<select class=auto-send-select data-action=peers name=select onchange="onSelectionChange(this)">' +
+        '<option>30</option>' +
+        '<option>50</option>' +
+        '<option>100</option>' +
+        '</select>' +
+        '<div class="item_text"> Страница: ' + currentPage + ' из ' + totalPages + '</div>';
+
+    const selector = document.querySelector('.auto-send-select');
+    selector.value = params['limit'];
+}
+
+
+function createPagination(limit, totalPages, page, path) {
+    const element = document.querySelector(".pagination ul");
+
     let liTag = '';
     let active;
     let beforePage = page - 1;
     let afterPage = page + 1;
-    if(page > 1){ //show the next button if the page value is greater than 1
+    if (page > 1) { //show the next button if the page value is greater than 1
         let url = path + '?limit=' + limit + '&offset=' + (page - 2) + '';
         liTag += `<li class="btn prev" onclick="window.location.href = '${url}'"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
     }
 
-    if(page > 2){ //if page value is less than 2 then add 1 after the previous button
+    if (page > 2) { //if page value is less than 2 then add 1 after the previous button
         let url = path + '?limit=' + limit + '&offset=0';
         liTag += `<li class="first numb" onclick="window.location.href = '${url}'"><span>1</span></li>`;
-        if(page > 3){ //if page value is greater than 3 then add this (...) after the first li or page
+        if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }
     }
@@ -49,7 +63,7 @@ function createPagination(limit, totalPages, page, path){
     if (page == 1) {
         afterPage = afterPage + 2;
     } else if (page == 2) {
-        afterPage  = afterPage + 1;
+        afterPage = afterPage + 1;
     }
 
     for (var plength = beforePage; plength <= afterPage; plength++) {
@@ -59,17 +73,17 @@ function createPagination(limit, totalPages, page, path){
         if (plength == 0) { //if plength is 0 than add +1 in plength value
             plength = plength + 1;
         }
-        if(page == plength){ //if page is equal to plength than assign active string in the active variable
+        if (page == plength) { //if page is equal to plength than assign active string in the active variable
             active = "active";
-        }else{ //else leave empty to the active variable
+        } else { //else leave empty to the active variable
             active = "";
         }
         let url = path + '?limit=' + limit + '&offset=' + (plength - 1) + '';
         liTag += `<li class="numb ${active}" onclick="window.location.href = '${url}'"><span>${plength}</span></li>`;
     }
 
-    if(page < totalPages - 1){ //if page value is less than totalPage value by -1 then show the last li or page
-        if(page < totalPages - 2){ //if page value is less than totalPage value by -2 then add this (...) before the last li or page
+    if (page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
+        if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }
         let url = path + '?limit=' + limit + '&offset=' + (totalPages - 1) + '';
@@ -81,6 +95,5 @@ function createPagination(limit, totalPages, page, path){
         liTag += `<li class="btn next" onclick="window.location.href = '${url}'"><span>Next <i class="fas fa-angle-right"></i></span></li>`;
     }
     element.innerHTML = liTag; //add li tag inside ul tag
-    return liTag; //reurn the li tag
 }
 

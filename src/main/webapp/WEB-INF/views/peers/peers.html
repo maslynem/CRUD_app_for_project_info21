@@ -7,50 +7,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/resources/css/header.css">
-
-    <link rel="stylesheet" href="/resources/css/peers.css">
-    <link rel="stylesheet" href="/resources/css/pagination.css">
     <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/pagination.css">
+
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <div class="row1">
-            <div class="logo">
-                <a href="/"><img src="/resources/img/welcome_page_logo.png" alt="" width="94px" height="88px"></a>
-            </div>
-            <div class="title">Peers</div>
-        </div>
-        <div class="row2">
-            <div class="columns__row">
-                <div class="column_item">
-                    <div class="item__ref data">
-                        <a href="/peers?limit=30&offset=0">Data
-                            <ul class="submenu">
-                                <li><a href="/peers?limit=30&offset=0">Peers</a></li>
-                                <li><a href="#">Tasks</a></li>
-                                <li><a href="#">Checks</a></li>
-                                <li><a href="#">Verter</a></li>
-                                <li><a href="#">XP</a></li>
-                                <li><a href="#">P2P</a></li>
-                                <li><a href="#">TransferredPoints</a></li>
-                                <li><a href="#">Friends</a></li>
-                                <li><a href="#">Recommendations</a></li>
-                                <li><a href="#">TimeTracking</a></li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-                <div class="column_item">
-                    <div class="item__ref">
-                        <a href="/peers/">Operations</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="header_container"></div>
 </header>
 
 <hr>
@@ -72,34 +37,20 @@
     </tbody>
 </table>
 <hr>
-<div class="container_row">
-    <div class="row_items">
-        <div class="row_item">
-            <div class="item_text">Строк на странице</div>
-            <select class='auto-send-select' data-action='/peers' name='select'>
-                <option>30</option>
-                <option>50</option>
-                <option>100</option>
-            </select>
-            <div class="item_text">
-                Страница: <span th:text="${currentPage} + 1">offset</span> из <span
-                    th:text="${totalPages}">total</span>
-            </div>
-        </div>
-        <div class="row_item">
-            <div th:if="${totalPages > 1}">
-                <div class="pagination">
-                    <ul> </ul>
-                </div>
-            </div>
+<div class="container_pagination selector"></div>
+<div class="container_pagination">
+    <div th:if="${totalPages > 1}">
+        <div class="pagination">
+            <ul></ul>
         </div>
     </div>
 </div>
-<script th:inline="javascript" type="text/javascript" src="/resources/js/script.js">
-</script>
-
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script type="text/javascript" src="/resources/js/pagination_script.js"></script>
 <script th:inline="javascript">
-    element.innerHTML = createPagination([[${limit}]],[[${totalPages}]], [[${currentPage} + 1]], '/peers');
+    createHeader('Peers')
+    createSelector([[${totalPages}]], [[${currentPage} + 1]]);
+    createPagination([[${limit}]], [[${totalPages}]], [[${currentPage} +1]], '/peers');
 </script>
 </body>
 </html>
