@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/resources/css/header.css">
 
     <link rel="stylesheet" href="/resources/css/peers.css">
+    <link rel="stylesheet" href="/resources/css/pagination.css">
     <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
 </head>
 <body>
@@ -87,64 +88,18 @@
         </div>
         <div class="row_item">
             <div th:if="${totalPages > 1}">
-                <nav>
-                    <ul class="pagination">
-                        <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
-                            <a th:href="@{/peers(limit=${limit}, offset=${0})}" class="page-link">First</a>
-                        </li>
-                        <li th:class="${currentPage > 0 ? 'page item' : 'page-item disabled'}">
-                            <a th:href="@{/peers(limit=${limit}, offset=${currentPage} - 1)}" class="page-link">Previous</a>
-                        </li>
-
-                        <th:block th:if="${totalPages <= 10}">
-                        <li th:each="i: ${#numbers.sequence(1, totalPages)}"
-                            th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
-                            <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
-                        </li>
-                        </th:block>
-
-                        <th:block th:if="${totalPages > 10}">
-                            <th:block th:if="${currentPage + 1 <= 5 || currentPage + 1 >= totalPages - 4}">
-                                <li th:each="i: ${#numbers.sequence(1, 5)}"
-                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
-                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
-                                </li>
-
-                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage + 5})}" class="page-link">...</a>
-
-                                <li th:each="i: ${#numbers.sequence(totalPages - 4, totalPages)}"
-                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
-                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
-                                </li>
-                            </th:block>
-
-                            <th:block th:if="${currentPage + 1 > 5 && currentPage + 1 < totalPages - 4}">
-                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage - 5})}" class="page-link">...</a>
-
-                                <li th:each="i: ${#numbers.sequence(currentPage - 3, currentPage + 5)}"
-                                    th:class="${currentPage + 1 != i ? 'page-item' : 'page-item disabled'}">
-                                    <a th:href="@{/peers(limit=${limit}, offset=${i - 1})}" class="page-link">[[${i}]]</a>
-                                </li>
-
-                                <a th:href="@{/peers(limit=${limit}, offset=${currentPage + 5})}" class="page-link">...</a>
-                            </th:block>
-
-                        </th:block>
-
-
-
-                        <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
-                            <a th:href="@{/peers(limit=${limit}, offset=${currentPage} + 1)}" class="page-link">Next</a>
-                        </li>
-                        <li th:class="${currentPage + 1 < totalPages ? 'page item' : 'page-item disabled'}">
-                            <a th:href="@{/peers(limit=${limit}, offset=${totalPages - 1})}" class="page-link">Last</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="pagination">
+                    <ul> </ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<script th:inline="javascript" type="text/javascript" src="/resources/js/script.js"></script>
+<script th:inline="javascript" type="text/javascript" src="/resources/js/script.js">
+</script>
+
+<script th:inline="javascript">
+    element.innerHTML = createPagination([[${limit}]],[[${totalPages}]], [[${currentPage} + 1]], '/peers');
+</script>
 </body>
 </html>
