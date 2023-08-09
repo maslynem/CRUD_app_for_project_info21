@@ -1,8 +1,6 @@
 package ru.s21school.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +10,6 @@ import ru.s21school.dto.PeerDto;
 import ru.s21school.service.PeerService;
 
 import javax.validation.Valid;
-import java.util.List;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -22,18 +18,21 @@ public class PeerController {
 
     private final PeerService peerService;
 
-    @GetMapping()
-    public String peersPage(@RequestParam(required = false) Integer limit,
-                            @RequestParam(required = false) Integer offset,
+    @GetMapping("/page-{page}")
+    public String peersPage(@PathVariable Integer page,
+                            @RequestParam(required = false, defaultValue = "30") Integer pageSize,
+                            @RequestParam(required = false, defaultValue = "nickname") String sortField,
+                            @RequestParam(required = false, defaultValue = "asc") String sortDir,
                             Model model) {
-        if (limit == null) limit = 10;
-        if (offset == null) offset = 0;
-        PagePeerDto pagePeerDto = peerService.findAllPageable(PageRequest.of(offset, limit));
+        PagePeerDto pagePeerDto = peerService.findPeersWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("peers", pagePeerDto.getPeersDto());
-        model.addAttribute("currentPage", offset);
+        model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pagePeerDto.getTotalPages());
         model.addAttribute("totalItems", pagePeerDto.getTotalElements());
-        model.addAttribute("limit", limit);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         return "peers/peers";
     }
 

@@ -14,7 +14,7 @@ let params = window
 
 function onSelectionChange(select) {
     let selectedOption = select.options[select.selectedIndex];
-    window.location.href = `/peers?limit=${selectedOption.value}&offset=${0}`;
+    window.location.href = `/peers?pageSize=${selectedOption.value}&page=${0}`;
 }
 
 function createSelector(totalPages, currentPage) {
@@ -29,24 +29,25 @@ function createSelector(totalPages, currentPage) {
         '<div class="item_text"> Страница: ' + currentPage + ' из ' + totalPages + '</div>';
 
     const selector = document.querySelector('.auto-send-select');
-    selector.value = params['limit'];
+    selector.value = params['pageSize'];
 }
 
 
-function createPagination(limit, totalPages, page, path) {
+function createPagination(page, pageSize, totalPages, path, sortField, sortDir) {
     const element = document.querySelector(".pagination ul");
-
+    let urlEnd = '?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
     let liTag = '';
     let active;
     let beforePage = page - 1;
     let afterPage = page + 1;
-    if (page > 1) { //show the next button if the page value is greater than 1
-        let url = path + '?limit=' + limit + '&offset=' + (page - 2) + '';
+    if (page > 1) { //show the prev button if the page value is greater than 1
+        let url = path + (page - 2) + urlEnd;
         liTag += `<li class="btn prev" onclick="window.location.href = '${url}'"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
     }
 
     if (page > 2) { //if page value is less than 2 then add 1 after the previous button
-        let url = path + '?limit=' + limit + '&offset=0';
+        let url = path +'0?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
+
         liTag += `<li class="first numb" onclick="window.location.href = '${url}'"><span>1</span></li>`;
         if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
             liTag += `<li class="dots"><span>...</span></li>`;
@@ -78,7 +79,7 @@ function createPagination(limit, totalPages, page, path) {
         } else { //else leave empty to the active variable
             active = "";
         }
-        let url = path + '?limit=' + limit + '&offset=' + (plength - 1) + '';
+        let url = path + (plength - 1) + urlEnd;
         liTag += `<li class="numb ${active}" onclick="window.location.href = '${url}'"><span>${plength}</span></li>`;
     }
 
@@ -86,12 +87,13 @@ function createPagination(limit, totalPages, page, path) {
         if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }
-        let url = path + '?limit=' + limit + '&offset=' + (totalPages - 1) + '';
+        let url = path + (totalPages - 1) + urlEnd;
+
         liTag += `<li class="last numb" onclick="window.location.href = '${url}'"><span>${totalPages}</span></li>`;
     }
 
     if (page < totalPages) { //show the next button if the page value is less than totalPage(20)
-        let url = path + '?limit=' + limit + '&offset=' + page + '';
+        let url = path + page + urlEnd;
         liTag += `<li class="btn next" onclick="window.location.href = '${url}'"><span>Next <i class="fas fa-angle-right"></i></span></li>`;
     }
     element.innerHTML = liTag; //add li tag inside ul tag

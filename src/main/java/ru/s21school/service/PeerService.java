@@ -2,7 +2,9 @@ package ru.s21school.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.s21school.dto.PagePeerDto;
@@ -30,7 +32,10 @@ public class PeerService {
                 .collect(Collectors.toList());
     }
 
-    public PagePeerDto findAllPageable(Pageable pageable) {
+    public PagePeerDto findPeersWithPaginationAndSorting(int page, int pageSize, String sortField, String sortDirection ) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         Page<Peer> all = peerRepository.findAll(pageable);
         return new PagePeerDto(all.getContent(), all.getTotalPages(), all.getTotalElements(), peerReadMapper);
     }

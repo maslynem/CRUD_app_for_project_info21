@@ -11,9 +11,9 @@ function createHeader(title) {
         '            <div class="columns__row">\n' +
         '                <div class="column_item">\n' +
         '                    <div class="item__ref data">\n' +
-        '                        <a href="/peers/">Data\n' +
+        '                        <a href="/peers/page-0?pageSize=30">Data\n' +
         '                            <ul class="submenu">\n' +
-        '                                <li><a href="/peers?limit=30&offset=0">Peers</a></li>\n' +
+        '                                <li><a href="/peers/page-0?pageSize=30">Peers</a></li>\n' +
         '                                <li><a href="#">Tasks</a></li>\n' +
         '                                <li><a href="#">Checks</a></li>\n' +
         '                                <li><a href="#">Verter</a></li>\n' +
@@ -29,7 +29,7 @@ function createHeader(title) {
         '                </div>\n' +
         '                <div class="column_item">\n' +
         '                    <div class="item__ref">\n' +
-        '                        <a href="/peers?limit=30&offset=0">Operations</a>\n' +
+        '                        <a href="#">Operations</a>\n' +
         '                    </div>\n' +
         '                </div>\n' +
         '            </div>\n' +
