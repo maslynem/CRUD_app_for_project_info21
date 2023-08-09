@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.s21school.dto.PagePeerDto;
 import ru.s21school.dto.PeerDto;
 import ru.s21school.service.PeerService;
+import ru.s21school.util.PeerSaveValidator;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,12 @@ import javax.validation.Valid;
 public class PeerController {
 
     private final PeerService peerService;
+    private final PeerSaveValidator peerSaveValidator;
+
+    @GetMapping()
+    public String peersPageDefault() {
+        return "redirect:/peers/page-0";
+    }
 
     @GetMapping("/page-{page}")
     public String peersPage(@PathVariable Integer page,
@@ -58,24 +65,22 @@ public class PeerController {
         return "redirect:/peers";
     }
 
+    @GetMapping("/new")
+    public String newPeer(Model model) {
+        model.addAttribute("peer", new PeerDto());
+        return "peers/new";
+    }
 
-//
-//    @GetMapping("/new")
-//    public String newPeer(Model model) {
-//        model.addAttribute("peer", new Peer());
-//        return "peer/new";
-//    }
-//
-//    @PostMapping()
-//    public String create(@Valid @ModelAttribute("peer") Peer peer, BindingResult bindingResult) {
-//        peerValidator.validate(peer,bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "peer/new";
-//        }
-//        peerDao.save(peer);
-//        return "redirect:/peers";
-//    }
-//
+    @PostMapping("/savePeer")
+    public String savePeer(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult) {
+        peerSaveValidator.validate(peer,bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "peers/new";
+        }
+        peerService.save(peer);
+        return "redirect:/peers";
+    }
+
 
 //
 

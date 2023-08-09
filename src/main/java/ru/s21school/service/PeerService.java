@@ -11,7 +11,7 @@ import ru.s21school.dto.PagePeerDto;
 import ru.s21school.dto.PeerDto;
 import ru.s21school.entity.Peer;
 import ru.s21school.mapper.PeerReadMapper;
-import ru.s21school.mapper.PeerUpdateMapper;
+import ru.s21school.mapper.PeerSaveMapper;
 import ru.s21school.repository.PeerRepository;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class PeerService {
     private final PeerRepository peerRepository;
     private final PeerReadMapper peerReadMapper;
-    private final PeerUpdateMapper peerUpdateMapper;
+    private final PeerSaveMapper peerSaveMapper;
 
     public List<PeerDto> findAll() {
         return peerRepository.findAll().stream()
@@ -47,6 +47,11 @@ public class PeerService {
 
     @Transactional
     public void update(PeerDto peerUpdate) {
-        peerRepository.save(peerUpdateMapper.map(peerUpdate));
+        peerRepository.save(peerSaveMapper.map(peerUpdate));
+    }
+
+    @Transactional
+    public void save(PeerDto peer) {
+        peerRepository.save(peerSaveMapper.map(peer));
     }
 }
