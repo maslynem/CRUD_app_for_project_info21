@@ -14,7 +14,8 @@ let params = window
 
 function onSelectionChange(select) {
     let selectedOption = select.options[select.selectedIndex];
-    window.location.href = `/peers?pageSize=${selectedOption.value}&page=${0}`;
+    console.log(`/peers/page=0?pageSize=${selectedOption.value}`);
+    window.location.href = `/peers/page-0?pageSize=${selectedOption.value}`;
 }
 
 function createSelector(totalPages, currentPage) {
@@ -35,6 +36,7 @@ function createSelector(totalPages, currentPage) {
 
 function createPagination(page, pageSize, totalPages, path, sortField, sortDir) {
     const element = document.querySelector(".pagination ul");
+    if (element == null) return;
     let urlEnd = '?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
     let liTag = '';
     let active;

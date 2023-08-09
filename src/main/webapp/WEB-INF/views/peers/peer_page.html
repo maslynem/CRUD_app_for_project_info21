@@ -11,11 +11,11 @@
 
 
 <a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
-    <input type="button" value="Update" />
+    <input type="button" value="Редактировать" />
 </a>
 
 <form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="Удалить страницу"/>
 </form>
 
 </body>

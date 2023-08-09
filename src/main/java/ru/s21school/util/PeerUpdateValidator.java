@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.PeerDto;
+import ru.s21school.dto.peerDto.PeerDto;
 
 import java.time.LocalDate;
 

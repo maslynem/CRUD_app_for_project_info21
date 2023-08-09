@@ -14,13 +14,10 @@
     <link rel="stylesheet" href="/resources/css/peers/create_peer.css">
 
 </head>
-<header>
-    <div class="header_container"></div>
-</header>
+<header></header>
 <body>
 <div class="container">
-
-    <form action="#" th:action="@{/peers/savePeer}" th:object="${peer}"
+    <form action="#" th:action="@{/peers/new}" th:object="${peer}"
           method="POST">
         <div class="form-group">
             <label for="nickname" class="form-label"></label>

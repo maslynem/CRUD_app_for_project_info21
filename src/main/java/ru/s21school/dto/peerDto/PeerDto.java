@@ -1,4 +1,4 @@
-package ru.s21school.dto;
+package ru.s21school.dto.peerDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

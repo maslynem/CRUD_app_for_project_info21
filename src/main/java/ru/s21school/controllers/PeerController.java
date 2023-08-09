@@ -1,14 +1,17 @@
 package ru.s21school.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.s21school.dto.PagePeerDto;
-import ru.s21school.dto.PeerDto;
+import org.springframework.web.server.ResponseStatusException;
+import ru.s21school.dto.peerDto.PagePeerDto;
+import ru.s21school.dto.peerDto.PeerDto;
 import ru.s21school.service.PeerService;
 import ru.s21school.util.PeerSaveValidator;
+import ru.s21school.util.PeerUpdateValidator;
 
 import javax.validation.Valid;
 
@@ -19,6 +22,7 @@ public class PeerController {
 
     private final PeerService peerService;
     private final PeerSaveValidator peerSaveValidator;
+    private final PeerUpdateValidator peerUpdateValidator;
 
     @GetMapping()
     public String peersPageDefault() {
@@ -44,25 +48,12 @@ public class PeerController {
     }
 
     @GetMapping("/{nickname}")
-    public String showPeer(@PathVariable String nickname, Model model) {
-        PeerDto peer = peerService.findByNickname(nickname);
-        model.addAttribute("peer", peer);
-        return "peers/peer_page";
-    }
-
-    @GetMapping("/{nickname}/edit")
-    public String edit(Model model, @PathVariable String nickname) {
-        model.addAttribute("peer", peerService.findByNickname(nickname));
-        return "peers/edit";
-    }
-
-    @PatchMapping("/{nickname}")
-    public String update(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "peers/edit";
-        }
-        peerService.update(peer);
-        return "redirect:/peers";
+    public String findByNickname(@PathVariable String nickname, Model model) {
+        return peerService.findByNickname(nickname)
+                .map(peer -> {
+                    model.addAttribute("peer", peer);
+                    return "peers/peer_page";
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/new")
@@ -71,24 +62,41 @@ public class PeerController {
         return "peers/new";
     }
 
-    @PostMapping("/savePeer")
-    public String savePeer(@Valid @ModelAttribute("peer") PeerDto peer, BindingResult bindingResult) {
-        peerSaveValidator.validate(peer,bindingResult);
+    @PostMapping("/new")
+    public String savePeer(@Valid @ModelAttribute("peer") PeerDto peerDto, BindingResult bindingResult) {
+        peerSaveValidator.validate(peerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "peers/new";
         }
-        peerService.save(peer);
-        return "redirect:/peers";
+        peerService.save(peerDto);
+        return "redirect:/peers/";
     }
 
+    @GetMapping("/{nickname}/edit")
+    public String edit(Model model, @PathVariable String nickname) {
+        return peerService.findByNickname(nickname)
+                .map(peerDto -> {
+                    model.addAttribute("peer", peerDto);
+                    return "peers/edit";
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
-//
+    @PatchMapping("{nickname}")
+    public String update(@Valid @ModelAttribute("peer") PeerDto peerDto, BindingResult bindingResult, @PathVariable String nickname) {
+        peerUpdateValidator.validate(peerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/peers/{nickname}/edit";
+        }
+        return peerService.update(nickname, peerDto)
+                .map(it -> "redirect:/peers/{nickname}/")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
-//
-//    @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") int id) {
-//        peerDao.delete(id);
-//        return "redirect:/peers";
-//    }
-
+    @DeleteMapping("/{nickname}")
+    public String delete(@PathVariable String nickname) {
+        if (!peerService.delete(nickname)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/peers/";
+    }
 }

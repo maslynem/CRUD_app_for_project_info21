@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.PeerDto;
+import ru.s21school.dto.peerDto.PeerDto;
 import ru.s21school.service.PeerService;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,8 @@ public class PeerSaveValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         PeerDto peer = (PeerDto) target;
-        if (peerService.findByNickname(peer.getNickname()) != null) {
+        Optional<PeerDto> byNickname = peerService.findByNickname(peer.getNickname());
+        if (byNickname.isPresent()) {
             errors.rejectValue("nickname", "", "Nickname is already taken");
         }
         LocalDate birthday = peer.getBirthday();
