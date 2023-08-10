@@ -1,4 +1,4 @@
-package ru.s21school.controllers;
+package ru.s21school.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.peerDto.PeerDto;
 import ru.s21school.service.PeerService;
-import ru.s21school.util.validators.peerValidators.PeerSaveValidator;
-import ru.s21school.util.validators.peerValidators.PeerUpdateValidator;
+import ru.s21school.util.validator.peerValidator.PeerSaveValidator;
+import ru.s21school.util.validator.peerValidator.PeerUpdateValidator;
 
 import javax.validation.Valid;
 

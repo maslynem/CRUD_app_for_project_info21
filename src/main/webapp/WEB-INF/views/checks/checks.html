@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Peers</title>
+    <title>Checks</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -16,33 +16,49 @@
 </head>
 <body>
 
-<header> </header>
+<header></header>
 
 <hr>
 <div class="container-fluid">
-    <a th:href="@{/peers/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
+    <a th:href="@{/checks/new}" class="btn btn-primary btn-sm mb-3"> Add Check </a>
     <table class="table table-bordered table-striped table-href">
         <thead class="table-dark">
         <tr>
             <th class="text-center">
-                <a th:href="@{/peers/page-0(pageSize=${pageSize},sortField='nickname',sortDir=${reverseSortDir})}">
-                    Nickname
+                <a th:href="@{/checks/page-0(pageSize=${pageSize},sortField='peerNickname',sortDir=${reverseSortDir})}">
+                    Peer Nickname
                 </a>
             </th>
             <th class="text-center">
-                <a th:href="@{/peers/page-0(pageSize=${pageSize},sortField='birthday',sortDir=${reverseSortDir})}">
-                    Birthday
+                <a th:href="@{/checks/page-0(pageSize=${pageSize},sortField='taskTitle',sortDir=${reverseSortDir})}">
+                    Task Title
                 </a>
             </th>
+            <th class="text-center">
+                <a th:href="@{/checks/page-0(pageSize=${pageSize},sortField='date',sortDir=${reverseSortDir})}">
+                    Date
+                </a>
+            </th>
+            <th class="text-center" colspan="2"> Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="person : ${peers}">
-            <td >
-                <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${person.getNickname()})}"
-                   th:text="${person.getNickname()}"></a>
+        <tr th:each="check : ${checks}">
+            <td>
+                <a class="peer_ref" th:href="@{/peers/{title}(title=${check.getPeerNickname()})}"
+                   th:text="${check.getPeerNickname()}"></a>
             </td>
-            <td th:text="${person.getBirthday()}"/>
+            <td th:text="${check.getTaskTitle()}"/>
+            <td th:text="${check.getDate()}"/>
+            <td>
+                <a th:href="@{/checks/{id}/edit(id=${check.getId()})}" class="btn btn-primary">Update</a>
+            </td>
+            <td>
+                <form action="#" th:method="DELETE" th:action="@{/checks/{id}(id=${check.getId()})}"
+                      th:object="${check}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -59,9 +75,11 @@
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
+<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+
 <script th:inline="javascript">
-    path = '/peers/page-';
-    createHeader('Peers')
+    path = '/checks/page-';
+    createHeader('Checks')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
     createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
 </script>

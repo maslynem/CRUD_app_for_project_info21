@@ -12,12 +12,7 @@ let params = window
         {}
     );
 
-function onSelectionChange(select) {
-    let selectedOption = select.options[select.selectedIndex];
-    console.log(`/peers/page=0?pageSize=${selectedOption.value}`);
-    window.location.href = `/peers/page-0?pageSize=${selectedOption.value}`;
-}
-
+let path = '';
 function createSelector(totalPages, currentPage) {
     const element = document.querySelector(".selector");
 
@@ -33,8 +28,12 @@ function createSelector(totalPages, currentPage) {
     selector.value = params['pageSize'];
 }
 
+function onSelectionChange(select) {
+    let selectedOption = select.options[select.selectedIndex];
+    window.location.href = path + '0?pageSize=' + selectedOption.value;
+}
 
-function createPagination(page, pageSize, totalPages, path, sortField, sortDir) {
+function createPagination(page, pageSize, totalPages, sortField, sortDir) {
     const element = document.querySelector(".pagination ul");
     if (element == null) return;
     let urlEnd = '?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';

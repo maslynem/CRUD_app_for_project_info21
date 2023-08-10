@@ -14,14 +14,14 @@ function createHeader(title) {
         '                            <ul class="data__list_submenu">\n' +
         '                                <li><a class = "header__text" href="/peers/page-0?pageSize=30">Peers</a></li>\n' +
         '                                <li><a class = "header__text" href="/tasks/page-0?pageSize=30">Tasks</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">Checks</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">Verter</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">XP</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">P2P</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">TransferredPoints</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">Friends</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">Recommendations</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">TimeTracking</a></li>\n' +
+        '                                <li><a class = "header__text" href="/checks/page-0?pageSize=30"">Checks</a></li>\n' +
+        '                                <li><a class = "header__text" href="/verter-checks/page-0?pageSize=30"">Verter</a></li>\n' +
+        '                                <li><a class = "header__text" href="/xp/page-0?pageSize=30"">XP</a></li>\n' +
+        '                                <li><a class = "header__text" href="/p2p/page-0?pageSize=30"">P2P</a></li>\n' +
+        '                                <li><a class = "header__text" href="/transferred-points/page-0?pageSize=30"">TransferredPoints</a></li>\n' +
+        '                                <li><a class = "header__text" href="/friends/page-0?pageSize=30"">Friends</a></li>\n' +
+        '                                <li><a class = "header__text" href="/recommendations/page-0?pageSize=30"">Recommendations</a></li>\n' +
+        '                                <li><a class = "header__text" href="/time-tracking/page-0?pageSize=30"">TimeTracking</a></li>\n' +
         '                            </ul>\n' +
         '                        </a>\n' +
         '                    </div>\n' +

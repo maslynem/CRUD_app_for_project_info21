@@ -1,4 +1,4 @@
-package ru.s21school.util.validators.taskValidators;
+package ru.s21school.util.validator.taskValidator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class TaskSaveValidator implements Validator {
+public class TaskUpdateValidator implements Validator {
     private final TaskService taskService;
 
     @Override
@@ -22,12 +22,8 @@ public class TaskSaveValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         TaskDto task = (TaskDto) target;
-        Optional<TaskDto> byTitle = taskService.findById(task.getTitle());
-        if (byTitle.isPresent()) {
-            errors.rejectValue("title", "", "Title is already taken");
-        }
         String parentTaskTitle = task.getParentTaskTitle();
-        if (!parentTaskTitle.isEmpty()) {
+        if (parentTaskTitle != null) {
             Optional<TaskDto> parentTask = taskService.findById(parentTaskTitle);
             if (!parentTask.isPresent()) {
                 errors.rejectValue("parentTaskTitle", "", "Task with this title does not exist");

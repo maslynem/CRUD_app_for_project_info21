@@ -1,4 +1,4 @@
-package ru.s21school.controllers;
+package ru.s21school.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.taskDto.TaskDto;
 import ru.s21school.service.TaskService;
-import ru.s21school.util.validators.taskValidators.TaskSaveValidator;
-import ru.s21school.util.validators.taskValidators.TaskUpdateValidator;
+import ru.s21school.util.validator.taskValidator.TaskSaveValidator;
+import ru.s21school.util.validator.taskValidator.TaskUpdateValidator;
 
 import javax.validation.Valid;
 

@@ -66,9 +66,10 @@
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
 <script th:inline="javascript">
+    path = '/tasks/page-';
     createHeader('Tasks')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
-    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], '/tasks/page-', [[${sortField}]], [[${sortDir}]]);
+    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
 </script>
 </body>
 </html>
