@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Peer</title>
+</head>
+<body>
+
+<p th:text="${peer.getNickname()}">VALUE</p>
+<p th:text="${peer.getBirthday()}">VALUE</p>
+
+
+<a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
+    <input type="button" value="Редактировать" />
+</a>
+
+<form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
+    <input type="submit" onclick="return confirmDelete(this)" value="Удалить запись"/>
+</form>
+
+<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+</body>
+</html>
