@@ -24,24 +24,30 @@
         <thead class="table-dark">
         <tr>
             <th class="text-center">
-                <a th:href="@{/peers/page-0(pageSize=${pageSize},sortField='nickname',sortDir=${reverseSortDir})}">
-                    Nickname
+                <a th:href="@{/tasks/page-0(pageSize=${pageSize},sortField='title',sortDir=${reverseSortDir})}">
+                    Title
                 </a>
             </th>
             <th class="text-center">
-                <a th:href="@{/peers/page-0(pageSize=${pageSize},sortField='birthday',sortDir=${reverseSortDir})}">
-                    Birthday
+                <a th:href="@{/tasks/page-0(pageSize=${pageSize},sortField='parentTaskTitle',sortDir=${reverseSortDir})}">
+                    Parent Task Title
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/tasks/page-0(pageSize=${pageSize},sortField='maxXp',sortDir=${reverseSortDir})}">
+                    Maximum Experience
                 </a>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="person : ${peers}">
+        <tr th:each="task : ${tasks}">
             <td >
-                <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${person.getNickname()})}"
-                   th:text="${person.getNickname()}"></a>
+                <a class="peer_ref" th:href="@{/tasks/{title}(title=${task.getTitle()})}"
+                   th:text="${task.getTitle()}"></a>
             </td>
-            <td th:text="${person.getBirthday()}"/>
+            <td th:text="${task.getParentTaskTitle()}"/>
+            <td th:text="${task.getMaxXp()}"/>
         </tr>
         </tbody>
     </table>
@@ -54,15 +60,15 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/peers/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
+    <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
 </div>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
 <script th:inline="javascript">
-    createHeader('Peers')
+    createHeader('Tasks')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
-    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], '/peers/page-', [[${sortField}]], [[${sortDir}]]);
+    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], '/tasks/page-', [[${sortField}]], [[${sortDir}]]);
 </script>
 </body>
 </html>

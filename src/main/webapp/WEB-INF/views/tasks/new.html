@@ -17,11 +17,11 @@
 <header></header>
 <body>
 <div class="container">
-    <form action="#" th:action="@{/peers/new}" th:object="${peer}"
+    <form action="#" th:action="@{/tasks/new}" th:object="${task}"
           method="POST">
         <div class="form-group">
-            <label for="nickname" class="form-label"></label>
-            <input type="text" id="nickname" th:field="*{nickname}"
+            <label for="title" class="form-label"></label>
+            <input type="text" id="title" th:field="*{title}"
                    placeholder="Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError">
             <small class=" error_message" id="nicknameError"
                    th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">error name</small>

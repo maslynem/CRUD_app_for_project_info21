@@ -6,15 +6,16 @@
 </head>
 <body>
 
-<p th:text="${peer.getNickname()}">VALUE</p>
-<p th:text="${peer.getBirthday()}">VALUE</p>
+<p th:text="${task.getTitle()}">VALUE</p>
+<p th:text="${task.getParentTask().getTitle()}">VALUE</p>
+<p th:text="${task.getMaxXp()}">VALUE</p>
 
 
-<a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
+<a th:href="@{/tasks/{title}/edit(title=${task.getTitle()})}">
     <input type="button" value="Редактировать" />
 </a>
 
-<form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
+<form th:method="DELETE" th:action="@{/tasks/{title}/edit(title=${task.getTitle()})}">
     <input type="submit" onclick="return confirmDelete(this)" value="Удалить запись"/>
 </form>
 

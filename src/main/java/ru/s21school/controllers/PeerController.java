@@ -1,17 +1,17 @@
 package ru.s21school.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.s21school.dto.peerDto.PagePeerDto;
 import ru.s21school.dto.peerDto.PeerDto;
 import ru.s21school.service.PeerService;
-import ru.s21school.util.PeerSaveValidator;
-import ru.s21school.util.PeerUpdateValidator;
+import ru.s21school.util.validators.peerValidators.PeerSaveValidator;
+import ru.s21school.util.validators.peerValidators.PeerUpdateValidator;
 
 import javax.validation.Valid;
 
@@ -35,8 +35,8 @@ public class PeerController {
                             @RequestParam(required = false, defaultValue = "nickname") String sortField,
                             @RequestParam(required = false, defaultValue = "asc") String sortDir,
                             Model model) {
-        PagePeerDto pagePeerDto = peerService.findPeersWithPaginationAndSorting(page, pageSize, sortField, sortDir);
-        model.addAttribute("peers", pagePeerDto.getPeersDto());
+        Page<PeerDto> pagePeerDto = peerService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
+        model.addAttribute("peers", pagePeerDto.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pagePeerDto.getTotalPages());
         model.addAttribute("totalItems", pagePeerDto.getTotalElements());
@@ -49,7 +49,7 @@ public class PeerController {
 
     @GetMapping("/{nickname}")
     public String findByNickname(@PathVariable String nickname, Model model) {
-        return peerService.findByNickname(nickname)
+        return peerService.findById(nickname)
                 .map(peer -> {
                     model.addAttribute("peer", peer);
                     return "peers/peer_page";
@@ -74,7 +74,7 @@ public class PeerController {
 
     @GetMapping("/{nickname}/edit")
     public String edit(Model model, @PathVariable String nickname) {
-        return peerService.findByNickname(nickname)
+        return peerService.findById(nickname)
                 .map(peerDto -> {
                     model.addAttribute("peer", peerDto);
                     return "peers/edit";

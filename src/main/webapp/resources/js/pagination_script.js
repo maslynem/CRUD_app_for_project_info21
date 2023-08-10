@@ -47,11 +47,11 @@ function createPagination(page, pageSize, totalPages, path, sortField, sortDir) 
         liTag += `<li class="btn prev" onclick="window.location.href = '${url}'"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
     }
 
-    if (page > 2) { //if page value is less than 2 then add 1 after the previous button
+    if (totalPages > 2) { //if page value is less than 2 then add 1 after the previous button
         let url = path +'0?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
 
         liTag += `<li class="first numb" onclick="window.location.href = '${url}'"><span>1</span></li>`;
-        if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
+        if (totalPages > 3) { //if page value is greater than 3 then add this (...) after the first li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }
     }

@@ -13,7 +13,7 @@ function createHeader(title) {
         '                        <a class = "header__text" href="/peers/page-0?pageSize=30">Data\n' +
         '                            <ul class="data__list_submenu">\n' +
         '                                <li><a class = "header__text" href="/peers/page-0?pageSize=30">Peers</a></li>\n' +
-        '                                <li><a class = "header__text" href="#">Tasks</a></li>\n' +
+        '                                <li><a class = "header__text" href="/tasks/page-0?pageSize=30">Tasks</a></li>\n' +
         '                                <li><a class = "header__text" href="#">Checks</a></li>\n' +
         '                                <li><a class = "header__text" href="#">Verter</a></li>\n' +
         '                                <li><a class = "header__text" href="#">XP</a></li>\n' +

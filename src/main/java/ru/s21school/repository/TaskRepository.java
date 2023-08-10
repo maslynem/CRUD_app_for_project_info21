@@ -2,8 +2,8 @@ package ru.s21school.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.s21school.entity.Peer;
+import ru.s21school.entity.Task;
 
 @Repository
-public interface PeerRepository extends JpaRepository<Peer, String> {
+public interface TaskRepository extends JpaRepository<Task, String> {
 }
