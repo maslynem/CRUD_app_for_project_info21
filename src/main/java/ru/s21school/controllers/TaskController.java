@@ -43,7 +43,7 @@ public class TaskController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        return "tasks/tasks";
+        return "/tasks/tasks";
     }
 
     @GetMapping("/{title}")
@@ -55,47 +55,48 @@ public class TaskController {
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-//    @GetMapping("/new")
-//    public String newTask(Model model) {
-//        model.addAttribute("task", new TaskDto());
-//        return "tasks/new";
-//    }
-//
-//    @PostMapping("/new")
-//    public String saveTask(@Valid @ModelAttribute("task") TaskDto taskDto, BindingResult bindingResult) {
-//        taskSaveValidator.validate(taskDto, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "tasks/new";
-//        }
-//        taskService.save(taskDto);
-//        return "redirect:/tasks/";
-//    }
-//
-//    @GetMapping("/{title}/edit")
-//    public String edit(Model model, @PathVariable String title) {
-//        return taskService.findById(title)
-//                .map(taskDto -> {
-//                    model.addAttribute("task", taskDto);
-//                    return "tasks/edit";
-//                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-//
-//    @PatchMapping("{title}")
-//    public String update(@Valid @ModelAttribute("task") TaskDto taskDto, BindingResult bindingResult, @PathVariable String title) {
-//        taskUpdateValidator.validate(taskDto, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/tasks/{title}/edit";
-//        }
-//        return taskService.update(title, taskDto)
-//                .map(it -> "redirect:/tasks/{title}/")
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-//
-//    @DeleteMapping("/{title}")
-//    public String delete(@PathVariable String title) {
-//        if (!taskService.delete(title)) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//        return "redirect:/tasks/";
-//    }
+    @GetMapping("/new")
+    public String newTask(Model model) {
+        model.addAttribute("task", new TaskDto());
+        return "tasks/new";
+    }
+
+    @PostMapping("/new")
+    public String saveTask(@Valid @ModelAttribute("task") TaskDto taskDto, BindingResult bindingResult) {
+        taskSaveValidator.validate(taskDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "tasks/new";
+        }
+        taskService.save(taskDto);
+        return "redirect:/tasks/";
+    }
+
+    @GetMapping("/{title}/edit")
+    public String edit(Model model, @PathVariable String title) {
+        return taskService.findById(title)
+                .map(taskDto -> {
+                    model.addAttribute("task", taskDto);
+                    return "tasks/edit";
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PatchMapping("/{title}")
+    public String update(@Valid @ModelAttribute("task") TaskDto taskDto, BindingResult bindingResult, @PathVariable String title) {
+        taskUpdateValidator.validate(taskDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "tasks/edit";
+        }
+
+        return taskService.update(title, taskDto)
+                .map(it -> "redirect:/tasks/{title}/")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{title}")
+    public String delete(@PathVariable String title) {
+        if (!taskService.delete(title)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/tasks/";
+    }
 }

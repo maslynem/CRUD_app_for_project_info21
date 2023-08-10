@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update person</title>
+    <title>Update task</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -10,42 +10,51 @@
 
     <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
     <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
 </head>
 <body>
+
 <header></header>
+
 <div class="container">
-    <form action="#" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}" th:object="${peer}"
+    <form action="#" th:action="@{/tasks/{title}(title=${task.getTitle()})}" th:object="${task}"
           th:method="PATCH">
 
         <div class="form-group row mt-5">
-            <label for="nickname" class="col-sm-2 col-form-label">Nickname</label>
-            <input type="text" id="nickname" th:field="*{nickname}"
-                   placeholder="Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError" readonly>
-            <small class=" error_message" id="nicknameError"
-                   th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">error name</small>
+            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <input type="text" id="title" th:field="*{title}"
+                   placeholder="Title" class="form-control mb-4 col-4" readonly>
         </div>
 
-        <div class="form-group row">
-            <label for="dateField" class="col-sm-2 col-form-label">Birthday</label>
-            <input type="date" id="dateField" th:field="*{birthday}"
-                   class="form-control mb-4 col-4" aria-describedby="birthdayError">
-            <small class=" error_message " id="birthdayError"
-                   th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">error name</small>
+        <div class="form-group row mt-5">
+            <label for="parentTaskTitle" class="col-sm-2 col-form-label">Parent Task Title</label>
+            <input type="text" id="parentTaskTitle" th:field="*{parentTaskTitle}"
+                   placeholder="Parent Task Title" class="form-control mb-4 col-4" aria-describedby="parentTaskTitleError">
+            <small class="error_message" id="parentTaskTitleError"
+                   th:if="${#fields.hasErrors('parentTaskTitle')}" th:errors="*{parentTaskTitle}">error title</small>
         </div>
+
+        <div class="form-group row mt-5">
+            <label for="maxXp" class="col-sm-2 col-form-label">Maximum experience</label>
+            <input type="text" id="maxXp" th:field="*{maxXp}"
+                   placeholder="Maximum experience" class="form-control mb-4 col-4" aria-describedby="maxXpError">
+            <small class="error_message" id="maxXpError"
+                   th:if="${#fields.hasErrors('maxXp')}" th:errors="*{maxXp}">error title</small>
+        </div>
+
 
         <button type="submit" class="btn btn-info col-2">Update</button>
     </form>
 
     <hr>
 
-    <a th:href="@{/peers/{nickname}(nickname=${peer.getNickname()})}"> Back</a>
+    <a th:href="@{/tasks/{title}(title=${task.getTitle()})}"> Back</a>
 </div>
 
 
-<script type="text/javascript" src="/resources/js/birthday_script.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
-    createHeader('Edit peer');
+    createHeader('Edit Task');
 </script>
 </body>
 </html>

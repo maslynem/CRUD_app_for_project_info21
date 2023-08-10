@@ -19,34 +19,41 @@
 <div class="container">
     <form action="#" th:action="@{/tasks/new}" th:object="${task}"
           method="POST">
-        <div class="form-group">
+        <div class="form-group ">
             <label for="title" class="form-label"></label>
             <input type="text" id="title" th:field="*{title}"
-                   placeholder="Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError">
-            <small class=" error_message" id="nicknameError"
-                   th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">error name</small>
+                   placeholder="Title" class="form-control mb-4 col-4" aria-describedby="titleError">
+            <small class=" error_message" id="titleError"
+                   th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error title</small>
         </div>
+
         <div class="form-group">
-
-            <label for="dateField" class="form-label"></label>
-            <input type="date" id="dateField" th:field="*{birthday}"
-                   class="form-control mb-4 col-4" aria-describedby="birthdayError">
-            <small class=" error_message " id="birthdayError"
-                   th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">error name</small>
+            <label for="parentTaskTitle" class="col-sm-2 col-form-label"></label>
+            <input type="text" id="parentTaskTitle" th:field="*{parentTaskTitle}"
+                   placeholder="Parent Task Title" class="form-control mb-4 col-4" aria-describedby="parentTaskTitleError">
+            <small class="error_message" id="parentTaskTitleError"
+                   th:if="${#fields.hasErrors('parentTaskTitle')}" th:errors="*{parentTaskTitle}">error title</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2"> Save Peer</button>
+        <div class="form-group ">
+            <label for="maxXp" class="col-sm-2 col-form-label"></label>
+            <input type="number" id="maxXp" th:field="*{maxXp}"
+                   placeholder="Maximum experience" class="form-control mb-4 col-4" aria-describedby="maxXpError">
+            <small class="error_message" id="maxXpError"
+                   th:if="${#fields.hasErrors('maxXp')}" th:errors="*{maxXp}">error title</small>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2"> Save Task</button>
     </form>
 
     <hr>
 
-    <a th:href="@{/peers/}"> Back to Peers List</a>
+    <a th:href="@{/tasks/}"> Back to Peers List</a>
 </div>
 
-<script type="text/javascript" src="/resources/js/birthday_script.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
-    createHeader('Create peer');
+    createHeader('Create Task');
 </script>
 </body>
 </html>

@@ -27,10 +27,10 @@ public class TaskSaveValidator implements Validator {
             errors.rejectValue("title", "", "Title is already taken");
         }
         String parentTaskTitle = task.getParentTaskTitle();
-        if (parentTaskTitle != null) {
+        if (!parentTaskTitle.isEmpty()) {
             Optional<TaskDto> parentTask = taskService.findById(parentTaskTitle);
             if (!parentTask.isPresent()) {
-                errors.rejectValue("parentTask", "", "Task with this title does not exist");
+                errors.rejectValue("parentTaskTitle", "", "Task with this title does not exist");
             }
         }
     }

@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Peer</title>
+    <title>Task</title>
 </head>
 <body>
 
 <p th:text="${task.getTitle()}">VALUE</p>
-<p th:text="${task.getParentTask().getTitle()}">VALUE</p>
+<p th:text="${task.getParentTaskTitle()}">VALUE</p>
 <p th:text="${task.getMaxXp()}">VALUE</p>
 
 
@@ -15,8 +15,8 @@
     <input type="button" value="Редактировать" />
 </a>
 
-<form th:method="DELETE" th:action="@{/tasks/{title}/edit(title=${task.getTitle()})}">
-    <input type="submit" onclick="return confirmDelete(this)" value="Удалить запись"/>
+<form th:method="DELETE" th:action="@{/tasks/{title}(title=${task.getTitle()})}">
+    <input type="submit" onclick="return confirmDelete()" value="Удалить запись"/>
 </form>
 
 <script type="text/javascript" src="/resources/js/confirmDelete.js"></script>

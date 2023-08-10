@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Peers</title>
+    <title>Tasks</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -20,6 +20,7 @@
 
 <hr>
 <div class="container-fluid">
+    <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Task </a>
     <table class="table table-bordered table-striped table-href">
         <thead class="table-dark">
         <tr>
@@ -60,7 +61,6 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
 </div>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>

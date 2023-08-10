@@ -26,7 +26,7 @@ public class TaskUpdateValidator implements Validator {
         if (parentTaskTitle != null) {
             Optional<TaskDto> parentTask = taskService.findById(parentTaskTitle);
             if (!parentTask.isPresent()) {
-                errors.rejectValue("parentTask", "", "Task with this title does not exist");
+                errors.rejectValue("parentTaskTitle", "", "Task with this title does not exist");
             }
         }
     }
