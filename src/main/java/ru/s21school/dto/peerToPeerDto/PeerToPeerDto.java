@@ -1,4 +1,4 @@
-package ru.s21school.dto.verterDto;
+package ru.s21school.dto.peerToPeerDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.s21school.entity.State;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
@@ -14,17 +15,20 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class VerterDto {
+public class PeerToPeerDto {
+
     private Long id;
 
-    @NotNull(message = "Can not be empty")
+    @NotNull(message = "can not be empty")
     private Long checkId;
 
-    @NotNull(message = "Can not be empty")
+    @NotBlank(message = "can not be empty")
+    private String checkingPeerNickname;
+
+    @NotNull(message = "can not be empty")
     private State state;
 
-    @NotNull(message = "Can not be empty")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @NotNull(message = "can not be empty")
     private LocalTime time;
-
 }

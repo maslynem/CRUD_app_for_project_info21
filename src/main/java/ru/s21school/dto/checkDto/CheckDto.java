@@ -16,16 +16,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class CheckDto {
-    Long id;
+    private Long id;
 
     @NotBlank(message = "Nickname can not be empty")
-    String peerNickname;
+    private String peerNickname;
 
     @NotBlank(message = "Title can not be empty")
-    String taskTitle;
+    private String taskTitle;
 
     @NotNull(message = "Date can not be empty")
     @PastOrPresent(message = "Must contain past or present date")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    LocalDate date;
+    private LocalDate date;
 }

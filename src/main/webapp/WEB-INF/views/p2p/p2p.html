@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Peer To Peer</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/pagination.css">
+    <link rel="stylesheet" href="/resources/css/table.css">
+
+</head>
+<body>
+
+<header></header>
+
+<hr>
+<div class="container-fluid">
+    <a th:href="@{/p2p/new}" class="btn btn-primary btn-sm mb-3"> Add P2P </a>
+    <table class="table table-bordered table-striped table-href">
+        <caption></caption>
+        <thead class="table-dark">
+        <tr>
+            <th class="text-center">
+                <a th:href="@{/p2p/page-0(pageSize=${pageSize},sortField='checkId',sortDir=${reverseSortDir})}">
+                    Check ID
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/p2p/page-0(pageSize=${pageSize},sortField='checkingPeerNickname',sortDir=${reverseSortDir})}">
+                    Checking Peer Nickname
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/p2p/page-0(pageSize=${pageSize},sortField='state',sortDir=${reverseSortDir})}">
+                    State
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/p2p/page-0(pageSize=${pageSize},sortField='time',sortDir=${reverseSortDir})}">
+                    Time
+                </a>
+            </th>
+            <th class="text-center" colspan="2"> Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entity : ${entities}">
+            <td th:text="${entity.getCheckId()}"/>
+            <td th:text="${entity.getCheckingPeerNickname()}"/>
+            <td th:text="${entity.getState().name()}"/>
+            <td th:text="${entity.getTime()}"/>
+            <td>
+                <a th:href="@{/p2p/{id}/edit(id=${entity.getId()})}" class="btn btn-primary">Update</a>
+            </td>
+            <td>
+                <form action="#" th:method="DELETE" th:action="@{/p2p/{id}(id=${entity.getId()})}"
+                      th:object="${entity}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <div class="container_pagination selector"></div>
+    <div class="container_pagination">
+        <div th:if="${totalPages > 1}">
+            <div class="pagination">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script type="text/javascript" src="/resources/js/pagination_script.js"></script>
+<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+
+<script th:inline="javascript">
+    path = '/p2p/page-';
+    createHeader('Peer To Peer')
+    createSelector([[${totalPages}]], [[${currentPage} +1]]);
+    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
+</script>
+</body>
+</html>

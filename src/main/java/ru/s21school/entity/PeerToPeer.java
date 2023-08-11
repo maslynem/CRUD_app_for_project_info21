@@ -16,7 +16,6 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "p2p")
-//@TypeDef(typeClass = EnumType.class, defaultForType = State.class)
 public class PeerToPeer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

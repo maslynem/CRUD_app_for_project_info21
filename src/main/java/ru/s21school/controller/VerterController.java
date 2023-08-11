@@ -51,14 +51,9 @@ public class VerterController {
         return "/verters/verters";
     }
 
-    // todo there is no view for verter_page. May be add later.
+//    todo there is no view for verter_page. May be add later.
 //    @GetMapping("/{id}")
-//    public String findByTitle(@PathVariable Long id, Model model) {
-//        return verterService.findById(id)
-//                .map(verter -> {
-//                    model.addAttribute("verter", verter);
-//                    return "verters/verter_page";
-//                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//    public String findById(@PathVariable Long id, Model model) {
 //    }
 
     @GetMapping("/new")
@@ -70,10 +65,11 @@ public class VerterController {
     }
 
     @PostMapping("/new")
-    public String saveVerter(@Valid @ModelAttribute("verter") VerterDto verterDto, BindingResult bindingResult) {
+    public String saveVerter(@Valid @ModelAttribute("verter") VerterDto verterDto, BindingResult bindingResult, Model model) {
         saveValidator.validate(verterDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("POST /verters/new FAIL CREATE NEW RECORD: {}", bindingResult.getAllErrors());
+            model.addAttribute("states", State.values());
             return "verters/new";
         }
         verterService.save(verterDto);

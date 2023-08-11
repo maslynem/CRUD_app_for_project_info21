@@ -48,14 +48,9 @@ public class ExperienceController {
         return "/experiences/experiences";
     }
 
-    // todo there is no view for experience_page. May be add later.
+//    todo there is no view for experience_page. May be add later.
 //    @GetMapping("/{id}")
-//    public String findByTitle(@PathVariable Long id, Model model) {
-//        return experienceService.findById(id)
-//                .map(experience -> {
-//                    model.addAttribute("experience", experience);
-//                    return "experiences/experience_page";
-//                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//    public String findById(@PathVariable Long id, Model model) {
 //    }
 
     @GetMapping("/new")
