@@ -1,10 +1,10 @@
 package ru.s21school.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,7 @@ import ru.s21school.util.validator.checkValidator.CheckSaveUpdateValidator;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/checks")
@@ -29,10 +30,10 @@ public class CheckController {
 
     @GetMapping("/page-{page}")
     public String checksPage(@PathVariable Integer page,
-                            @RequestParam(required = false, defaultValue = "30") Integer pageSize,
-                            @RequestParam(required = false, defaultValue = "peerNickname") String sortField,
-                            @RequestParam(required = false, defaultValue = "asc") String sortDir,
-                            Model model) {
+                             @RequestParam(required = false, defaultValue = "30") Integer pageSize,
+                             @RequestParam(required = false, defaultValue = "peerNickname") String sortField,
+                             @RequestParam(required = false, defaultValue = "asc") String sortDir,
+                             Model model) {
         Page<CheckDto> pageCheckDto = checkService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("checks", pageCheckDto.getContent());
         model.addAttribute("currentPage", page);
@@ -42,6 +43,7 @@ public class CheckController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        log.info("GET /checks/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/checks/checks";
     }
 
@@ -57,6 +59,7 @@ public class CheckController {
 
     @GetMapping("/new")
     public String newCheck(Model model) {
+        log.info("GET /checks/new");
         model.addAttribute("check", new CheckDto());
         return "checks/new";
     }
@@ -65,9 +68,11 @@ public class CheckController {
     public String saveCheck(@Valid @ModelAttribute("check") CheckDto checkDto, BindingResult bindingResult) {
         checkSaveUpdateValidator.validate(checkDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            log.warn("POST /checks/new FAIL CREATE NEW RECORD: {}", bindingResult.getAllErrors());
             return "checks/new";
         }
         checkService.save(checkDto);
+        log.info("POST /checks/new CREATED NEW RECORD: {}", checkDto);
         return "redirect:/checks/";
     }
 
@@ -75,28 +80,42 @@ public class CheckController {
     public String edit(Model model, @PathVariable Long id) {
         return checkService.findById(id)
                 .map(checkDto -> {
+                    log.info("GET /checks/{}/edit : {}", id, checkDto);
                     model.addAttribute("check", checkDto);
                     return "checks/edit";
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                }).orElseThrow(() -> {
+                    log.warn("GET /checks/{}/edit RECORD WITH ID {} NOT FOUND", id, id);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
+                });
     }
 
     @PatchMapping("/{id}")
     public String update(@Valid @ModelAttribute("check") CheckDto checkDto, BindingResult bindingResult, @PathVariable Long id) {
         checkSaveUpdateValidator.validate(checkDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            log.warn("POST /checks/{} FAIL UPDATE RECORD: {}", id, bindingResult.getAllErrors());
             return "checks/edit";
         }
 
         return checkService.update(id, checkDto)
-                .map(it -> "redirect:/checks/{id}/")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .map(it -> {
+                    log.info("POST /checks/{} WAS UPDATED: {}", id, it);
+                    return "redirect:/checks/{id}/";
+                })
+                .orElseThrow(() -> {
+                            log.warn("POST /checks/{} RECORD WITH ID {} NOT FOUND", id, id);
+                            return new ResponseStatusException(HttpStatus.NOT_FOUND);
+                        }
+                );
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id) {
         if (!checkService.delete(id)) {
+            log.warn("DELETE /checks/{} RECORD WITH TITLE {} NOT FOUND", id, id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        log.info("DELETE /checks/{} RECORD WITH TITLE {} WAS DELETED", id, id);
         return "redirect:/checks/";
     }
 }

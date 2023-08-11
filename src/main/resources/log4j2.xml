@@ -4,7 +4,32 @@
         <Property name="LOG_DIR">./logs</Property>
     </Properties>
     <Appenders>
-        <RollingFile name="RollingFile"
+
+        <RollingFile name="VerterControllerFile"
+                     filePattern="${LOG_DIR}/verter_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="TaskControllerFile"
+                     filePattern="${LOG_DIR}/task_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="CheckControllerFile"
+                     filePattern="${LOG_DIR}/check_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="PeerControllerFile"
+                     filePattern="${LOG_DIR}/peer_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="File"
                      filePattern="${LOG_DIR}/logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
@@ -14,9 +39,25 @@
         </Console>
     </Appenders>
     <Loggers>
+
+        <Logger name="ru.s21school.controller.VerterController"  level="info">
+            <AppenderRef ref="VerterControllerFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.controller.PeerController"  level="info">
+            <AppenderRef ref="PeerControllerFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.controller.CheckController"  level="info">
+            <AppenderRef ref="CheckControllerFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.controller.TaskController" level="info">
+            <AppenderRef ref="TaskControllerFile"/>
+        </Logger>
+
         <Root level="info">
-            <AppenderRef ref="RollingFile"/>
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

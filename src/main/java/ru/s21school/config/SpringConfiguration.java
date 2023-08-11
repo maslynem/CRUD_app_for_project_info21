@@ -100,6 +100,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
         return properties;
     }
 
+//    Hibernate
 //    @Bean
 //    public LocalSessionFactoryBean sessionFactory() {
 //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -108,8 +109,15 @@ public class SpringConfiguration implements WebMvcConfigurer {
 //        sessionFactory.setHibernateProperties(hibernateProperties());
 //        return sessionFactory;
 //    }
+//
+//    @Bean
+//    public HibernateTransactionManager hibernateTransactionManager() {
+//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(sessionFactory().getObject());
+//        return transactionManager;
+//    }
 
-
+//    Spring Data JPA
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -119,16 +127,8 @@ public class SpringConfiguration implements WebMvcConfigurer {
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(hibernateProperties());
-
         return em;
     }
-
-//    @Bean
-//    public HibernateTransactionManager hibernateTransactionManager() {
-//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(sessionFactory().getObject());
-//        return transactionManager;
-//    }
 
     @Bean
     public PlatformTransactionManager transactionManager() {

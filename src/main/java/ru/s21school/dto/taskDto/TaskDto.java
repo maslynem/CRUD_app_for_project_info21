@@ -3,12 +3,14 @@ package ru.s21school.dto.taskDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class TaskDto {
 
     @NotBlank(message = "Title can not be empty")

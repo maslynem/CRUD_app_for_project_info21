@@ -36,8 +36,6 @@
                 <option th:value="failure">Failure</option>
             </select>
 
-            <!--            <input type="text" id="state" th:field="*{state}"-->
-            <!--                   placeholder="State" class="form-control mb-4 col-4" aria-describedby="stateError">-->
             <small class="error_message" id="stateError"
                    th:if="${#fields.hasErrors('state')}" th:errors="*{state}">error state</small>
         </div>
