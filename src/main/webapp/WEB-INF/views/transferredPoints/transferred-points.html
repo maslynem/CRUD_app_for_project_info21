@@ -48,10 +48,12 @@
             <td th:text="${entity.getCheckingPeerNickname()}"/>
             <td th:text="${entity.getCheckedPeerNickname()}"/>
             <td th:text="${entity.getPointsAmount()}"/>
-            <td>
+            <td class="text-center">
+
                 <a th:href="@{/transferred-points/{id}/edit(id=${entity.getId()})}" class="btn btn-primary">Update</a>
             </td>
-            <td>
+            <td class="text-center">
+
                 <form action="#" th:method="DELETE" th:action="@{/transferred-points/{id}(id=${entity.getId()})}"
                       th:object="${verter}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>

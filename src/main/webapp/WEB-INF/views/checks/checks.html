@@ -50,10 +50,10 @@
             </td>
             <td th:text="${check.getTaskTitle()}"/>
             <td th:text="${check.getDate()}"/>
-            <td>
+            <td class="text-center">
                 <a th:href="@{/checks/{id}/edit(id=${check.getId()})}" class="btn btn-primary">Update</a>
             </td>
-            <td>
+            <td class="text-center">
                 <form action="#" th:method="DELETE" th:action="@{/checks/{id}(id=${check.getId()})}"
                       th:object="${check}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>

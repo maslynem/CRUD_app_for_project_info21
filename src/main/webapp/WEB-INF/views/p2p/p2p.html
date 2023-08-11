@@ -54,10 +54,12 @@
             <td th:text="${entity.getCheckingPeerNickname()}"/>
             <td th:text="${entity.getState().name()}"/>
             <td th:text="${entity.getTime()}"/>
-            <td>
+            <td class="text-center">
+
                 <a th:href="@{/p2p/{id}/edit(id=${entity.getId()})}" class="btn btn-primary">Update</a>
             </td>
-            <td>
+            <td class="text-center">
+
                 <form action="#" th:method="DELETE" th:action="@{/p2p/{id}(id=${entity.getId()})}"
                       th:object="${entity}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>

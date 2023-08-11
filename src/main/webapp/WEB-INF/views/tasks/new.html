@@ -30,7 +30,8 @@
         <div class="form-group">
             <label for="parentTaskTitle" class="col-sm-2 col-form-label"></label>
             <input type="text" id="parentTaskTitle" th:field="*{parentTaskTitle}"
-                   placeholder="Parent Task Title" class="form-control mb-4 col-4" aria-describedby="parentTaskTitleError">
+                   placeholder="Parent Task Title" class="form-control mb-4 col-4"
+                   aria-describedby="parentTaskTitleError">
             <small class="error_message" id="parentTaskTitleError"
                    th:if="${#fields.hasErrors('parentTaskTitle')}" th:errors="*{parentTaskTitle}">error title</small>
         </div>
@@ -48,7 +49,7 @@
 
     <hr>
 
-    <a th:href="@{/tasks/}"> Back to Peers List</a>
+    <a th:href="@{/tasks/}"> Back</a>
 </div>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>

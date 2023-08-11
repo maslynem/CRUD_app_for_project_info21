@@ -11,7 +11,7 @@
 
 
 <a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
-    <input type="button" value="Редактировать" />
+    <input type="button" value="Редактировать"/>
 </a>
 
 <form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">

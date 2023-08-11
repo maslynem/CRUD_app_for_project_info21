@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<header> </header>
+<header></header>
 
 <hr>
 <div class="container-fluid">
@@ -38,7 +38,7 @@
         </thead>
         <tbody>
         <tr th:each="person : ${peers}">
-            <td >
+            <td>
                 <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${person.getNickname()})}"
                    th:text="${person.getNickname()}"></a>
             </td>

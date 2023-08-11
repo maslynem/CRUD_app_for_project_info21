@@ -49,18 +49,19 @@ public class TaskController {
         return "/tasks/tasks";
     }
 
-    @GetMapping("/{title}")
-    public String findByTitle(@PathVariable String title, Model model) {
-        return taskService.findById(title)
-                .map(task -> {
-                    log.info("GET /tasks/{} : {}", title, task);
-                    model.addAttribute("task", task);
-                    return "tasks/task_page";
-                }).orElseThrow(() -> {
-                    log.warn("GET /tasks/{} RECORD WITH TITLE {} NOT FOUND", title, title);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
-                });
-    }
+    // todo delete
+//    @GetMapping("/{title}")
+//    public String findByTitle(@PathVariable String title, Model model) {
+//        return taskService.findById(title)
+//                .map(task -> {
+//                    log.info("GET /tasks/{} : {}", title, task);
+//                    model.addAttribute("task", task);
+//                    return "tasks/task_page";
+//                }).orElseThrow(() -> {
+//                    log.warn("GET /tasks/{} RECORD WITH TITLE {} NOT FOUND", title, title);
+//                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
+//                });
+//    }
 
     @GetMapping("/new")
     public String newTask(Model model) {
@@ -105,7 +106,7 @@ public class TaskController {
         return taskService.update(title, taskDto)
                 .map(it -> {
                     log.info("POST /tasks/{} WAS UPDATED: {}", title, it);
-                    return "redirect:/tasks/{title}/";
+                    return "redirect:/tasks/";
                 })
                 .orElseThrow(() -> {
                             log.warn("POST /tasks/{} RECORD WITH ID {} NOT FOUND", title, title);

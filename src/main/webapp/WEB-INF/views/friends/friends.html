@@ -48,10 +48,12 @@
                 <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${friend.getPeerTwoNickname()})}"
                    th:text="${friend.getPeerTwoNickname()}"></a>
             </td>
-            <td>
+            <td class="text-center">
+
                 <a th:href="@{/friends/{id}/edit(id=${friend.getId()})}" class="btn btn-primary">Update</a>
             </td>
-            <td>
+            <td class="text-center">
+
                 <form action="#" th:method="DELETE" th:action="@{/friends/{id}(id=${friend.getId()})}"
                       th:object="${friend}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>

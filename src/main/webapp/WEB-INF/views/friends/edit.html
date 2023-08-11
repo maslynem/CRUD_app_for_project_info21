@@ -29,7 +29,8 @@
         <div class="form-group row mt-5">
             <label for="peerOneNickname" class="col-sm-2 col-form-label">Peer One Nickname</label>
             <input type="text" id="peerOneNickname" th:field="*{peerOneNickname}"
-                   placeholder="Peer One Nickname" class="form-control mb-4 col-4" aria-describedby="peerOneNicknameError">
+                   placeholder="Peer One Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerOneNicknameError">
             <small class="error_message" id="peerOneNicknameError"
                    th:if="${#fields.hasErrors('peerOneNickname')}" th:errors="*{peerOneNickname}">error checkId</small>
         </div>
@@ -37,7 +38,8 @@
         <div class="form-group row mt-5">
             <label for="peerTwoNickname" class="col-sm-2 col-form-label">Peer Two Nickname</label>
             <input type="text" id="peerTwoNickname" th:field="*{peerTwoNickname}"
-                   placeholder="Peer Two Nickname" class="form-control mb-4 col-4" aria-describedby="peerTwoNicknameError">
+                   placeholder="Peer Two Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerTwoNicknameError">
             <small class="error_message" id="peerTwoNicknameError"
                    th:if="${#fields.hasErrors('peerTwoNickname')}" th:errors="*{peerTwoNickname}">error checkId</small>
         </div>

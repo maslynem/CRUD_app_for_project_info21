@@ -29,16 +29,20 @@
         <div class="form-group row mt-5">
             <label for="checkingPeerNickname" class="col-sm-2 col-form-label">Checking Peer Nickname</label>
             <input type="text" id="checkingPeerNickname" th:field="*{checkingPeerNickname}"
-                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4" aria-describedby="checkingPeerNicknameError" readonly>
+                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="checkingPeerNicknameError" readonly>
             <small class="error_message" id="checkingPeerNicknameError"
-                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error checkId</small>
+                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error
+                checkId</small>
         </div>
         <div class="form-group row mt-5">
             <label for="checkedPeerNickname" class="col-sm-2 col-form-label">Checked Peer Nickname</label>
             <input type="text" id="checkedPeerNickname" th:field="*{checkedPeerNickname}"
-                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4" aria-describedby="checkedPeerNicknameError" readonly>
+                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="checkedPeerNicknameError" readonly>
             <small class="error_message" id="checkedPeerNicknameError"
-                   th:if="${#fields.hasErrors('checkedPeerNickname')}" th:errors="*{checkedPeerNickname}">error checkId</small>
+                   th:if="${#fields.hasErrors('checkedPeerNickname')}" th:errors="*{checkedPeerNickname}">error
+                checkId</small>
         </div>
         <div class="form-group row mt-5">
             <label for="pointsAmount" class="col-sm-2 col-form-label">Points Amount</label>

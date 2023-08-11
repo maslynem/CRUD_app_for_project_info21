@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<header> </header>
+<header></header>
 
 <hr>
 <div class="container-fluid">
@@ -39,16 +39,23 @@
                     Maximum Experience
                 </a>
             </th>
+            <th class="text-center" colspan="2"> Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="task : ${tasks}">
-            <td >
-                <a class="peer_ref" th:href="@{/tasks/{title}(title=${task.getTitle()})}"
-                   th:text="${task.getTitle()}"></a>
-            </td>
+            <td th:text="${task.getTitle()}"/>
             <td th:text="${task.getParentTaskTitle()}"/>
             <td th:text="${task.getMaxXp()}"/>
+            <td class="text-center">
+                <a th:href="@{/tasks/{title}/edit(title=${task.getTitle()})}" class="btn btn-primary">Update</a>
+            </td>
+            <td class="text-center">
+                <form action="#" th:method="DELETE" th:action="@{/tasks/{title}(title=${task.getTitle()})}"
+                      th:object="${task}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

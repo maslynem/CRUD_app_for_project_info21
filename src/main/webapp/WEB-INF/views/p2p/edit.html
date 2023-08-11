@@ -30,11 +30,13 @@
         <div class="form-group row mt-5">
             <label for="nickname" class="col-sm-2 col-form-label">Checking Peer Nickname</label>
             <input type="text" id="nickname" th:field="*{checkingPeerNickname}"
-                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError" readonly>
+                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError"
+                   readonly>
             <small class=" error_message" id="nicknameError"
-                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error name</small>
+                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error
+                name</small>
         </div>
-        
+
         <div class="form-group row mt-5">
             <label for="checkId" class="col-sm-2 col-form-label">Check Id</label>
             <input type="text" id="checkId" th:field="*{checkId}"

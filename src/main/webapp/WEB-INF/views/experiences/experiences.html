@@ -42,10 +42,12 @@
         <tr th:each="experience : ${experiences}">
             <td th:text="${experience.getCheckId()}"/>
             <td th:text="${experience.getXpAmount()}"/>
-            <td>
+            <td class="text-center">
+
                 <a th:href="@{/experiences/{id}/edit(id=${experience.getId()})}" class="btn btn-primary">Update</a>
             </td>
-            <td>
+            <td class="text-center">
+
                 <form action="#" th:method="DELETE" th:action="@{/experiences/{id}(id=${experience.getId()})}"
                       th:object="${experience}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
