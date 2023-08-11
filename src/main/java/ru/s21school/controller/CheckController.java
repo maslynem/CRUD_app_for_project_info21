@@ -3,6 +3,7 @@ package ru.s21school.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,7 @@ import ru.s21school.util.validator.checkValidator.CheckSaveUpdateValidator;
 
 import javax.validation.Valid;
 
-@Repository
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/checks")
 public class CheckController {
@@ -29,7 +30,7 @@ public class CheckController {
     @GetMapping("/page-{page}")
     public String checksPage(@PathVariable Integer page,
                             @RequestParam(required = false, defaultValue = "30") Integer pageSize,
-                            @RequestParam(required = false, defaultValue = "id") String sortField,
+                            @RequestParam(required = false, defaultValue = "peerNickname") String sortField,
                             @RequestParam(required = false, defaultValue = "asc") String sortDir,
                             Model model) {
         Page<CheckDto> pageCheckDto = checkService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);

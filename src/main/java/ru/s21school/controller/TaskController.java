@@ -3,7 +3,7 @@ package ru.s21school.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import ru.s21school.util.validator.taskValidator.TaskUpdateValidator;
 
 import javax.validation.Valid;
 
-@Repository
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {

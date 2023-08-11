@@ -17,31 +17,38 @@
 <header></header>
 
 <div class="container">
-    <form action="#" th:action="@{/tasks/{title}(title=${task.getTitle()})}" th:object="${task}"
+    <form action="#" th:action="@{/checks/}" th:object="${check}"
           th:method="PATCH">
 
         <div class="form-group row mt-5">
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
-            <input type="text" id="title" th:field="*{title}"
-                   placeholder="Title" class="form-control mb-4 col-4" readonly>
+            <label for="id" class="col-sm-2 col-form-label">Title</label>
+            <input type="text" id="id" th:field="*{id}"
+                   placeholder="Id" class="form-control mb-4 col-4" readonly>
         </div>
 
         <div class="form-group row mt-5">
-            <label for="parentTaskTitle" class="col-sm-2 col-form-label">Parent Task Title</label>
-            <input type="text" id="parentTaskTitle" th:field="*{parentTaskTitle}"
-                   placeholder="Parent Task Title" class="form-control mb-4 col-4" aria-describedby="parentTaskTitleError">
-            <small class="error_message" id="parentTaskTitleError"
-                   th:if="${#fields.hasErrors('parentTaskTitle')}" th:errors="*{parentTaskTitle}">error title</small>
+            <label for="peerNickname" class="col-sm-2 col-form-label">Parent Task Title</label>
+            <input type="text" id="peerNickname" th:field="*{peerNickname}"
+                   placeholder="Peer Nickname" class="form-control mb-4 col-4" aria-describedby="peerNicknameError">
+            <small class="error_message" id="peerNicknameError"
+                   th:if="${#fields.hasErrors('peerNickname')}" th:errors="*{peerNickname}">error title</small>
         </div>
 
         <div class="form-group row mt-5">
-            <label for="maxXp" class="col-sm-2 col-form-label">Maximum experience</label>
-            <input type="text" id="maxXp" th:field="*{maxXp}"
-                   placeholder="Maximum experience" class="form-control mb-4 col-4" aria-describedby="maxXpError">
-            <small class="error_message" id="maxXpError"
-                   th:if="${#fields.hasErrors('maxXp')}" th:errors="*{maxXp}">error title</small>
+            <label for="taskTitle" class="col-sm-2 col-form-label"></label>
+            <input type="text" id="taskTitle" th:field="*{taskTitle}"
+                   placeholder="Task Title" class="form-control mb-4 col-4" aria-describedby="taskTitleError">
+            <small class="error_message" id="taskTitleError"
+                   th:if="${#fields.hasErrors('taskTitle')}" th:errors="*{taskTitle}">error taskTitle</small>
         </div>
 
+        <div class="form-group row mt-5">
+            <label for="date" class="col-sm-2 col-form-label"></label>
+            <input type="date" id="date" th:field="*{date}"
+                   placeholder="Date" class="form-control mb-4 col-4" aria-describedby="dateError">
+            <small class="error_message" id="dateError"
+                   th:if="${#fields.hasErrors('date')}" th:errors="*{date}">error date</small>
+        </div>
 
         <button type="submit" class="btn btn-info col-2">Update</button>
     </form>

@@ -15,7 +15,7 @@ function createHeader(title) {
         '                                <li><a class = "header__text" href="/peers/page-0?pageSize=30">Peers</a></li>\n' +
         '                                <li><a class = "header__text" href="/tasks/page-0?pageSize=30">Tasks</a></li>\n' +
         '                                <li><a class = "header__text" href="/checks/page-0?pageSize=30"">Checks</a></li>\n' +
-        '                                <li><a class = "header__text" href="/verter-checks/page-0?pageSize=30"">Verter</a></li>\n' +
+        '                                <li><a class = "header__text" href="/verters/page-0?pageSize=30"">Verter</a></li>\n' +
         '                                <li><a class = "header__text" href="/xp/page-0?pageSize=30"">XP</a></li>\n' +
         '                                <li><a class = "header__text" href="/p2p/page-0?pageSize=30"">P2P</a></li>\n' +
         '                                <li><a class = "header__text" href="/transferred-points/page-0?pageSize=30"">TransferredPoints</a></li>\n' +
