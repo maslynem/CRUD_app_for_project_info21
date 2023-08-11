@@ -17,6 +17,7 @@ import java.util.Optional;
 public class CheckSaveUpdateValidator implements Validator {
     private final PeerService peerService;
     private final TaskService taskService;
+
     @Override
     public boolean supports(Class<?> clazz) {
         return CheckDto.class.equals(clazz);
@@ -29,8 +30,7 @@ public class CheckSaveUpdateValidator implements Validator {
         if (!peer.isPresent()) {
             errors.rejectValue("peerNickname", "", "Peer with this nickname does not exist");
         }
-        Optional<TaskDto> task = taskService.findById(check.getTaskTitle());
-        if (!task.isPresent()) {
+        if (!taskService.findById(check.getTaskTitle()).isPresent()) {
             errors.rejectValue("taskTitle", "", "Task with this title does not exist");
         }
     }
