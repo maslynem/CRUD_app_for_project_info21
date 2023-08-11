@@ -53,7 +53,7 @@ public class TaskController {
     public String findByTitle(@PathVariable String title, Model model) {
         return taskService.findById(title)
                 .map(task -> {
-                    log.info("GET /tasks/{} Task: {}", title, task);
+                    log.info("GET /tasks/{} : {}", title, task);
                     model.addAttribute("task", task);
                     return "tasks/task_page";
                 }).orElseThrow(() -> {

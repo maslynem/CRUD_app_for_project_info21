@@ -87,6 +87,7 @@ public class VerterController {
                 .map(verterDto -> {
                     log.info("GET /verters/{}/edit : {}", id, verterDto);
                     model.addAttribute("verter", verterDto);
+                    model.addAttribute("states", State.values());
                     return "verters/edit";
                 }).orElseThrow(() -> {
                     log.warn("GET /verters/{}/edit RECORD WITH ID {} NOT FOUND", id, id);

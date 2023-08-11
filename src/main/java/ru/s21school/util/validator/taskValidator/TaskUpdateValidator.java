@@ -1,6 +1,7 @@
 package ru.s21school.util.validator.taskValidator;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -15,12 +16,12 @@ public class TaskUpdateValidator implements Validator {
     private final TaskService taskService;
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(@NonNull Class<?> clazz) {
         return TaskDto.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NonNull Object target, @NonNull Errors errors) {
         TaskDto task = (TaskDto) target;
         String parentTaskTitle = task.getParentTaskTitle();
         if (parentTaskTitle != null) {

@@ -54,7 +54,7 @@ public class PeerController {
     public String findByNickname(@PathVariable String nickname, Model model) {
         return peerService.findById(nickname)
                 .map(peer -> {
-                    log.info("GET /nickname/{} Task: {}", nickname, peer);
+                    log.info("GET /nickname/{} : {}", nickname, peer);
                     model.addAttribute("peer", peer);
                     return "peers/peer_page";
                 }).orElseThrow(() -> {
