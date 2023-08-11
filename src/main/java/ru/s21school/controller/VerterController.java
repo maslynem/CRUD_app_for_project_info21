@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.verterDto.VerterDto;
+import ru.s21school.entity.State;
 import ru.s21school.service.VerterService;
 import ru.s21school.util.validator.verterValidator.VerterSaveValidator;
 
@@ -64,6 +65,7 @@ public class VerterController {
     public String newVerter(Model model) {
         log.info("GET /verters/new");
         model.addAttribute("verter", new VerterDto());
+        model.addAttribute("states", State.values());
         return "verters/new";
     }
 

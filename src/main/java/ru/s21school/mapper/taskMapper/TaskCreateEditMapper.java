@@ -6,7 +6,6 @@ import ru.s21school.dto.taskDto.TaskDto;
 import ru.s21school.entity.Task;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.TaskRepository;
-import ru.s21school.service.TaskService;
 
 @Component
 @RequiredArgsConstructor

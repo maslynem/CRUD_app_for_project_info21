@@ -22,6 +22,7 @@
 <div class="container-fluid">
     <a th:href="@{/verters/new}" class="btn btn-primary btn-sm mb-3"> Add Verter </a>
     <table class="table table-bordered table-striped table-href">
+        <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
@@ -45,7 +46,7 @@
         <tbody>
         <tr th:each="verter : ${verters}">
             <td th:text="${verter.getCheckId()}"/>
-            <td th:text="${verter.getState()}"/>
+            <td th:text="${verter.getState().name()}"/>
             <td th:text="${verter.getTime()}"/>
             <td>
                 <a th:href="@{/verters/{id}/edit(id=${verter.getId()})}" class="btn btn-primary">Update</a>

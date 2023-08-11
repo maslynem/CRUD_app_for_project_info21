@@ -1,15 +1,16 @@
 package ru.s21school.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,14 +23,28 @@ public class Verter {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
+    @ToString.Exclude
     private Check check;
 
     @Column
     @NotNull
     @Enumerated(EnumType.STRING)
-    State state;
+    private State state;
 
     @Column
     @NotNull
-    LocalTime time;
+    private LocalTime time;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Verter verter = (Verter) o;
+        return getId() != null && Objects.equals(getId(), verter.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

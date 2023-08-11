@@ -31,9 +31,8 @@
         <div class="form-group row mt-5">
             <label for="state" class="col-sm-2 col-form-label">State</label>
             <select id="state" th:field="*{state}">
-                <option th:value="start">Start</option>
-                <option th:value="success">Success</option>
-                <option th:value="failure">Failure</option>
+                <option th:each="state : ${states}" th:value="${state}" th:text="${state.name()}">
+                </option>
             </select>
 
             <small class="error_message" id="stateError"

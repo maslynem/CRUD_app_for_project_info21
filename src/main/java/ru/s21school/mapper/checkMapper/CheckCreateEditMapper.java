@@ -10,8 +10,6 @@ import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.PeerRepository;
 import ru.s21school.repository.TaskRepository;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class CheckCreateEditMapper implements Mapper<CheckDto, Check> {
@@ -20,22 +18,31 @@ public class CheckCreateEditMapper implements Mapper<CheckDto, Check> {
 
     @Override
     public Check map(CheckDto object) {
-        Optional<Peer> peer = peerRepository.findById(object.getPeerNickname());
-        Optional<Task> task = taskRepository.findById(object.getTaskTitle());
+        Peer peer = peerRepository
+                .findById(object.getPeerNickname())
+                .orElseThrow(() -> new RuntimeException("No peer with nickname " + object.getPeerNickname()));
+        Task task = taskRepository
+                .findById(object.getTaskTitle())
+                .orElseThrow(() -> new RuntimeException("No task with title " + object.getTaskTitle()));
         return new Check(
                 object.getId(),
-                peer.get(),
-                task.get(),
+                peer,
+                task,
                 object.getDate()
         );
     }
 
     @Override
     public Check map(CheckDto fromObject, Check toObject) {
-        Optional<Peer> peer = peerRepository.findById(fromObject.getPeerNickname());
-        Optional<Task> task = taskRepository.findById(fromObject.getTaskTitle());
-        toObject.setPeer(peer.get());
-        toObject.setTask(task.get());
+        Peer peer = peerRepository
+                .findById(fromObject.getPeerNickname())
+                .orElseThrow(() -> new RuntimeException("No peer with nickname " + fromObject.getPeerNickname()));
+        Task task = taskRepository
+                .findById(fromObject.getTaskTitle())
+                .orElseThrow(() -> new RuntimeException("No task with title " + fromObject.getTaskTitle()));
+
+        toObject.setPeer(peer);
+        toObject.setTask(task);
         toObject.setDate(fromObject.getDate());
         return toObject;
     }

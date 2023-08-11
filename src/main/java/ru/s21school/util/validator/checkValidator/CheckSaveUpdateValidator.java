@@ -1,12 +1,12 @@
 package ru.s21school.util.validator.checkValidator;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.s21school.dto.checkDto.CheckDto;
 import ru.s21school.dto.peerDto.PeerDto;
-import ru.s21school.dto.taskDto.TaskDto;
 import ru.s21school.service.PeerService;
 import ru.s21school.service.TaskService;
 
@@ -19,12 +19,12 @@ public class CheckSaveUpdateValidator implements Validator {
     private final TaskService taskService;
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(@NonNull Class<?> clazz) {
         return CheckDto.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NonNull Object target, @NonNull Errors errors) {
         CheckDto check = (CheckDto) target;
         Optional<PeerDto> peer = peerService.findById(check.getPeerNickname());
         if (!peer.isPresent()) {

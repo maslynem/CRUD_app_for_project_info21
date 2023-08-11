@@ -1,15 +1,15 @@
 package ru.s21school.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.s21school.entity.Peer;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,14 +23,29 @@ public class TransferredPoints  {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checking_peer")
     @NotNull
+    @ToString.Exclude
     private Peer checkingPeer;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checked_peer")
     @NotNull
+    @ToString.Exclude
     private Peer checkedPeer;
 
     @Column(name = "points_amount")
     @NotNull
-    Long pointsAmount;
+    private Long pointsAmount;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TransferredPoints that = (TransferredPoints) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

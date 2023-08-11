@@ -1,10 +1,7 @@
 package ru.s21school.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.s21school.entity.Peer;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,8 +9,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,19 +27,32 @@ public class TimeTracking {
     @OneToOne
     @JoinColumn(name = "peer")
     @NotNull
-    Peer peer;
+    private Peer peer;
 
     @Column
     @NotNull
-    LocalDate date;
+    private LocalDate date;
 
     @Column
     @NotNull
-    LocalTime time;
+    private LocalTime time;
 
     @Column
     @NotNull
     @Min(1)
     @Max(2)
-    Integer state;
+    private Integer state;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TimeTracking that = (TimeTracking) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

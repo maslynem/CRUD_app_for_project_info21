@@ -1,14 +1,15 @@
 package ru.s21school.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,9 +23,23 @@ public class Experience  {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
     @NotNull
+    @ToString.Exclude
     private Check check;
 
     @Column(name = "xp_amount")
     @NotNull
-    Long XpAmount;
+    private Long xpAmount;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Experience that = (Experience) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
