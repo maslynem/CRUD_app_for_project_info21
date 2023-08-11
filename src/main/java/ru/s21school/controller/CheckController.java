@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.s21school.dto.checkDto.CheckDto;
+import ru.s21school.dto.CheckDto;
 import ru.s21school.service.CheckService;
 import ru.s21school.util.validator.checkValidator.CheckSaveUpdateValidator;
 

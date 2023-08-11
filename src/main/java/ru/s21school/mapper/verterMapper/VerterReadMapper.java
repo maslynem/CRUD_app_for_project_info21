@@ -1,7 +1,7 @@
 package ru.s21school.mapper.verterMapper;
 
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.verterDto.VerterDto;
+import ru.s21school.dto.VerterDto;
 import ru.s21school.entity.Verter;
 import ru.s21school.mapper.Mapper;
 

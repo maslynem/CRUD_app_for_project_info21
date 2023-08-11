@@ -2,7 +2,7 @@ package ru.s21school.mapper.peerToPeerMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.peerToPeerDto.PeerToPeerDto;
+import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.entity.Check;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.PeerToPeer;

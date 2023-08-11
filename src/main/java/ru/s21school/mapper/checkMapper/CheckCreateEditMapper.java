@@ -2,7 +2,7 @@ package ru.s21school.mapper.checkMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.checkDto.CheckDto;
+import ru.s21school.dto.CheckDto;
 import ru.s21school.entity.Check;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.Task;

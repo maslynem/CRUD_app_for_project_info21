@@ -1,7 +1,7 @@
 package ru.s21school.mapper.experienceMapper;
 
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.experienceDto.ExperienceDto;
+import ru.s21school.dto.ExperienceDto;
 import ru.s21school.entity.Experience;
 import ru.s21school.mapper.Mapper;
 

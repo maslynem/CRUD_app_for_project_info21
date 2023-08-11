@@ -1,4 +1,4 @@
-package ru.s21school.dto.experienceDto;
+package ru.s21school.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

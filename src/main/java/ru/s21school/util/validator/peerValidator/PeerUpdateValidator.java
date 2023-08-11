@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.peerDto.PeerDto;
+import ru.s21school.dto.PeerDto;
 
 import java.time.LocalDate;
 

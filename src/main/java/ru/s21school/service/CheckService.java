@@ -1,7 +1,7 @@
 package ru.s21school.service;
 
 import org.springframework.stereotype.Service;
-import ru.s21school.dto.checkDto.CheckDto;
+import ru.s21school.dto.CheckDto;
 import ru.s21school.entity.Check;
 import ru.s21school.mapper.checkMapper.CheckCreateEditMapper;
 import ru.s21school.mapper.checkMapper.CheckReadMapper;

@@ -15,7 +15,7 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "transferred_points")
-public class TransferredPoints  {
+public class TransferredPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +40,7 @@ public class TransferredPoints  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        TransferredPoints that = (TransferredPoints) o;
+        TransferredPoint that = (TransferredPoint) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

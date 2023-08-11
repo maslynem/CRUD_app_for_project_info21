@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.taskDto.TaskDto;
+import ru.s21school.dto.TaskDto;
 import ru.s21school.service.TaskService;
 
 import java.util.Optional;

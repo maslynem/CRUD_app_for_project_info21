@@ -2,7 +2,7 @@ package ru.s21school.mapper.taskMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.taskDto.TaskDto;
+import ru.s21school.dto.TaskDto;
 import ru.s21school.entity.Task;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.TaskRepository;

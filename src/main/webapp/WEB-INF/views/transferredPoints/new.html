@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Transferred Point</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/transferred-points/new}" th:object="${entity}"
+          th:method="POST">
+
+        <div class="form-group row mt-5">
+            <label for="checkingPeerNickname" class="col-sm-2 col-form-label">Checking Peer Nickname</label>
+            <input type="text" id="checkingPeerNickname" th:field="*{checkingPeerNickname}"
+                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4" aria-describedby="checkingPeerNicknameError">
+            <small class="error_message" id="checkingPeerNicknameError"
+                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error checkId</small>
+        </div>
+        <div class="form-group row mt-5">
+            <label for="checkedPeerNickname" class="col-sm-2 col-form-label">Checked Peer Nickname</label>
+            <input type="text" id="checkedPeerNickname" th:field="*{checkedPeerNickname}"
+                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4" aria-describedby="checkedPeerNicknameError">
+            <small class="error_message" id="checkedPeerNicknameError"
+                   th:if="${#fields.hasErrors('checkedPeerNickname')}" th:errors="*{checkedPeerNickname}">error checkId</small>
+        </div>
+        <div class="form-group row mt-5">
+            <label for="pointsAmount" class="col-sm-2 col-form-label">Points Amount</label>
+            <input type="number" id="pointsAmount" th:field="*{pointsAmount}"
+                   placeholder="Points Amount" class="form-control mb-4 col-4" aria-describedby="pointsAmountError">
+            <small class="error_message" id="pointsAmountError"
+                   th:if="${#fields.hasErrors('pointsAmount')}" th:errors="*{pointsAmount}">error checkId</small>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/transferred-points/}"> Back</a>
+</div>
+
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Create Transferred Point');
+</script>
+</body>
+</html>

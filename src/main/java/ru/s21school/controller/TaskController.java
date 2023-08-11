@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.s21school.dto.taskDto.TaskDto;
+import ru.s21school.dto.TaskDto;
 import ru.s21school.service.TaskService;
 import ru.s21school.util.validator.taskValidator.TaskSaveValidator;
 import ru.s21school.util.validator.taskValidator.TaskUpdateValidator;

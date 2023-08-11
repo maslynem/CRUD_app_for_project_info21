@@ -4,21 +4,14 @@
         <Property name="LOG_DIR">./logs</Property>
     </Properties>
     <Appenders>
-
-        <RollingFile name="VerterControllerFile"
-                     filePattern="${LOG_DIR}/verter_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-        </RollingFile>
-
-        <RollingFile name="TaskControllerFile"
-                     filePattern="${LOG_DIR}/task_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-        </RollingFile>
-
         <RollingFile name="CheckControllerFile"
                      filePattern="${LOG_DIR}/check_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="ExperienceControllerFile"
+                     filePattern="${LOG_DIR}/experience_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
@@ -29,35 +22,73 @@
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
 
+        <RollingFile name="PeerToPeerControllerFile"
+                     filePattern="${LOG_DIR}/peerToPeer_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="TaskControllerFile"
+                     filePattern="${LOG_DIR}/task_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="TransferredPointControllerFile"
+                     filePattern="${LOG_DIR}/transferredPoint_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="VerterControllerFile"
+                     filePattern="${LOG_DIR}/verter_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
         <RollingFile name="File"
                      filePattern="${LOG_DIR}/logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
+
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+
     </Appenders>
     <Loggers>
+        <Logger name="ru.s21school.controller.CheckController"  level="info">
+            <AppenderRef ref="CheckControllerFile"/>
+        </Logger>
 
-        <Logger name="ru.s21school.controller.VerterController"  level="info">
-            <AppenderRef ref="VerterControllerFile"/>
+        <Logger name="ru.s21school.controller.ExperienceController"  level="info">
+            <AppenderRef ref="ExperienceControllerFile"/>
         </Logger>
 
         <Logger name="ru.s21school.controller.PeerController"  level="info">
             <AppenderRef ref="PeerControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.CheckController"  level="info">
-            <AppenderRef ref="CheckControllerFile"/>
+        <Logger name="ru.s21school.controller.PeerToPeerController"  level="info">
+            <AppenderRef ref="PeerToPeerControllerFile"/>
         </Logger>
 
         <Logger name="ru.s21school.controller.TaskController" level="info">
             <AppenderRef ref="TaskControllerFile"/>
         </Logger>
 
+        <Logger name="ru.s21school.controller.TransferredPointController" level="info">
+            <AppenderRef ref="TransferredPointControllerFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.controller.VerterController"  level="info">
+            <AppenderRef ref="VerterControllerFile"/>
+        </Logger>
+
         <Root level="info">
             <AppenderRef ref="File"/>
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

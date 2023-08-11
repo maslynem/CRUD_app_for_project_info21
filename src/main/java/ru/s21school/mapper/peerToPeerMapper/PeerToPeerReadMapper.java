@@ -1,7 +1,7 @@
 package ru.s21school.mapper.peerToPeerMapper;
 
 import org.springframework.stereotype.Component;
-import ru.s21school.dto.peerToPeerDto.PeerToPeerDto;
+import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.entity.PeerToPeer;
 import ru.s21school.mapper.Mapper;
 

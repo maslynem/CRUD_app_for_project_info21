@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.s21school.dto.verterDto.VerterDto;
+import ru.s21school.dto.VerterDto;
 import ru.s21school.entity.State;
 import ru.s21school.service.VerterService;
 import ru.s21school.util.validator.verterValidator.VerterSaveValidator;
@@ -22,7 +22,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/verters")
 public class VerterController {
-    private static final String REDIRECT_VERTERS = "redirect:/verters/";
 
     private final VerterService verterService;
     private final VerterSaveValidator saveValidator;
@@ -74,7 +73,7 @@ public class VerterController {
         }
         verterService.save(verterDto);
         log.info("POST /verters/new CREATED NEW RECORD: {}", verterDto);
-        return REDIRECT_VERTERS;
+        return "redirect:/verters/";
     }
 
     @GetMapping("/{id}/edit")
@@ -101,7 +100,7 @@ public class VerterController {
         return verterService.update(id, verterDto)
                 .map(it -> {
                     log.info("POST /verters/{} WAS UPDATED: {}", id, it);
-                    return REDIRECT_VERTERS;
+                    return "redirect:/verters/";
                 })
                 .orElseThrow(() -> {
                             log.warn("POST /verters/{} RECORD WITH ID {} NOT FOUND", id, id);
@@ -117,6 +116,6 @@ public class VerterController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /verters/{} RECORD WITH ID {} WAS DELETED", id, id);
-        return REDIRECT_VERTERS;
+        return "redirect:/verters/";
     }
 }

@@ -5,8 +5,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.checkDto.CheckDto;
-import ru.s21school.dto.verterDto.VerterDto;
+import ru.s21school.dto.CheckDto;
+import ru.s21school.dto.VerterDto;
 import ru.s21school.service.CheckService;
 
 import java.util.Optional;

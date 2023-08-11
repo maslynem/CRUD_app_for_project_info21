@@ -5,9 +5,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.s21school.dto.checkDto.CheckDto;
-import ru.s21school.dto.peerDto.PeerDto;
-import ru.s21school.dto.peerToPeerDto.PeerToPeerDto;
+import ru.s21school.dto.CheckDto;
+import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.service.CheckService;
 import ru.s21school.service.PeerService;
 
@@ -36,11 +35,8 @@ public class PeerToPeerSaveValidator implements Validator {
             }
         }
         String checkingPeerNickname = peerToPeer.getCheckingPeerNickname();
-        if (!checkingPeerNickname.isEmpty()) {
-            Optional<PeerDto> byNickname = peerService.findById(checkingPeerNickname);
-            if (byNickname.isPresent()) {
-                errors.rejectValue("checkingPeerNickname", "", "Nickname is already taken");
-            }
+        if (!checkingPeerNickname.isEmpty() && !peerService.findById(checkingPeerNickname).isPresent()) {
+            errors.rejectValue("checkingPeerNickname", "", "Peer with this nickname does not exist");
         }
     }
 }

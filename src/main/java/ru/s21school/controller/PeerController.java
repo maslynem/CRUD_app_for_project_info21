@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.s21school.dto.peerDto.PeerDto;
+import ru.s21school.dto.PeerDto;
 import ru.s21school.service.PeerService;
 import ru.s21school.util.validator.peerValidator.PeerSaveValidator;
 import ru.s21school.util.validator.peerValidator.PeerUpdateValidator;
