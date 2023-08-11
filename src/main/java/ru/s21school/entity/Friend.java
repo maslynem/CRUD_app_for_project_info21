@@ -15,7 +15,7 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "Friends", uniqueConstraints = @UniqueConstraint(columnNames = {"peer1", "peer2"}))
-public class Friends {
+public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,8 +34,8 @@ public class Friends {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Friends friends = (Friends) o;
-        return getId() != null && Objects.equals(getId(), friends.getId());
+        Friend friend = (Friend) o;
+        return getId() != null && Objects.equals(getId(), friend.getId());
     }
 
     @Override

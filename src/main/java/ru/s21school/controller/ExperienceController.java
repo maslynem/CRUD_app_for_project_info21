@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.ExperienceDto;
 import ru.s21school.service.ExperienceService;
-import ru.s21school.util.validator.ExperienceValidator.ExperienceSaveValidator;
+import ru.s21school.util.validator.experienceValidator.ExperienceSaveValidator;
 
 import javax.validation.Valid;
 

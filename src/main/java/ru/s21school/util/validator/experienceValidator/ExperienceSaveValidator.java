@@ -1,4 +1,4 @@
-package ru.s21school.util.validator.ExperienceValidator;
+package ru.s21school.util.validator.experienceValidator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;

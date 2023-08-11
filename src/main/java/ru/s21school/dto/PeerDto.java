@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
 public class PeerDto {
     @NotNull(message = "Nickname can not be empty")
     @NotEmpty(message = "Nickname can not be empty")

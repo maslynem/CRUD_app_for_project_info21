@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.service.TransferredPointService;
-import ru.s21school.util.validator.TransferedPointValidator.TransferredPointSaveValidator;
+import ru.s21school.util.validator.transferedPointValidator.TransferredPointSaveValidator;
 
 import javax.validation.Valid;
 

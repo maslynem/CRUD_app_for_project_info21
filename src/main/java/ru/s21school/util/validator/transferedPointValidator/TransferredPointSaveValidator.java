@@ -1,4 +1,4 @@
-package ru.s21school.util.validator.TransferedPointValidator;
+package ru.s21school.util.validator.transferedPointValidator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
