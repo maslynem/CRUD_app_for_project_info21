@@ -55,8 +55,8 @@
             <td class="text-center">
 
                 <form action="#" th:method="DELETE" th:action="@{/transferred-points/{id}(id=${entity.getId()})}"
-                      th:object="${verter}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                      th:object="${entity}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
                 </form>
             </td>
         </tr>
@@ -76,7 +76,7 @@
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
-<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+<script type="text/javascript" src="/resources/js/confirm_delete.js"></script>
 
 <script th:inline="javascript">
     path = '/transferred-points/page-';

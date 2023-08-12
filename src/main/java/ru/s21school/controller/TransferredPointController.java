@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.service.TransferredPointService;
-import ru.s21school.util.validator.transferedPointValidator.TransferredPointSaveValidator;
+import ru.s21school.util.validator.transferedPointValidator.TransferredPointSaveEditValidator;
 
 import javax.validation.Valid;
 
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class TransferredPointController {
 
     private final TransferredPointService transferredPointService;
-    private final TransferredPointSaveValidator saveValidator;
+    private final TransferredPointSaveEditValidator saveValidator;
 
     @GetMapping()
     public String transferredPointsPageDefault() {

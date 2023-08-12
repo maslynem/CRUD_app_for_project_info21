@@ -22,6 +22,7 @@
 <div class="container-fluid">
     <a th:href="@{/checks/new}" class="btn btn-primary btn-sm mb-3"> Add Check </a>
     <table class="table table-bordered table-striped table-href">
+        <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
@@ -56,7 +57,7 @@
             <td class="text-center">
                 <form action="#" th:method="DELETE" th:action="@{/checks/{id}(id=${check.getId()})}"
                       th:object="${check}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
                 </form>
             </td>
         </tr>
@@ -75,7 +76,7 @@
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
-<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+<script type="text/javascript" src="/resources/js/confirm_delete.js"></script>
 
 <script th:inline="javascript">
     path = '/checks/page-';

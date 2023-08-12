@@ -31,7 +31,7 @@
                 </a>
             </th>
             <th class="text-center">
-                <a th:href="@{/verters/page-0(pageSize=${pageSize},sortField='state',sortDir=${reverseSortDir})}">
+                <a th:href="@{/verters/page-0(pageSize=${pageSize},sortField='checkState',sortDir=${reverseSortDir})}">
                     State
                 </a>
             </th>
@@ -46,7 +46,7 @@
         <tbody>
         <tr th:each="verter : ${verters}">
             <td th:text="${verter.getCheckId()}"/>
-            <td th:text="${verter.getState().name()}"/>
+            <td th:text="${verter.getCheckState().name()}"/>
             <td th:text="${verter.getTime()}"/>
             <td>
                 <a th:href="@{/verters/{id}/edit(id=${verter.getId()})}" class="btn btn-primary">Update</a>
@@ -54,7 +54,7 @@
             <td>
                 <form action="#" th:method="DELETE" th:action="@{/verters/{id}(id=${verter.getId()})}"
                       th:object="${verter}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
                 </form>
             </td>
         </tr>
@@ -74,7 +74,7 @@
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
-<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+<script type="text/javascript" src="/resources/js/confirm_delete.js"></script>
 
 <script th:inline="javascript">
     path = '/verters/page-';

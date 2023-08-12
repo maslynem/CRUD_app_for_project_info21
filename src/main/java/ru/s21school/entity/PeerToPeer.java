@@ -36,7 +36,7 @@ public class PeerToPeer  {
     @Column
     @Enumerated(EnumType.STRING)
     @NotNull
-    private State state;
+    private CheckState state;
 
     @Column
     @NotNull
@@ -47,7 +47,7 @@ public class PeerToPeer  {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         PeerToPeer that = (PeerToPeer) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

@@ -14,8 +14,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "Recommendations", uniqueConstraints = @UniqueConstraint(columnNames = {"peer", "recommended_peer"}))
-public class Recommendations {
+@Table(name = "recommendations", uniqueConstraints = @UniqueConstraint(columnNames = {"peer", "recommended_peer"}))
+public class Recommendation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +35,8 @@ public class Recommendations {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Recommendations that = (Recommendations) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        Recommendation that = (Recommendation) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

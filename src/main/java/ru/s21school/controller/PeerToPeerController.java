@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.PeerToPeerDto;
-import ru.s21school.entity.State;
+import ru.s21school.entity.CheckState;
 import ru.s21school.service.PeerToPeerService;
 import ru.s21school.util.validator.peerToPeerValidator.PeerToPeerSaveValidator;
 
@@ -58,7 +58,7 @@ public class PeerToPeerController {
     public String newPeerToPeer(Model model) {
         log.info("GET /p2p/new");
         model.addAttribute("peerToPeer", new PeerToPeerDto());
-        model.addAttribute("states", State.values());
+        model.addAttribute("states", CheckState.values());
         return "p2p/new";
     }
 
@@ -67,7 +67,7 @@ public class PeerToPeerController {
         saveValidator.validate(peerToPeerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("POST /p2p/new FAIL CREATE NEW RECORD: {}", bindingResult.getAllErrors());
-            model.addAttribute("states", State.values());
+            model.addAttribute("states", CheckState.values());
             return "p2p/new";
         }
         peerToPeerService.save(peerToPeerDto);
@@ -81,7 +81,7 @@ public class PeerToPeerController {
                 .map(peerToPeerDto -> {
                     log.info("GET /p2p/{}/edit : {}", id, peerToPeerDto);
                     model.addAttribute("peerToPeer", peerToPeerDto);
-                    model.addAttribute("states", State.values());
+                    model.addAttribute("states", CheckState.values());
                     return "p2p/edit";
                 }).orElseThrow(() -> {
                     log.warn("GET /p2p/{}/edit RECORD WITH ID {} NOT FOUND", id, id);

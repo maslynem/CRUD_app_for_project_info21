@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.FriendDto;
-import ru.s21school.entity.State;
+import ru.s21school.entity.CheckState;
 import ru.s21school.service.FriendService;
 import ru.s21school.util.validator.friendValidator.FriendSaveEditValidator;
 
@@ -57,7 +57,7 @@ public class FriendController {
     public String newFriend(Model model) {
         log.info("GET /friends/new");
         model.addAttribute("friend", new FriendDto());
-        model.addAttribute("states", State.values());
+        model.addAttribute("states", CheckState.values());
         return "friends/new";
     }
 
@@ -66,7 +66,7 @@ public class FriendController {
         saveEditValidator.validate(friendDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("POST /friends/new FAIL CREATE NEW RECORD: {}", bindingResult.getAllErrors());
-            model.addAttribute("states", State.values());
+            model.addAttribute("states", CheckState.values());
             return "friends/new";
         }
         friendService.save(friendDto);
@@ -80,7 +80,7 @@ public class FriendController {
                 .map(friendDto -> {
                     log.info("GET /friends/{}/edit : {}", id, friendDto);
                     model.addAttribute("friend", friendDto);
-                    model.addAttribute("states", State.values());
+                    model.addAttribute("states", CheckState.values());
                     return "friends/edit";
                 }).orElseThrow(() -> {
                     log.warn("GET /friends/{}/edit RECORD WITH ID {} NOT FOUND", id, id);

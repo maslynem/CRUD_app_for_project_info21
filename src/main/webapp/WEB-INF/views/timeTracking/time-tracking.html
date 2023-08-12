@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Experiences</title>
+    <title>Time Tracking</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -20,34 +20,54 @@
 
 <hr>
 <div class="container-fluid">
-    <a th:href="@{/experiences/new}" class="btn btn-primary btn-sm mb-3"> Add Experience </a>
+    <a th:href="@{/time-tracking/new}" class="btn btn-primary btn-sm mb-3"> Add Time Tracking </a>
     <table class="table table-bordered table-striped table-href">
         <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
-                <a th:href="@{/experiences/page-0(pageSize=${pageSize},sortField='checkId',sortDir=${reverseSortDir})}">
-                    Check ID
+                <a th:href="@{/time-tracking/page-0(pageSize=${pageSize},sortField='peer',sortDir=${reverseSortDir})}">
+                    Peer Nickname
                 </a>
             </th>
             <th class="text-center">
-                <a th:href="@{/experiences/page-0(pageSize=${pageSize},sortField='xpAmount',sortDir=${reverseSortDir})}">
-                    Experiences Amount
+                <a th:href="@{/time-tracking/page-0(pageSize=${pageSize},sortField='date',sortDir=${reverseSortDir})}">
+                    Date
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/time-tracking/page-0(pageSize=${pageSize},sortField='time',sortDir=${reverseSortDir})}">
+                    Time
+                </a>
+            </th>
+            <th class="text-center">
+                <a th:href="@{/time-tracking/page-0(pageSize=${pageSize},sortField='state',sortDir=${reverseSortDir})}">
+                    State
                 </a>
             </th>
             <th class="text-center" colspan="2"> Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="experience : ${experiences}">
-            <td th:text="${experience.getCheckId()}"/>
-            <td th:text="${experience.getXpAmount()}"/>
-            <td class="text-center">
-                <a th:href="@{/experiences/{id}/edit(id=${experience.getId()})}" class="btn btn-primary">Update</a>
+        <tr th:each="entity : ${entities}">
+            <td>
+                <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${entity.getPeerNickname()})}"
+                   th:text="${entity.getPeerNickname()}"></a>
             </td>
+
+            <td th:text="${entity.getDate()}"/>
+
+            <td th:text="${entity.getTime()}"/>
+
+            <td th:text="${entity.getState()}"/>
+
             <td class="text-center">
-                <form action="#" th:method="DELETE" th:action="@{/experiences/{id}(id=${experience.getId()})}"
-                      th:object="${experience}">
+                <a th:href="@{/time-tracking/{id}/edit(id=${entity.getId()})}" class="btn btn-primary">Update</a>
+            </td>
+
+            <td class="text-center">
+                <form action="#" th:method="DELETE" th:action="@{/time-tracking/{id}(id=${entity.getId()})}"
+                      th:object="${entity}">
                     <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
                 </form>
             </td>
@@ -71,8 +91,8 @@
 <script type="text/javascript" src="/resources/js/confirm_delete.js"></script>
 
 <script th:inline="javascript">
-    path = '/experiences/page-';
-    createHeader('Experiences')
+    path = '/time-tracking/page-';
+    createHeader('Time Tracking')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
     createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
 </script>

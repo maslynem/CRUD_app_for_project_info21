@@ -19,16 +19,16 @@
 <div class="container">
     <form action="#" th:action="@{/peers/new}" th:object="${peer}"
           method="POST">
-        <div class="form-group">
-            <label for="nickname" class="form-label"></label>
+        <div class="form-group row mt-5">
+            <label for="nickname" class="col-sm-2 col-form-label">Nickname</label>
             <input type="text" id="nickname" th:field="*{nickname}"
                    placeholder="Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError">
             <small class=" error_message" id="nicknameError"
                    th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">error name</small>
         </div>
-        <div class="form-group">
+        <div class="form-group row mt-5">
 
-            <label for="dateField" class="form-label"></label>
+            <label for="dateField" class="col-sm-2 col-form-label">Birthday</label>
             <input type="date" id="dateField" th:field="*{birthday}"
                    class="form-control mb-4 col-4" aria-describedby="birthdayError">
             <small class=" error_message " id="birthdayError"

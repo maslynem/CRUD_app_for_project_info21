@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit p2p's check</title>
+    <title>Edit Edit Time Tracking</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -17,7 +17,7 @@
 <header></header>
 
 <div class="container">
-    <form action="#" th:action="@{/p2p/{id}(id=${peerToPeer.getId()})}" th:object="${peerToPeer}"
+    <form action="#" th:action="@{/time-tracking/{id}(id=${entity.getId()})}" th:object="${entity}"
           th:method="PATCH">
 
         <div class="form-group row mt-5">
@@ -26,33 +26,22 @@
                    placeholder="Title" class="form-control mb-4 col-4" readonly>
         </div>
 
-
         <div class="form-group row mt-5">
-            <label for="nickname" class="col-sm-2 col-form-label">Checking Peer Nickname</label>
-            <input type="text" id="nickname" th:field="*{checkingPeerNickname}"
-                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4" aria-describedby="nicknameError"
-                   readonly>
-            <small class=" error_message" id="nicknameError"
-                   th:if="${#fields.hasErrors('checkingPeerNickname')}" th:errors="*{checkingPeerNickname}">error
-                name</small>
+            <label for="peerNickname" class="col-sm-2 col-form-label">Peer Nickname</label>
+            <input type="text" id="peerNickname" th:field="*{peerNickname}"
+                   placeholder="Peer Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerNicknameError">
+            <small class="error_message" id="peerNicknameError"
+                   th:if="${#fields.hasErrors('peerNickname')}" th:errors="*{peerNickname}">error
+                checkId</small>
         </div>
 
         <div class="form-group row mt-5">
-            <label for="checkId" class="col-sm-2 col-form-label">Check Id</label>
-            <input type="text" id="checkId" th:field="*{checkId}"
-                   placeholder="Check Id" class="form-control mb-4 col-4" aria-describedby="checkIdError" readonly>
-            <small class="error_message" id="checkIdError"
-                   th:if="${#fields.hasErrors('checkId')}" th:errors="*{checkId}">error checkId</small>
-        </div>
-
-        <div class="form-group row mt-5">
-            <label for="checkState" class="col-sm-2 col-form-label">State</label>
-            <select id="checkState" th:field="*{checkState}">
-                <option th:each="checkState : ${states}" th:value="${checkState}" th:text="${checkState.name()}">
-                </option>
-            </select>
-            <small class="error_message" id="stateError"
-                   th:if="${#fields.hasErrors('checkState')}" th:errors="*{checkState}">error checkState</small>
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <input type="date" id="date" th:field="*{date}"
+                   placeholder="Date" class="form-control mb-4 col-4" aria-describedby="dateError">
+            <small class="error_message" id="dateError"
+                   th:if="${#fields.hasErrors('date')}" th:errors="*{date}">error date</small>
         </div>
 
         <div class="form-group row mt-5">
@@ -63,18 +52,28 @@
                    th:if="${#fields.hasErrors('time')}" th:errors="*{time}">error time</small>
         </div>
 
+        <div class="form-group row mt-5">
+            <label for="checkState" class="col-sm-2 col-form-label">State</label>
+            <select id="checkState" th:field="*{state}">
+                <option th:each="state : ${states}" th:value="${state}" th:text="${state.name()}">
+                </option>
+            </select>
+            <small class="error_message" id="stateError"
+                   th:if="${#fields.hasErrors('state')}" th:errors="*{state}">error checkState</small>
+        </div>
+
 
         <button type="submit" class="btn btn-info col-2">Update</button>
     </form>
 
     <hr>
 
-    <a th:href="@{/p2p/}"> Back</a>
+    <a th:href="@{/time-tracking/}"> Back</a>
 </div>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
-    createHeader('Edit verter\'s check');
+    createHeader('Edit Time Tracking');
 </script>
 </body>
 </html>

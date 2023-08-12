@@ -29,7 +29,7 @@ public class Verter {
     @Column
     @NotNull
     @Enumerated(EnumType.STRING)
-    private State state;
+    private CheckState state;
 
     @Column
     @NotNull
@@ -40,7 +40,7 @@ public class Verter {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Verter verter = (Verter) o;
-        return getId() != null && Objects.equals(getId(), verter.getId());
+        return id != null && Objects.equals(id, verter.id);
     }
 
     @Override

@@ -20,7 +20,8 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-import ru.s21school.util.converter.StringToStateConverter;
+import ru.s21school.util.converter.StringToCheckStateConverter;
+import ru.s21school.util.converter.StringToTimeTrackingStateConverter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -140,6 +141,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToStateConverter());
+        registry.addConverter(new StringToCheckStateConverter());
+        registry.addConverter(new StringToTimeTrackingStateConverter());
     }
 }

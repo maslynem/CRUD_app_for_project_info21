@@ -29,14 +29,14 @@ public class PeerToPeerCreateEditMapper implements Mapper<PeerToPeerDto, PeerToP
                 object.getId(),
                 check,
                 peer,
-                object.getState(),
+                object.getCheckState(),
                 object.getTime()
         );
     }
 
     @Override
     public PeerToPeer map(PeerToPeerDto fromObject, PeerToPeer toObject) {
-        toObject.setState(fromObject.getState());
+        toObject.setState(fromObject.getCheckState());
         toObject.setTime(fromObject.getTime());
         return toObject;
     }

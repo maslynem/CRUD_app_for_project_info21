@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.VerterDto;
-import ru.s21school.entity.State;
+import ru.s21school.entity.CheckState;
 import ru.s21school.service.VerterService;
 import ru.s21school.util.validator.verterValidator.VerterSaveValidator;
 
@@ -59,7 +59,7 @@ public class VerterController {
     public String newVerter(Model model) {
         log.info("GET /verters/new");
         model.addAttribute("verter", new VerterDto());
-        model.addAttribute("states", State.values());
+        model.addAttribute("states", CheckState.values());
         return "verters/new";
     }
 
@@ -68,7 +68,7 @@ public class VerterController {
         saveValidator.validate(verterDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("POST /verters/new FAIL CREATE NEW RECORD: {}", bindingResult.getAllErrors());
-            model.addAttribute("states", State.values());
+            model.addAttribute("states", CheckState.values());
             return "verters/new";
         }
         verterService.save(verterDto);
@@ -82,7 +82,7 @@ public class VerterController {
                 .map(verterDto -> {
                     log.info("GET /verters/{}/edit : {}", id, verterDto);
                     model.addAttribute("verter", verterDto);
-                    model.addAttribute("states", State.values());
+                    model.addAttribute("states", CheckState.values());
                     return "verters/edit";
                 }).orElseThrow(() -> {
                     log.warn("GET /verters/{}/edit RECORD WITH ID {} NOT FOUND", id, id);

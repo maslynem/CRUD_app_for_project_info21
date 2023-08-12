@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Recommendation</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/recommendations/new}" th:object="${recommendation}"
+          th:method="POST">
+
+        <div class="form-group row mt-5">
+            <label for="peerNickname" class="col-sm-2 col-form-label">Peer Nickname</label>
+            <input type="text" id="peerNickname" th:field="*{peerNickname}"
+                   placeholder="Peer Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerNicknameError">
+            <small class="error_message" id="peerNicknameError"
+                   th:if="${#fields.hasErrors('peerNickname')}" th:errors="*{peerNickname}">error
+                checkId</small>
+        </div>
+        <div class="form-group row mt-5">
+            <label for="recommendedPeerNickname" class="col-sm-2 col-form-label">Recommended Peer Nickname</label>
+            <input type="text" id="recommendedPeerNickname" th:field="*{recommendedPeerNickname}"
+                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="recommendedPeerNicknameError">
+            <small class="error_message" id="recommendedPeerNicknameError"
+                   th:if="${#fields.hasErrors('recommendedPeerNickname')}" th:errors="*{recommendedPeerNickname}">error
+                checkId</small>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/recommendations/}"> Back</a>
+</div>
+
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Create Recommendation');
+</script>
+</body>
+</html>

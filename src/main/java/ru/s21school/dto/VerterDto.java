@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.s21school.entity.State;
+import ru.s21school.entity.CheckState;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
@@ -21,7 +21,7 @@ public class VerterDto {
     private Long checkId;
 
     @NotNull(message = "Can not be empty")
-    private State state;
+    private CheckState checkState;
 
     @NotNull(message = "Can not be empty")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)

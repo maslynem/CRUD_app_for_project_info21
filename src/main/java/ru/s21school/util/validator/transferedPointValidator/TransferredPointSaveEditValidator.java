@@ -10,7 +10,7 @@ import ru.s21school.service.PeerService;
 
 @Component
 @RequiredArgsConstructor
-public class TransferredPointSaveValidator implements Validator {
+public class TransferredPointSaveEditValidator implements Validator {
     private final PeerService peerService;
 
     @Override

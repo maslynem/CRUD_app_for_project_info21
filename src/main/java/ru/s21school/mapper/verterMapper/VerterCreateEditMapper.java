@@ -19,14 +19,14 @@ public class VerterCreateEditMapper implements Mapper<VerterDto, Verter> {
         return new Verter(
                 object.getId(),
                 check,
-                object.getState(),
+                object.getCheckState(),
                 object.getTime()
         );
     }
 
     @Override
     public Verter map(VerterDto fromObject, Verter toObject) {
-        toObject.setState(fromObject.getState());
+        toObject.setState(fromObject.getCheckState());
         toObject.setTime(fromObject.getTime());
         return toObject;
     }

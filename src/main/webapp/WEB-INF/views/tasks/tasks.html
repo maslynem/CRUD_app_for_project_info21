@@ -22,6 +22,7 @@
 <div class="container-fluid">
     <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Task </a>
     <table class="table table-bordered table-striped table-href">
+        <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
@@ -53,7 +54,7 @@
             <td class="text-center">
                 <form action="#" th:method="DELETE" th:action="@{/tasks/{title}(title=${task.getTitle()})}"
                       th:object="${task}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
                 </form>
             </td>
         </tr>

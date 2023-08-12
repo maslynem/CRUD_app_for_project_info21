@@ -15,9 +15,9 @@
 </a>
 
 <form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
-    <input type="submit" onclick="return confirmDelete()" value="Удалить запись"/>
+    <input type="submit" onclick="return confirm_delete()" value="Удалить запись"/>
 </form>
 
-<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+<script type="text/javascript" src="/resources/js/confirm_delete.js"></script>
 </body>
 </html>
