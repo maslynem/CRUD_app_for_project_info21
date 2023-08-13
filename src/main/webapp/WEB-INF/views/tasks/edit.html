@@ -44,7 +44,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-info col-2">Update</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_update()">Update</button>
     </form>
 
     <hr>
@@ -52,7 +52,7 @@
     <a th:href="@{/tasks/}"> Back</a>
 </div>
 
-
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
     createHeader('Edit Task');

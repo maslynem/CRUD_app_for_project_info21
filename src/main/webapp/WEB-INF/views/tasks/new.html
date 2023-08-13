@@ -44,7 +44,7 @@
                    th:if="${#fields.hasErrors('maxXp')}" th:errors="*{maxXp}">error title</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2"> Save Task</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()"> Save Task</button>
     </form>
 
     <hr>
@@ -52,6 +52,7 @@
     <a th:href="@{/tasks/}"> Back</a>
 </div>
 
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
     createHeader('Create Task');

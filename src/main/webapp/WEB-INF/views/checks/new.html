@@ -43,13 +43,15 @@
                    th:if="${#fields.hasErrors('date')}" th:errors="*{date}">error date</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2"> Save Check</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()"> Save Check</button>
     </form>
 
     <hr>
 
     <a th:href="@{/checks/}"> Back to Checks List</a>
 </div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">

@@ -35,7 +35,7 @@
                    th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">error name</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2"> Save Peer</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()"> Save Peer</button>
     </form>
 
     <hr>
@@ -43,6 +43,7 @@
     <a th:href="@{/peers/}"> Back to Peers List</a>
 </div>
 
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/birthday_script.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">

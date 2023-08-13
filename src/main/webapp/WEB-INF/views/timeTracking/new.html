@@ -24,7 +24,7 @@
             <label for="peerNickname" class="col-sm-2 col-form-label">Peer Nickname</label>
             <input type="text" id="peerNickname" th:field="*{peerNickname}"
                    placeholder="Peer Nickname" class="form-control mb-4 col-4"
-            aria-describedby="peerNicknameError">
+                   aria-describedby="peerNicknameError">
             <small class="error_message" id="peerNicknameError"
                    th:if="${#fields.hasErrors('peerNickname')}" th:errors="*{peerNickname}">error
                 checkId</small>
@@ -56,7 +56,7 @@
                    th:if="${#fields.hasErrors('state')}" th:errors="*{state}">error checkState</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2">Save</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()">Save</button>
     </form>
 
     <hr>
@@ -64,6 +64,7 @@
     <a th:href="@{/time-tracking/}"> Back</a>
 </div>
 
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">
     createHeader('Create Time Tracking');
