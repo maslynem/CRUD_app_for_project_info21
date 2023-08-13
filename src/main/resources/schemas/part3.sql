@@ -13,13 +13,13 @@ SELECT t1_checking_peer, t1_checked_peer, sum(t1_sum)
 FROM (SELECT checking_peer      AS t1_checking_peer,
              checked_peer       AS t1_checked_peer,
              sum(points_amount) AS t1_sum
-      FROM transferredpoints AS t1
+      FROM transferred_points AS t1
       GROUP BY checking_peer, checked_peer
       UNION ALL
       SELECT checked_peer           AS t1_checked_peer,
              checking_peer          AS t1_checking_peer,
              0 - sum(points_amount) AS t1_sum
-      FROM transferredpoints AS t2
+      FROM transferred_points AS t2
       GROUP BY checked_peer, checking_peer) AS t1
 GROUP BY t1_checking_peer, t1_checked_peer;
 $$
@@ -58,7 +58,7 @@ AS
 $$
 SELECT peer
 FROM (SELECT peer, count(state) AS in_out_count
-      FROM timetracking
+      FROM time_tracking
       WHERE date = day
       GROUP BY peer, date) AS t1
 WHERE t1.in_out_count = 2
@@ -82,12 +82,12 @@ $$
 SELECT t.checking_peer AS Peer, SUM(t.sum) AS PointsChange
 FROM (SELECT checking_peer,
              sum(points_amount) AS sum
-      FROM transferredpoints
+      FROM transferred_points
       GROUP BY checking_peer
       UNION ALL
       SELECT checked_peer,
              0 - sum(points_amount) AS sum
-      FROM transferredpoints
+      FROM transferred_points
       GROUP BY checked_peer) AS t
 GROUP BY t.checking_peer
 ORDER BY PointsChange DESC;
@@ -452,7 +452,7 @@ CREATE OR REPLACE FUNCTION ex15(in_time TIME, N INT)
 AS
 $$
 WITH t_first_in_time AS (SELECT peer, date, min(time) AS time
-                         FROM timetracking
+                         FROM time_tracking
                          WHERE state = 1
                            AND time < in_time
                          GROUP BY peer, date)
@@ -477,7 +477,7 @@ AS
 $$
 SELECT DISTINCT peer
 FROM (SELECT peer, count(state) - 1 AS in_out_count
-      FROM timetracking
+      FROM time_tracking
       WHERE date > CURRENT_DATE - N
         AND state = 2
       GROUP BY peer, date) AS t1
@@ -511,8 +511,8 @@ BEGIN
             early_number_entries := 0;
             FOR row in SELECT peer
                        FROM (SELECT peer, birthday
-                             FROM timetracking
-                                      LEFT JOIN peers p2 on timetracking.peer = p2.nickname
+                             FROM time_tracking
+                                      LEFT JOIN peers p2 on time_tracking.peer = p2.nickname
                              WHERE state = 1
                              GROUP BY peer, date, birthday) AS t1
                        WHERE date_part('month', t1.birthday) = i
@@ -520,13 +520,13 @@ BEGIN
                 LOOP
                     total_number_entries := total_number_entries + count(t.peer)
                                             FROM (SELECT peer
-                                                  FROM timetracking
+                                                  FROM time_tracking
                                                   WHERE state = 1
                                                     AND peer = row.peer
                                                   GROUP BY peer, date) as t;
                     early_number_entries := early_number_entries + count(t.peer)
                                             FROM (SELECT peer
-                                                  FROM timetracking
+                                                  FROM time_tracking
                                                   WHERE state = 1
                                                     AND peer = row.peer
                                                     AND time < '12:00:00'
