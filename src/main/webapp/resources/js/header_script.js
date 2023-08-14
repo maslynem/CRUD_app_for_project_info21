@@ -27,8 +27,13 @@ function createHeader(title) {
         '                    </div>\n' +
         '                </div>\n' +
         '                <div class="column_item">\n' +
-        '                    <div class="item__ref">\n' +
-        '                        <a class = "header__text" href="/query">Operations</a>\n' +
+        '                    <div class="item__ref data__submenu">\n' +
+        '                       <a class = "header__text" href="/operations/">Operations\n' +
+        '                            <ul class="data__list_submenu">\n' +
+        '                                <li><a class = "header__text" href="/operations/">Procedures</a></li>\n' +
+        '                                <li><a class = "header__text" href="/operations/query">Execute query</a></li>\n' +
+        '                            </ul>\n' +
+        '                        </a>\n' +
         '                    </div>\n' +
         '                </div>\n' +
         '        </div>'

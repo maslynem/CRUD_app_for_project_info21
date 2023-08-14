@@ -2,26 +2,37 @@ package ru.s21school.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class QueryRepositoryImpl implements QueryRepository {
-    private final JdbcTemplate jdbcTemplate;
     private final EntityManager entityManager;
+
     @Override
-    public void executeQuery(String query) {
+    public List executeSelectQuery(String query) {
         try {
             log.info("try to execute SELECT query: {}", query);
-            jdbcTemplate.execute(query);
-            entityManager.createNativeQuery(query).getResultList()
+            return entityManager.createNativeQuery(query).getResultList();
         } catch (RuntimeException e) {
             log.warn("Fail execute query : {}. REASON: {}", query, e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public int executeUpdateQuery(String query) {
+        try {
+            log.info("try to execute UPDATE query: {}", query);
+            return entityManager.createNativeQuery(query).executeUpdate();
+        } catch (RuntimeException e) {
+            log.warn("Fail execute query : {}. REASON: {}", query, e.getMessage());
+            throw e;
+        }
+
     }
 }
