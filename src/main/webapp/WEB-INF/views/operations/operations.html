@@ -17,53 +17,379 @@
 <header></header>
 <body>
 <div class="container">
-    <div style="font-size: 24px">Процедура добавления P2P проверки</div>
-    <form action="/operations/1" method="post" th:object="${addP2pCheck}">
-        <div class="form-group row mt-5">
-            <label for="checkingPeer"  class="col-sm-2 col-form-label">Ник проверяемого</label>
-            <input type="text" id="checkingPeer" th:field="*{checkingPeer}"
-                   placeholder="Checking Peer Nickname" class="form-control mb-4 col-4"
-                   aria-describedby="checkingPeerError">
-            <small class="error_message" id="checkingPeerError"
-                   th:if="${#fields.hasErrors('checkingPeer')}" th:errors="*{checkingPeer}">error checkingPeer</small>
-        </div> 
-        
-        <div class="form-group row mt-5">
-            <label for="checkedPeer"  class="col-sm-2 col-form-label">Ник проверяющего</label>
-            <input type="text" id="checkedPeer" th:field="*{checkedPeer}"
-                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4"
-                   aria-describedby="checkedPeerError">
-            <small class="error_message" id="checkedPeerError"
-                   th:if="${#fields.hasErrors('checkedPeer')}" th:errors="*{checkedPeer}">error checkingPeer</small>
-        </div>   
-        
-        <div class="form-group row mt-5">
-            <label for="taskTitle"  class="col-sm-2 col-form-label">Название задания</label>
-            <input type="text" id="taskTitle" th:field="*{taskTitle}"
-                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4"
-                   aria-describedby="taskTitleError">
-            <small class="error_message" id="taskTitleError"
-                   th:if="${#fields.hasErrors('taskTitle')}" th:errors="*{taskTitle}">error checkingPeer</small>
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>1. Процедура добавления P2P проверки</h5>
         </div>
-
-        <div class="form-group row mt-5">
-            <label for="checkState" class="col-sm-2 col-form-label">Cтатус P2P проверки</label>
-            <select id="checkState" name="state">
-                <option th:each="checkState : ${states}" th:value="${checkState.name()}" th:text="${checkState.name()}">
-                </option>
-            </select>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры: ник проверяемого, ник проверяющего, название задания, статус P2P проверки, время.</p>
+            <p>Если задан статус "начало", добавить запись в таблицу Checks (в качестве даты использовать
+                сегодняшнюю).</p>
+            <p>Добавить запись в таблицу P2P.</p>
+            <p>Если задан статус "начало", в качестве проверки указать только что добавленную запись, иначе указать
+                проверку с незавершенным P2P этапом.</p>
         </div>
-
-        <div class="form-group row mt-5">
-            <label for="time" class="col-sm-2 col-form-label">Время</label>
-            <input type="time" id="time" name="checkTime"
-                   class="form-control mb-4 col-4" aria-describedby="timeError">
-        </div>
-
-        <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
-    </form>
-
+    </div>
+    <div class="row">
+        <a href="/operations/add-p2p-check" class="btn btn-primary">Перейти</a>
+    </div>
 </div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>2. Процедура добавления проверки Verter'ом</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры: ник проверяемого, название задания, статус проверки Verter'ом, время.</p>
+            <p>Добавить запись в таблицу Verter (в качестве проверки указать проверку соответствующего задания с самым поздним (по времени) успешным P2P этапом)</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/add-verter-check" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>3. Функция, возвращающая таблицу TransferredPoints в более человекочитаемом виде</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Ник пира 1, ник пира 2, количество переданных пир поинтов.</p>
+            <p>Количество отрицательное, если пир 2 получил от пира 1 больше поинтов.</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/3" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>4. Функция, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>В таблицу включать только задания, успешно прошедшие проверку (определять по таблице Checks).</p>
+            <p>Одна задача может быть успешно выполнена несколько раз. В таком случае в таблицу включать все успешные проверки.</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/4" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>5. Функция, определяющую пиров, которые не выходили из кампуса в течение всего дня</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры функции: день, например 12.05.2022.</p>
+            <p>Функция возвращает только список пиров.</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/5" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>6. Посчитать изменение в количестве пир поинтов каждого пира по таблице TransferredPoints</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Формат вывода: ник пира, изменение в количество пир поинтов</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/6" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>7. Посчитать изменение в количестве пир поинтов каждого пира по таблице, возвращаемой #3</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Формат вывода: ник пира, изменение в количество пир поинтов</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/7" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>8. Определить самое часто проверяемое задание за каждый день</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>При одинаковом количестве проверок каких-то заданий в определенный день, вывести их все.</p>
+            <p>Формат вывода: день, название задания.</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/8" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>9. Найти всех пиров, выполнивших весь заданный блок задач и дату завершения последнего задания</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры процедуры: название блока, например "CPP".</p>
+            <p>Формат вывода: ник пира, дата завершения блока (т.е. последнего выполненного задания из этого блока)</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/9" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>10. Определить, к какому пиру стоит идти на проверку каждому обучающемуся</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Определять нужно исходя из рекомендаций друзей пира, т.е. нужно найти пира, проверяться у которого рекомендует наибольшее число друзей.</p>
+            <p>Формат вывода: ник пира, ник найденного проверяющего</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/10" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>11. Определить процент пиров, которые</h5>
+        </div>
+    </div>
+    <div>
+        <ul>
+            <li>Приступили только к блоку 1</li>
+            <li>Приступили только к блоку 2</li>
+            <li>Приступили к обоим</li>
+            <li>Не приступили ни к одному</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div>
+            <p>Пир считается приступившим к блоку, если он проходил хоть одну проверку любого задания из этого блока (по таблице Checks).</p>
+            <p>Формат вывода: процент приступивших только к первому блоку, процент приступивших только ко второму блоку, процент приступивших к обоим, процент не приступивших ни к одному</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/11" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>12. Определить процент пиров, которые когда-либо успешно проходили проверку в свой день рождения</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Формат вывода: процент пиров, успешно прошедших проверку в день рождения, процент пиров, проваливших проверку в день рождения</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/12" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>13. Определить всех пиров, которые сдали заданные задания 1 и 2, но не сдали задание 3</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры функции: названия заданий 1, 2 и 3.</p>
+            <p>Формат вывода: список пиров.</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/13" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>14. Для каждой задачи вывести кол-во предшествующих ей задач</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>То есть сколько задач нужно выполнить, исходя из условий входа, чтобы получить доступ к текущей.</p>
+            <p>Формат вывода: название задачи, количество предшествующих</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/14" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>15. Найти "удачные" для проверок дни.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>День считается "удачным", если в нем есть хотя бы N идущих подряд успешных проверки</p>
+            <p>Параметры процедуры: количество идущих подряд успешных проверок N.</p>
+            <p>Формат вывода: список дней</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/15" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>16. Определить пира с наибольшим количеством XP.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Формат вывода: ник пира, количество XP</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/16" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>17. Определить пиров, приходивших раньше заданного времени не менее N раз за всё время.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры процедуры: время, количество раз N.</p>
+            <p>Формат вывода: список пиров</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/17" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>18. Определить пиров, выходивших за последние N дней из кампуса больше M раз</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры процедуры: количество дней N, количество раз M.</p>
+            <p>Формат вывода: список пиров</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/18" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>19. Определить для каждого месяца процент ранних входов</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Для каждого месяца посчитать, сколько раз люди, родившиеся в этот месяц, приходили в кампус за всё время (будем называть это общим числом входов).</p>
+            <p>Для каждого месяца посчитать, сколько раз люди, родившиеся в этот месяц, приходили в кампус раньше 12:00 за всё время (будем называть это числом ранних входов).</p>
+            <p>Для каждого месяца посчитать процент ранних входов в кампус относительно общего числа входов.</p>
+            <p>Формат вывода: месяц, процент ранних входов</p>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/operations/19" class="btn btn-primary">Перейти</a>
+    </div>
+</div>
+
+<hr>
+
+
+
 
 <script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>

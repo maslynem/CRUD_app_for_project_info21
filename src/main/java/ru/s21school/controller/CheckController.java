@@ -47,16 +47,6 @@ public class CheckController {
         return "/checks/checks";
     }
 
-    // todo there is no view for check_page. May be add later.
-//    @GetMapping("/{id}")
-//    public String findByTitle(@PathVariable Long id, Model model) {
-//        return checkService.findById(id)
-//                .map(check -> {
-//                    model.addAttribute("check", check);
-//                    return "checks/check_page";
-//                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-
     @GetMapping("/new")
     public String newCheck(Model model) {
         log.info("GET /checks/new");

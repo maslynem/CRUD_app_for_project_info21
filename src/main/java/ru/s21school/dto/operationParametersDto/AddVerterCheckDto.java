@@ -14,9 +14,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AddP2pCheckDto {
-    @NotBlank(message = "Can not be empty")
-    private String checkingPeer;
+public class AddVerterCheckDto {
 
     @NotBlank(message = "Can not be empty")
     private String checkedPeer;
