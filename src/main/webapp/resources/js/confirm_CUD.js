@@ -9,4 +9,7 @@ function confirm_update() {
 function confirm_save() {
     return confirm("Are you sure you want to do insert a record?");
 }
+function confirm_execute() {
+    return confirm("Are you sure you want to execute a SQL statement?");
+}
 
