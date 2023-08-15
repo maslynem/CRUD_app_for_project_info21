@@ -8,10 +8,7 @@ import ru.s21school.dao.procedure.AddVerterProcedure;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
-import ru.s21school.functionResult.CheckedTaskResult;
-import ru.s21school.functionResult.TaskBlockResult;
-import ru.s21school.functionResult.SuccessfulCheckResult;
-import ru.s21school.functionResult.TransferredPointChangeResult;
+import ru.s21school.functionResult.*;
 import ru.s21school.mapper.transferredPointMapper.TransferedPointsHumanReadMapper;
 
 import java.time.LocalDate;
@@ -31,7 +28,8 @@ public class OperationsService {
     private final TransferredPointsChangeFunctionV2 transferredPointsChangeFunctionV2;
     private final CheckedTaskFunction checkedTaskFunction;
     private final TaskBlockFunction taskBlockFunction;
-
+    private final RecommendedPeerFunction recommendedPeerFunction;
+    private final TwoBlockCompareFunction twoBlockCompareFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -68,6 +66,14 @@ public class OperationsService {
 
     public List<TaskBlockResult> executeTaskBlockFunction(String blockName) {
         return taskBlockFunction.execute(blockName);
+    }
+
+    public List<RecommendedPeerResult> executeRecommendedPeerFunction() {
+        return recommendedPeerFunction.execute();
+    }
+
+    public List<TwoBlockCompareResult> executeTwoBlockCompareFunction(String firstBlock, String secondBlock) {
+        return twoBlockCompareFunction.execute(firstBlock, secondBlock);
     }
 
 }

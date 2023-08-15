@@ -42,10 +42,8 @@ public class OperationsController {
             log.warn("bindingResult has errors: {}", bindingResult.getAllErrors());
             return "/operations/add_p2p_check";
         }
-        log.info("ready to execute procedure add_p2p_check: {}", addP2PCheckParametersDto);
         operationsService.executeAddP2pCheckProcedure(addP2PCheckParametersDto);
         model.addAttribute("addP2pCheckSuccess", true);
-        log.info("procedure add_p2p_check was executed successfully");
         return "/operations/add_p2p_check";
     }
 
@@ -63,10 +61,8 @@ public class OperationsController {
             log.warn("bindingResult has errors: {}", bindingResult.getAllErrors());
             return "/operations/add_verter_check";
         }
-        log.info("ready to execute procedure add_verter_check: {}", addVerterCheckParametersDto);
         operationsService.executeAddVerterCheckProcedure(addVerterCheckParametersDto);
         model.addAttribute("addVerterCheckSuccess", true);
-        log.info("procedure add_verter_check was executed successfully");
         return "/operations/add_verter_check";
     }
 
@@ -121,7 +117,7 @@ public class OperationsController {
         model.addAttribute("entities", operationsService.executeTransferredPointsChangeFunctionV1());
         return "/operations/transferred_points_change_v1";
     }
-    
+
     @GetMapping("/transferred-points-change-v2")
     String showTransferredPointsChangeV2() {
         log.info("GET /operations/transferred-points-change");
@@ -160,4 +156,32 @@ public class OperationsController {
         model.addAttribute("entities", operationsService.executeTaskBlockFunction(blockName));
         return "/operations/task_block";
     }
+
+    @GetMapping("/recommended-peer")
+    String showRecommendedPeer() {
+        log.info("GET /operations/recommended-peer");
+        return "/operations/recommended_peer";
+    }
+
+    @PostMapping("/recommended-peer")
+    String executeFunctionRecommendedPeer(Model model) {
+        log.info("POST /operations/recommended-peer");
+        model.addAttribute("entities", operationsService.executeRecommendedPeerFunction());
+        return "/operations/recommended_peer";
+    }
+
+    @GetMapping("/blocks-comparing")
+    String showBlocksComparing() {
+        log.info("GET /operations/blocks-comparing");
+        return "/operations/blocks_comparing";
+    }
+
+    @PostMapping("/blocks-comparing")
+    String executeFunctionRecommendedPeer(@RequestParam String firstBlock, @RequestParam String secondBlock, Model model) {
+        log.info("POST /operations/blocks-comparing");
+        model.addAttribute("entities", operationsService.executeTwoBlockCompareFunction(firstBlock, secondBlock));
+        return "/operations/blocks_comparing";
+    }
+
+
 }

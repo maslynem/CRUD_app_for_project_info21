@@ -215,19 +215,19 @@ FROM ex08();
 CREATE OR REPLACE FUNCTION ex09(IN block1 VARCHAR, IN block2 VARCHAR)
     RETURNS TABLE
             (
-                StartedBlock1      NUMERIC,
-                StartedBlock2      NUMERIC,
-                StartedBothBlocks  NUMERIC,
-                DidntStartAnyBlock NUMERIC
+                StartedBlock1      BIGINT,
+                StartedBlock2      BIGINT,
+                StartedBothBlocks  BIGINT,
+                DidntStartAnyBlock BIGINT
             )
 AS
 $$
 DECLARE
-    n_peers            NUMERIC;
-    StartedBlock1      NUMERIC;
-    StartedBlock2      NUMERIC;
-    StartedBothBlocks  NUMERIC;
-    DidntStartAnyBlock NUMERIC;
+    n_peers            BIGINT;
+    StartedBlock1      BIGINT;
+    StartedBlock2      BIGINT;
+    StartedBothBlocks  BIGINT;
+    DidntStartAnyBlock BIGINT;
 BEGIN
     n_peers := (SELECT count(nickname) FROM peers);
     StartedBlock1 := count(t.nickname)
@@ -272,7 +272,7 @@ $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex09('SQL', 'CPP');
+FROM ex09('DO', 'DO');
 
 -- 10) Определить процент пиров, которые когда-либо успешно проходили проверку в свой день рождения
 CREATE OR REPLACE FUNCTION ex10()

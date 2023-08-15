@@ -19,6 +19,7 @@ public class AddP2pCheckProcedure {
         log.info("start execute procedure add_p2p_check");
         try {
             jdbcTemplate.update(sqlQuery, checkingPeer, checkedPeer, taskTitle, state, checkTime);
+            log.info("procedure add_p2p_check was executed");
         } catch (Exception e) {
             log.warn("{}", e.getMessage());
             throw e;

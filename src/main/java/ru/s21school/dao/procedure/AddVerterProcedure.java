@@ -19,6 +19,7 @@ public class AddVerterProcedure {
         log.info("start execute procedure add_verter_check");
         try {
             jdbcTemplate.update(sqlQuery, checkedPeer, taskTitle, state, checkTime);
+            log.info("procedure add_verter_check was executed");
         } catch (Exception e) {
             log.warn("{}", e.getMessage());
             throw e;

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Operations</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <div class="row">
+        <h5>Определить процент пиров, которые</h5>
+    </div>
+    <div>
+        <ul>
+            <li>Приступили только к блоку 1</li>
+            <li>Приступили только к блоку 2</li>
+            <li>Приступили к обоим</li>
+            <li>Не приступили ни к одному</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div>
+            <p>Пир считается приступившим к блоку, если он проходил хоть одну проверку любого задания из этого блока (по
+                таблице Checks).</p>
+            <p>Формат вывода: процент приступивших только к первому блоку, процент приступивших только ко второму блоку,
+                процент приступивших к обоим, процент не приступивших ни к одному</p>
+        </div>
+    </div>
+
+    <form action="/operations/blocks-comparing" method="post">
+        <div class="form-group row mt-5">
+
+            <label for="firstBlockName" class="col-sm-2 col-form-label">First Block Name</label>
+            <select id="firstBlockName" name="firstBlock">
+                <option value="C" th:text="C"></option>
+                <option value="CPP" th:text="CPP"></option>
+                <option value="A" th:text="Algorithms"></option>
+                <option value="SQL" th:text="SQL"></option>
+                <option value="DO" th:text="Devops"></option>
+            </select>
+        </div>
+
+
+        <div class="form-group row mt-5">
+            <label for="secondBlockName" class="col-sm-2 col-form-label">Second Block Name</label>
+            <select id="secondBlockName" name="secondBlock">
+                <option value="C" th:text="C"></option>
+                <option value="CPP" th:text="CPP"></option>
+                <option value="A" th:text="Algorithms"></option>
+                <option value="SQL" th:text="SQL"></option>
+                <option value="DO" th:text="Devops"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
+    </form>
+    <th:block th:if="${entities} != null">
+        <table class="table table-bordered table-striped table-href">
+            <caption></caption>
+            <thead class="table-dark">
+            <tr>
+                <th class="text-center">
+                    StartedBlock1
+                </th>
+                <th class="text-center">
+                    StartedBlock2
+                </th>
+                <th class="text-center">
+                    StartedBothBlocks
+                </th>
+                <th class="text-center">
+                    DidntStartAnyBlock
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entity : ${entities}">
+                <td th:text="${entity.getStartedBlock1()}"/>
+                <td th:text="${entity.getStartedBlock2()}"/>
+                <td th:text="${entity.getStartedBothBlocks()}"/>
+                <td th:text="${entity.getDidntStartAnyBlock()}"/>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <div class="mt-5">
+        <a href="/operations/" class="btn btn-primary">Назад</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Operations');
+</script>
+</body>
+</html>
