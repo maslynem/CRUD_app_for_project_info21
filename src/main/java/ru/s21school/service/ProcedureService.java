@@ -2,6 +2,7 @@ package ru.s21school.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.s21school.dao.function.PeersAllDayInCampusFunction;
 import ru.s21school.dao.function.SuccessfulChecksFunction;
 import ru.s21school.dao.function.TransferredPointsHumanReadFunction;
 import ru.s21school.dao.procedure.AddP2pCheckProcedure;
@@ -12,6 +13,7 @@ import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
 import ru.s21school.dto.operationDto.SuccessfulCheckReadDto;
 import ru.s21school.mapper.transferredPointMapper.TransferedPointsHumanReadMapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class ProcedureService {
     private final TransferredPointsHumanReadFunction transferredPointsHumanReadFunction;
     private final TransferedPointsHumanReadMapper transferedPointsHumanReadMapper;
     private final SuccessfulChecksFunction successfulChecksFunction;
+    private final PeersAllDayInCampusFunction peersAllDayInCampusFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -41,6 +44,8 @@ public class ProcedureService {
         return successfulChecksFunction.execute();
     }
 
-
+    public List<String> executePeersAllDayInCampusFunction(LocalDate day) {
+        return peersAllDayInCampusFunction.execute(day);
+    }
 
 }

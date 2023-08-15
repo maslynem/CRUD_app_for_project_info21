@@ -3,18 +3,17 @@ package ru.s21school.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
 import ru.s21school.service.ProcedureService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Slf4j
 @Controller
@@ -95,6 +94,18 @@ public class OperationsController {
         log.info("POST /operations/successful-checks");
         model.addAttribute("entities", procedureService.executeSuccessfulChecksFunction());
         return "/operations/successful_checks";
+    }
 
+    @GetMapping("/all-day-in-campus")
+    String showAllDayInCampus() {
+        log.info("GET /operations/all-day-in-campus");
+        return "/operations/all_day_in_campus";
+    }
+
+    @PostMapping("/all-day-in-campus")
+    String executeFunctionAllDayInCampus(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
+        log.info("POST /operations/all-day-in-campus");
+        model.addAttribute("entities", procedureService.executePeersAllDayInCampusFunction(date));
+        return "/operations/all_day_in_campus";
     }
 }

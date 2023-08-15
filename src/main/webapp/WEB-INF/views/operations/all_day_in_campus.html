@@ -19,17 +19,22 @@
 <div class="container">
     <div class="row">
         <div class="col-15 mt-2">
-            <h5>Функция, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP</h5>
+            <h5>Функция, определяющую пиров, которые не выходили из кампуса в течение всего дня</h5>
         </div>
     </div>
     <div class="row">
         <div>
-            <p>В таблицу включать только задания, успешно прошедшие проверку (определять по таблице Checks).</p>
-            <p>Одна задача может быть успешно выполнена несколько раз. В таком случае в таблицу включать все успешные проверки.</p>
+            <p>Параметры функции: день, например 12.05.2022.</p>
+            <p>Функция возвращает только список пиров.</p>
         </div>
     </div>
 
-    <form action="/operations/successful-checks" method="post">
+    <form action="/operations/all-day-in-campus" method="post">
+        <div class="form-group row mt-5">
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <input type="date" id="date" name="date"
+                   placeholder="Date" class="form-control mb-4 col-4">
+        </div>
         <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
     </form>
     <th:block th:if="${entities} != null">
@@ -40,19 +45,11 @@
                 <th class="text-center">
                     Peer Nickname
                 </th>
-                <th class="text-center">
-                    Task Title
-                </th>
-                <th class="text-center">
-                    XP
-                </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="entity : ${entities}">
-                <td th:text="${entity.getPeer()}"/>
-                <td th:text="${entity.getTask()}"/>
-                <td th:text="${entity.getXp()}"/>
+                <td th:text="${entity}"/>
             </tr>
             </tbody>
         </table>
