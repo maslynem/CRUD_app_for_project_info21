@@ -18,11 +18,11 @@ public class PeersAllDayInCampusFunction {
     private static final String sqlQuery = "SELECT * FROM ex03(?)";
 
     public List<String> execute(LocalDate day) {
-        log.info("start execute function ex02(). Date: {}", day);
+        log.info("start execute function ex03(). Date: {}", day);
         try {
             return jdbcTemplate.queryForList(sqlQuery, String.class, day);
         } catch (Exception e) {
-            log.warn("{}", e.getMessage());
+            log.warn("FAIL execute function ex03. Message: {}", e.getMessage());
             throw e;
         }
     }

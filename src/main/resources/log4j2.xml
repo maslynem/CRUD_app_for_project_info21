@@ -45,6 +45,11 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
+        <RollingFile name="VerterControllerFile"
+                     filePattern="${LOG_DIR}/verter_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
 
         <RollingFile name="File"
                      filePattern="${LOG_DIR}/logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">

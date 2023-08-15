@@ -25,7 +25,8 @@ GROUP BY t1_checking_peer, t1_checked_peer;
 $$
     LANGUAGE SQL;
 
-SELECT * FROM ex01();
+SELECT *
+FROM ex01();
 
 
 -- 2) Написать функцию, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP
@@ -46,7 +47,8 @@ WHERE checks.id IN (SELECT check_id FROM verter WHERE state = 'Success');
 $$
     LANGUAGE SQL;
 
-SELECT * FROM ex02();
+SELECT *
+FROM ex02();
 
 -- 3) Написать функцию, определяющую пиров, которые не выходили из кампуса в течение всего дня
 
@@ -170,15 +172,18 @@ BEGIN
                  FROM checks AS c
                           LEFT JOIN verter v ON c.id = v.check_id
                           LEFT JOIN tasks t ON c.task = t.title
-                 WHERE v.state = 'Success'
-                   AND t.title = last_task
+                          LEFT JOIN p2p p on c.id = p.check_id
+
+                 WHERE t.title = last_task
+                   AND (v.state = 'Success' OR (v.state IS NULL AND p.state = 'Success'))
+
                  GROUP BY c.peer;
 END ;
 $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex07('C');
+FROM ex07('CPP');
 
 
 -- 8) Определить, к какому пиру стоит идти на проверку каждому обучающемуся
@@ -517,18 +522,18 @@ BEGIN
                        GROUP BY peer
                 LOOP
                     total_number_entries := total_number_entries + (SELECT count(t.peer)
-                                            FROM (SELECT peer
-                                                  FROM time_tracking
-                                                  WHERE state = 1
-                                                    AND peer = row.peer
-                                                  GROUP BY peer, date) as t);
+                                                                    FROM (SELECT peer
+                                                                          FROM time_tracking
+                                                                          WHERE state = 1
+                                                                            AND peer = row.peer
+                                                                          GROUP BY peer, date) as t);
                     early_number_entries := early_number_entries + (SELECT count(t.peer)
-                                            FROM (SELECT peer
-                                                  FROM time_tracking
-                                                  WHERE state = 1
-                                                    AND peer = row.peer
-                                                    AND time < '12:00:00'
-                                                  GROUP BY peer, date) as t);
+                                                                    FROM (SELECT peer
+                                                                          FROM time_tracking
+                                                                          WHERE state = 1
+                                                                            AND peer = row.peer
+                                                                            AND time < '12:00:00'
+                                                                          GROUP BY peer, date) as t);
                 END LOOP;
 
             RETURN QUERY SELECT months[i],

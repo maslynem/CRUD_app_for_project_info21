@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
-import ru.s21school.service.ProcedureService;
+import ru.s21school.service.OperationsService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @RequestMapping("/operations")
 public class OperationsController {
-    private final ProcedureService procedureService;
+    private final OperationsService operationsService;
 
     @GetMapping
     String showOperationsPage() {
@@ -43,7 +43,7 @@ public class OperationsController {
             return "/operations/add_p2p_check";
         }
         log.info("ready to execute procedure add_p2p_check: {}", addP2PCheckParametersDto);
-        procedureService.executeAddP2pCheckProcedure(addP2PCheckParametersDto);
+        operationsService.executeAddP2pCheckProcedure(addP2PCheckParametersDto);
         model.addAttribute("addP2pCheckSuccess", true);
         log.info("procedure add_p2p_check was executed successfully");
         return "/operations/add_p2p_check";
@@ -64,7 +64,7 @@ public class OperationsController {
             return "/operations/add_verter_check";
         }
         log.info("ready to execute procedure add_verter_check: {}", addVerterCheckParametersDto);
-        procedureService.executeAddVerterCheckProcedure(addVerterCheckParametersDto);
+        operationsService.executeAddVerterCheckProcedure(addVerterCheckParametersDto);
         model.addAttribute("addVerterCheckSuccess", true);
         log.info("procedure add_verter_check was executed successfully");
         return "/operations/add_verter_check";
@@ -79,7 +79,7 @@ public class OperationsController {
     @PostMapping("/transferred-points-human-read")
     String executeFunctionTransferredPointsHumanRead(Model model) {
         log.info("POST /operations/transferred-points-human-read");
-        model.addAttribute("entities", procedureService.executeTransferredPointsHumanRead());
+        model.addAttribute("entities", operationsService.executeTransferredPointsHumanRead());
         return "/operations/transferred_points_human_read";
     }
 
@@ -92,7 +92,7 @@ public class OperationsController {
     @PostMapping("/successful-checks")
     String executeFunctionSuccessfulChecks(Model model) {
         log.info("POST /operations/successful-checks");
-        model.addAttribute("entities", procedureService.executeSuccessfulChecksFunction());
+        model.addAttribute("entities", operationsService.executeSuccessfulChecksFunction());
         return "/operations/successful_checks";
     }
 
@@ -105,7 +105,59 @@ public class OperationsController {
     @PostMapping("/all-day-in-campus")
     String executeFunctionAllDayInCampus(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         log.info("POST /operations/all-day-in-campus");
-        model.addAttribute("entities", procedureService.executePeersAllDayInCampusFunction(date));
+        model.addAttribute("entities", operationsService.executePeersAllDayInCampusFunction(date));
         return "/operations/all_day_in_campus";
+    }
+
+    @GetMapping("/transferred-points-change-v1")
+    String showTransferredPointsChangeV1() {
+        log.info("GET /operations/transferred-points-change");
+        return "/operations/transferred_points_change_v1";
+    }
+
+    @PostMapping("/transferred-points-change-v1")
+    String executeFunctionTransferredPointsChangeV1(Model model) {
+        log.info("POST /operations/transferred-points-change");
+        model.addAttribute("entities", operationsService.executeTransferredPointsChangeFunctionV1());
+        return "/operations/transferred_points_change_v1";
+    }
+    
+    @GetMapping("/transferred-points-change-v2")
+    String showTransferredPointsChangeV2() {
+        log.info("GET /operations/transferred-points-change");
+        return "/operations/transferred_points_change_v2";
+    }
+
+    @PostMapping("/transferred-points-change-v2")
+    String executeFunctionTransferredPointsChangeV2(Model model) {
+        log.info("POST /operations/transferred-points-change");
+        model.addAttribute("entities", operationsService.executeTransferredPointsChangeFunctionV2());
+        return "/operations/transferred_points_change_v2";
+    }
+
+    @GetMapping("/checked-tasks")
+    String showCheckedTasks() {
+        log.info("GET /operations/checked-tasks");
+        return "/operations/checked_tasks";
+    }
+
+    @PostMapping("/checked-tasks")
+    String executeFunctionCheckedTasks(Model model) {
+        log.info("POST /operations/checked-tasks");
+        model.addAttribute("entities", operationsService.executeCheckedTaskFunction());
+        return "/operations/checked_tasks";
+    }
+
+    @GetMapping("/task-block")
+    String showTaskBlockFunctionPage() {
+        log.info("GET /operations/task-block");
+        return "/operations/task_block";
+    }
+
+    @PostMapping("/task-block")
+    String executeFunctionTaskBlock(@RequestParam String blockName, Model model) {
+        log.info("POST /operations/task-block");
+        model.addAttribute("entities", operationsService.executeTaskBlockFunction(blockName));
+        return "/operations/task_block";
     }
 }

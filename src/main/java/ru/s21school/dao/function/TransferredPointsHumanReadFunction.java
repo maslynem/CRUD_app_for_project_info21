@@ -21,7 +21,7 @@ public class TransferredPointsHumanReadFunction {
         try {
             return jdbcTemplate.queryForList(sqlQuery);
         } catch (Exception e) {
-            log.warn("{}", e.getMessage());
+            log.warn("FAIL execute function ex01. Message: {}", e.getMessage());
             throw e;
         }
     }
