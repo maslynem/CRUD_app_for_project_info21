@@ -183,5 +183,18 @@ public class OperationsController {
         return "/operations/blocks_comparing";
     }
 
+    @GetMapping("/birthday-check")
+    String showBirthdayCheck() {
+        log.info("GET /operations/birthday-check");
+        return "/operations/birthday_check";
+    }
+
+    @PostMapping("/birthday-check")
+    String executeFunctionBirthdayCheck(Model model) {
+        log.info("POST /operations/birthday-check");
+        model.addAttribute("entities", operationsService.executeBirthdayCheckFunction());
+        return "/operations/birthday_check";
+    }
+
 
 }

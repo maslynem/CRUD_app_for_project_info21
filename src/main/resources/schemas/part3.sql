@@ -278,15 +278,15 @@ FROM ex09('DO', 'DO');
 CREATE OR REPLACE FUNCTION ex10()
     RETURNS TABLE
             (
-                SuccessfulChecks   NUMERIC,
-                UnsuccessfulChecks NUMERIC
+                SuccessfulChecks   INT,
+                UnsuccessfulChecks INT
             )
 AS
 $$
 DECLARE
     all_checks         INT;
-    SuccessfulChecks   NUMERIC;
-    UnsuccessfulChecks NUMERIC;
+    SuccessfulChecks   INT;
+    UnsuccessfulChecks INT;
 BEGIN
     all_checks := count(t.nickname)
                   FROM (SELECT DISTINCT ON (p.nickname) p.nickname, p.birthday, c.date
