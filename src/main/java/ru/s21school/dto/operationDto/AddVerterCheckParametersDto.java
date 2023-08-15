@@ -1,4 +1,4 @@
-package ru.s21school.dto.operationParametersDto;
+package ru.s21school.dto.operationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AddVerterCheckDto {
+public class AddVerterCheckParametersDto {
 
     @NotBlank(message = "Can not be empty")
     private String checkedPeer;

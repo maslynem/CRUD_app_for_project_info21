@@ -2,7 +2,6 @@ package ru.s21school.service;
 
 import org.springframework.stereotype.Service;
 import ru.s21school.dto.PeerToPeerDto;
-import ru.s21school.dto.operationParametersDto.AddP2pCheckDto;
 import ru.s21school.entity.PeerToPeer;
 import ru.s21school.mapper.peerToPeerMapper.PeerToPeerCreateEditMapper;
 import ru.s21school.mapper.peerToPeerMapper.PeerToPeerReadMapper;

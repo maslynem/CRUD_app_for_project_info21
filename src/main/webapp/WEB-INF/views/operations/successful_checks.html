@@ -19,17 +19,17 @@
 <div class="container">
     <div class="row">
         <div class="col-15 mt-2">
-            <h5>Функция, возвращающая таблицу TransferredPoints в более человекочитаемом виде</h5>
+            <h5>Функция, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP</h5>
         </div>
     </div>
     <div class="row">
         <div>
-            <p>Ник пира 1, ник пира 2, количество переданных пир поинтов.</p>
-            <p>Количество отрицательное, если пир 2 получил от пира 1 больше поинтов.</p>
+            <p>В таблицу включать только задания, успешно прошедшие проверку (определять по таблице Checks).</p>
+            <p>Одна задача может быть успешно выполнена несколько раз. В таком случае в таблицу включать все успешные проверки.</p>
         </div>
     </div>
 
-    <form action="/operations/transferred-points-human-read" method="post">
+    <form action="/operations/successful-checks" method="post">
         <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
     </form>
     <th:block th:if="${entities} != null">
@@ -38,28 +38,28 @@
             <thead class="table-dark">
             <tr>
                 <th class="text-center">
-                    Peer One Nickname
+                    Peer Nickname
                 </th>
                 <th class="text-center">
-                    Peer Two Nickname
+                    Task Title
                 </th>
                 <th class="text-center">
-                    Points Amount
+                    XP
                 </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="entity : ${entities}">
-                <td th:text="${entity.getCheckingPeerNickname()}"/>
-                <td th:text="${entity.getCheckedPeerNickname()}"/>
-                <td th:text="${entity.getPointsAmount()}"/>
+                <td th:text="${entity.getPeer()}"/>
+                <td th:text="${entity.getTask()}"/>
+                <td th:text="${entity.getXp()}"/>
             </tr>
             </tbody>
         </table>
     </th:block>
 
     <div class="mt-5">
-        <a href="/operations/transferred-points-human-read" class="btn btn-primary">Назад</a>
+        <a href="/operations/successful-checks" class="btn btn-primary">Назад</a>
     </div>
 </div>
 

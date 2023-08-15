@@ -46,8 +46,7 @@ WHERE checks.id IN (SELECT check_id FROM verter WHERE state = 'Success');
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex02();
+SELECT * FROM ex02();
 
 -- 3) Написать функцию, определяющую пиров, которые не выходили из кампуса в течение всего дня
 
@@ -517,19 +516,19 @@ BEGIN
                        WHERE date_part('month', t1.birthday) = i
                        GROUP BY peer
                 LOOP
-                    total_number_entries := total_number_entries + count(t.peer)
+                    total_number_entries := total_number_entries + (SELECT count(t.peer)
                                             FROM (SELECT peer
                                                   FROM time_tracking
                                                   WHERE state = 1
                                                     AND peer = row.peer
-                                                  GROUP BY peer, date) as t;
-                    early_number_entries := early_number_entries + count(t.peer)
+                                                  GROUP BY peer, date) as t);
+                    early_number_entries := early_number_entries + (SELECT count(t.peer)
                                             FROM (SELECT peer
                                                   FROM time_tracking
                                                   WHERE state = 1
                                                     AND peer = row.peer
                                                     AND time < '12:00:00'
-                                                  GROUP BY peer, date) as t;
+                                                  GROUP BY peer, date) as t);
                 END LOOP;
 
             RETURN QUERY SELECT months[i],
