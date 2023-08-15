@@ -24,13 +24,14 @@ public class OperationsController {
     private final ProcedureService procedureService;
 
     @GetMapping
-    String showOperationsPage(Model model) {
+    String showOperationsPage() {
         log.info("GET /operations");
         return "/operations/operations";
     }
 
     @GetMapping("/add-p2p-check")
     String showAddP2pCheckPage(Model model) {
+        log.info("GET /operations/add-p2p-check");
         model.addAttribute("addP2pCheck", new AddP2pCheckDto());
         return "/operations/add_p2p_check";
     }
@@ -51,6 +52,7 @@ public class OperationsController {
 
     @GetMapping("/add-verter-check")
     String showAddVerterCheckPage(Model model) {
+        log.info("GET /operations/add-verter-check");
         model.addAttribute("addVerterCheck", new AddVerterCheckDto());
         return "/operations/add_verter_check";
     }
@@ -67,5 +69,18 @@ public class OperationsController {
         model.addAttribute("addVerterCheckSuccess", true);
         log.info("procedure add_verter_check was executed successfully");
         return "/operations/add_verter_check";
+    }
+
+    @GetMapping("/transferred-points-human-read")
+    String showTransferredPointsHumanRead() {
+        log.info("GET /operations/transferred-points-human-read");
+        return "/operations/transferred_points_human_read";
+    }
+
+    @PostMapping("/transferred-points-human-read")
+    String executeFunctionTransferredPointsHumanRead(Model model) {
+        log.info("POST /operations/transferred-points-human-read");
+        model.addAttribute("entities", procedureService.executeTransferredPointsHumanRead());
+        return "/operations/transferred_points_human_read";
     }
 }

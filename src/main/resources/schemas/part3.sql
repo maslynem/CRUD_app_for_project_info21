@@ -25,8 +25,7 @@ GROUP BY t1_checking_peer, t1_checked_peer;
 $$
     LANGUAGE SQL;
 
-SELECT *
-from ex01();
+SELECT * FROM ex01();
 
 
 -- 2) Написать функцию, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP

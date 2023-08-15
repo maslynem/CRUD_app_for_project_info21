@@ -21,6 +21,7 @@ public class AddVerterProcedure {
             jdbcTemplate.update(sqlQuery, checkedPeer, taskTitle, state, checkTime);
         } catch (Exception e) {
             log.warn("{}", e.getMessage());
+            throw e;
         }
     }
 }
