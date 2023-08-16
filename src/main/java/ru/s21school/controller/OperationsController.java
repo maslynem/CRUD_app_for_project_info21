@@ -243,5 +243,18 @@ public class OperationsController {
         return "/operations/lucky_days";
     }
 
+    @GetMapping("/top-peer")
+    String showTopPeerPage() {
+        log.info("GET /operations/top-peer");
+        return "/operations/top_peer";
+    }
+
+    @PostMapping("/top-peer")
+    String executeFunctionTopPeer(Model model) {
+        log.info("POST /operations/top-peer");
+        model.addAttribute("entity", operationsService.executeTopPeerFunction());
+        return "/operations/top_peer";
+    }
+
 
 }

@@ -34,6 +34,7 @@ public class OperationsService {
     private final CompletedTwoTaskWithoutThirdFunction completedTwoTaskWithoutThirdFunction;
     private final TaskCountFunction taskCountFunction;
     private final LuckyDaysFunction luckyDaysFunction;
+    private final TopPeerFunction topPeerFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -94,4 +95,7 @@ public class OperationsService {
         return luckyDaysFunction.execute(n);
     }
 
+    public TopPeerResult executeTopPeerFunction() {
+        return topPeerFunction.execute();
+    }
 }
