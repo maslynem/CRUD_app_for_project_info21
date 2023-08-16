@@ -35,6 +35,10 @@ public class RecommendationSaveEditValidator implements Validator {
             if (!recommendedPeer.isPresent()) {
                 errors.rejectValue("recommendedPeerNickname", "", "Peer with this nickname does not exist");
             }
+            if (peerNickname.equals(recommendedPeerNickname)) {
+                errors.rejectValue("peerNickname", "", "Can not be the same");
+                errors.rejectValue("recommendedPeerNickname", "", "Can not be the same");
+            }
         }
 
     }

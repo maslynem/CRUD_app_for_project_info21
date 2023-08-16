@@ -63,31 +63,31 @@
 
     </Appenders>
     <Loggers>
-        <Logger name="ru.s21school.controller.CheckController"  level="info">
+        <Logger name="ru.s21school.http.controller.CheckController" level="info">
             <AppenderRef ref="CheckControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.ExperienceController"  level="info">
+        <Logger name="ru.s21school.http.controller.ExperienceController" level="info">
             <AppenderRef ref="ExperienceControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.PeerController"  level="info">
+        <Logger name="ru.s21school.http.controller.PeerController" level="info">
             <AppenderRef ref="PeerControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.PeerToPeerController"  level="info">
+        <Logger name="ru.s21school.http.controller.PeerToPeerController" level="info">
             <AppenderRef ref="PeerToPeerControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.TaskController" level="info">
+        <Logger name="ru.s21school.http.controller.TaskController" level="info">
             <AppenderRef ref="TaskControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.TransferredPointController" level="info">
+        <Logger name="ru.s21school.http.controller.TransferredPointController" level="info">
             <AppenderRef ref="TransferredPointControllerFile"/>
         </Logger>
 
-        <Logger name="ru.s21school.controller.VerterController"  level="info">
+        <Logger name="ru.s21school.http.controller.VerterController" level="info">
             <AppenderRef ref="VerterControllerFile"/>
         </Logger>
 

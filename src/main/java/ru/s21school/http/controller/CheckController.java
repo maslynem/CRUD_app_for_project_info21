@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.CheckDto;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.CheckService;
 import ru.s21school.util.validator.checkValidator.CheckSaveUpdateValidator;
 
@@ -36,13 +37,7 @@ public class CheckController {
                              Model model) {
         Page<CheckDto> pageCheckDto = checkService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("checks", pageCheckDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageCheckDto.getTotalPages());
-        model.addAttribute("totalItems", pageCheckDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        ControllerUtil.setModelPagination(model, pageCheckDto, page, pageSize, sortField, sortDir);
         log.info("GET /checks/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/checks/checks";
     }

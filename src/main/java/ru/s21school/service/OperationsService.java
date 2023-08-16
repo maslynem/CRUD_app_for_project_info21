@@ -8,7 +8,7 @@ import ru.s21school.dao.procedure.AddVerterProcedure;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
-import ru.s21school.functionResult.*;
+import ru.s21school.dao.functionResult.*;
 import ru.s21school.mapper.transferredPointMapper.TransferedPointsHumanReadMapper;
 
 import java.time.LocalDate;

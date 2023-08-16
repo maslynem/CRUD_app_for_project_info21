@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.s21school.dto.RecommendationDto;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.Recommendation;
+import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.PeerRepository;
 
@@ -32,6 +33,6 @@ public class RecommendationCreateEditMapper implements Mapper<RecommendationDto,
     private Peer findPeer(String nickname) {
         return peerRepository
                 .findById(nickname)
-                .orElseThrow(() -> new RuntimeException("Peer with this nickname does not exist: " + nickname));
+                .orElseThrow(() -> new NoSuchPeerException("Peer with this nickname does not exist: " + nickname));
     }
 }

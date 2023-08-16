@@ -29,5 +29,10 @@ public class TransferredPointSaveEditValidator implements Validator {
         if (!checkingPeerNickname.isEmpty() && !peerService.findById(checkedPeerNickname).isPresent()) {
             errors.rejectValue("checkedPeerNickname", "", "Peer with this nickname does not exist");
         }
+        if (checkedPeerNickname.equals(checkingPeerNickname)) {
+            errors.rejectValue("checkingPeerNickname", "", "Can not be the same");
+            errors.rejectValue("checkedPeerNickname", "", "Can not be the same");
+
+        }
     }
 }

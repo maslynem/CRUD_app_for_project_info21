@@ -31,6 +31,10 @@ public class FriendSaveEditValidator implements Validator {
             if (!peerService.findById(peerTwoNickname).isPresent()) {
                 errors.rejectValue("peerTwoNickname", "", "Peer with this nickname does not exist");
             }
+            if (peerOneNickname.equals(peerTwoNickname)) {
+                errors.rejectValue("peerOneNickname", "", "Can not be the same");
+                errors.rejectValue("peerTwoNickname", "", "Can not be the same");
+            }
         }
     }
 }

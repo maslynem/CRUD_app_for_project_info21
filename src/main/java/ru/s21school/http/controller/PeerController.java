@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.PeerDto;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.PeerService;
 import ru.s21school.util.validator.peerValidator.PeerSaveValidator;
 import ru.s21school.util.validator.peerValidator.PeerUpdateValidator;
@@ -39,13 +40,8 @@ public class PeerController {
                             Model model) {
         Page<PeerDto> pagePeerDto = peerService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("peers", pagePeerDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pagePeerDto.getTotalPages());
-        model.addAttribute("totalItems", pagePeerDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pagePeerDto, page, pageSize, sortField, sortDir);
         log.info("GET /peers/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "peers/peers";
     }
@@ -90,7 +86,7 @@ public class PeerController {
                     model.addAttribute("peer", peerDto);
                     return "peers/edit";
                 }).orElseThrow(() -> {
-                    log.warn("GET /peers/{}/edit RECORD WITH nickname {} NOT FOUND", nickname, nickname);
+                    log.warn("GET /peers/{}/edit RECORD WITH NICKNAME {} NOT FOUND", nickname, nickname);
                     return new ResponseStatusException(HttpStatus.NOT_FOUND);
                 });
     }
@@ -116,7 +112,7 @@ public class PeerController {
     @DeleteMapping("/{nickname}")
     public String delete(@PathVariable String nickname) {
         if (!peerService.delete(nickname)) {
-            log.warn("DELETE /peers/{} RECORD WITH nickname {} NOT FOUND", nickname, nickname);
+            log.warn("DELETE /peers/{} RECORD WITH NICKNAME {} NOT FOUND", nickname, nickname);
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TaskDto;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.TaskService;
 import ru.s21school.util.validator.taskValidator.TaskSaveValidator;
 import ru.s21school.util.validator.taskValidator.TaskUpdateValidator;
@@ -38,30 +39,11 @@ public class TaskController {
                             Model model) {
         Page<TaskDto> pageTaskDto = taskService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("tasks", pageTaskDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageTaskDto.getTotalPages());
-        model.addAttribute("totalItems", pageTaskDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pageTaskDto, page, pageSize, sortField, sortDir);
         log.info("GET /tasks/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/tasks/tasks";
     }
-
-    // todo delete
-//    @GetMapping("/{title}")
-//    public String findByTitle(@PathVariable String title, Model model) {
-//        return taskService.findById(title)
-//                .map(task -> {
-//                    log.info("GET /tasks/{} : {}", title, task);
-//                    model.addAttribute("task", task);
-//                    return "tasks/task_page";
-//                }).orElseThrow(() -> {
-//                    log.warn("GET /tasks/{} RECORD WITH TITLE {} NOT FOUND", title, title);
-//                    return new ResponseStatusException(HttpStatus.NOT_FOUND);
-//                });
-//    }
 
     @GetMapping("/new")
     public String newTask(Model model) {

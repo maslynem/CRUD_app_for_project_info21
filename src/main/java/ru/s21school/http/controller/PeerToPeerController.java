@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.entity.CheckState;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.PeerToPeerService;
 import ru.s21school.util.validator.peerToPeerValidator.PeerToPeerSaveValidator;
 
@@ -38,21 +39,11 @@ public class PeerToPeerController {
                           Model model) {
         Page<PeerToPeerDto> pagePeerToPeerDto = peerToPeerService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("entities", pagePeerToPeerDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pagePeerToPeerDto.getTotalPages());
-        model.addAttribute("totalItems", pagePeerToPeerDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pagePeerToPeerDto, page, pageSize, sortField, sortDir);
         log.info("GET /p2p/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/p2p/p2p";
     }
-
-//    todo there is no view for p2p_page. May be add later.
-//    @GetMapping("/{id}")
-//    public String findById(@PathVariable Long id, Model model) {
-//    }
 
     @GetMapping("/new")
     public String newPeerToPeer(Model model) {

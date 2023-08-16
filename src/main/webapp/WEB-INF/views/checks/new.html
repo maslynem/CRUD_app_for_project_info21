@@ -20,7 +20,7 @@
     <form action="#" th:action="@{/checks/new}" th:object="${check}"
           method="POST">
         <div class="form-group row mt-5">
-            <label for="peerNickname" class="form-label"></label>
+            <label for="peerNickname" class="col-sm-2 form-label">Peer Nickname</label>
             <input type="text" id="peerNickname" th:field="*{peerNickname}"
                    placeholder="Peer Nickname" class="form-control mb-4 col-4" aria-describedby="peerNicknameError">
             <small class=" error_message" id="peerNicknameError"
@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-group row mt-5">
-            <label for="taskTitle" class="col-sm-2 col-form-label"></label>
+            <label for="taskTitle" class="col-sm-2 col-form-label">Task Title</label>
             <input type="text" id="taskTitle" th:field="*{taskTitle}"
                    placeholder="Task Title" class="form-control mb-4 col-4" aria-describedby="taskTitleError">
             <small class="error_message" id="taskTitleError"
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group row mt-5">
-            <label for="date" class="col-sm-2 col-form-label"></label>
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
             <input type="date" id="date" th:field="*{date}"
                    placeholder="Date" class="form-control mb-4 col-4" aria-describedby="dateError">
             <small class="error_message" id="dateError"

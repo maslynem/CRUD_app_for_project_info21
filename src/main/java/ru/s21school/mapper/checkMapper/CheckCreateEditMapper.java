@@ -6,6 +6,8 @@ import ru.s21school.dto.CheckDto;
 import ru.s21school.entity.Check;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.Task;
+import ru.s21school.exceptions.NoSuchPeerException;
+import ru.s21school.exceptions.NoSuchTaskException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.PeerRepository;
 import ru.s21school.repository.TaskRepository;
@@ -20,10 +22,10 @@ public class CheckCreateEditMapper implements Mapper<CheckDto, Check> {
     public Check map(CheckDto object) {
         Peer peer = peerRepository
                 .findById(object.getPeerNickname())
-                .orElseThrow(() -> new RuntimeException("No peer with nickname " + object.getPeerNickname()));
+                .orElseThrow(() -> new NoSuchPeerException("No peer with nickname " + object.getPeerNickname()));
         Task task = taskRepository
                 .findById(object.getTaskTitle())
-                .orElseThrow(() -> new RuntimeException("No task with title " + object.getTaskTitle()));
+                .orElseThrow(() -> new NoSuchTaskException("No task with title " + object.getTaskTitle()));
         return new Check(
                 object.getId(),
                 peer,
@@ -36,10 +38,10 @@ public class CheckCreateEditMapper implements Mapper<CheckDto, Check> {
     public Check map(CheckDto fromObject, Check toObject) {
         Peer peer = peerRepository
                 .findById(fromObject.getPeerNickname())
-                .orElseThrow(() -> new RuntimeException("No peer with nickname " + fromObject.getPeerNickname()));
+                .orElseThrow(() -> new NoSuchPeerException("No peer with nickname " + fromObject.getPeerNickname()));
         Task task = taskRepository
                 .findById(fromObject.getTaskTitle())
-                .orElseThrow(() -> new RuntimeException("No task with title " + fromObject.getTaskTitle()));
+                .orElseThrow(() -> new NoSuchTaskException("No task with title " + fromObject.getTaskTitle()));
 
         toObject.setPeer(peer);
         toObject.setTask(task);

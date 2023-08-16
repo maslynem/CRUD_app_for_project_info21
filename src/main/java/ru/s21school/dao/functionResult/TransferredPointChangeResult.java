@@ -1,15 +1,13 @@
-package ru.s21school.functionResult;
+package ru.s21school.dao.functionResult;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskBlockResult {
+public class TransferredPointChangeResult {
     private String peer;
-    private LocalDate day;
+    private Long pointsChange;
 }

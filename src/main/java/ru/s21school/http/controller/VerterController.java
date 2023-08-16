@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.VerterDto;
 import ru.s21school.entity.CheckState;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.VerterService;
 import ru.s21school.util.validator.verterValidator.VerterSaveValidator;
 
@@ -39,21 +40,12 @@ public class VerterController {
                               Model model) {
         Page<VerterDto> pageVerterDto = verterService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("verters", pageVerterDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageVerterDto.getTotalPages());
-        model.addAttribute("totalItems", pageVerterDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pageVerterDto, page, pageSize, sortField, sortDir);
+
         log.info("GET /verters/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/verters/verters";
     }
-
-//    todo there is no view for verter_page. May be add later.
-//    @GetMapping("/{id}")
-//    public String findById(@PathVariable Long id, Model model) {
-//    }
 
     @GetMapping("/new")
     public String newVerter(Model model) {

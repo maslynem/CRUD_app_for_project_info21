@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.s21school.functionResult.CheckedTaskResult;
+import ru.s21school.dao.functionResult.CheckedTaskResult;
 
 import java.util.List;
 

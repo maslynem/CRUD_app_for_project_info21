@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TransferredPointDto;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.TransferredPointService;
 import ru.s21school.util.validator.transferedPointValidator.TransferredPointSaveEditValidator;
 
@@ -37,21 +38,11 @@ public class TransferredPointController {
                               Model model) {
         Page<TransferredPointDto> pageTransferredPointDto = transferredPointService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("entities", pageTransferredPointDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageTransferredPointDto.getTotalPages());
-        model.addAttribute("totalItems", pageTransferredPointDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pageTransferredPointDto, page, pageSize, sortField, sortDir);
         log.info("GET /transferred-points/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/transferredPoints/transferred-points";
     }
-
-//    todo there is no view for transferredPoint_page. May be add later.
-//    @GetMapping("/{id}")
-//    public String findById(@PathVariable Long id, Model model) {
-//    }
 
     @GetMapping("/new")
     public String newTransferredPoint(Model model) {

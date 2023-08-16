@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.TransferredPoint;
+import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.PeerRepository;
 
@@ -17,11 +18,11 @@ public class TransferredPointCreateEditMapping implements Mapper<TransferredPoin
     public TransferredPoint map(TransferredPointDto object) {
         Peer checkingPeer = peerRepository
                 .findById(object.getCheckingPeerNickname())
-                .orElseThrow(() -> new RuntimeException("No peer with nickname " + object.getCheckingPeerNickname()));
+                .orElseThrow(() -> new NoSuchPeerException("No peer with nickname " + object.getCheckingPeerNickname()));
 
         Peer checkedPeer = peerRepository
                 .findById(object.getCheckedPeerNickname())
-                .orElseThrow(() -> new RuntimeException("No peer with nickname " + object.getCheckedPeerNickname()));
+                .orElseThrow(() -> new NoSuchPeerException("No peer with nickname " + object.getCheckedPeerNickname()));
 
         return new TransferredPoint(
                 object.getId(),

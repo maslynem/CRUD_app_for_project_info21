@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.s21school.dto.ExperienceDto;
 import ru.s21school.entity.Check;
 import ru.s21school.entity.Experience;
+import ru.s21school.exceptions.NoSuchCheckException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.CheckRepository;
 
@@ -17,7 +18,7 @@ public class ExperienceCreateEditMapper implements Mapper<ExperienceDto, Experie
     public Experience map(ExperienceDto object) {
         Check check = checkRepository
                 .findById(object.getCheckId())
-                .orElseThrow(() -> new RuntimeException("Check with id does not exist: " + object.getCheckId()));
+                .orElseThrow(() -> new NoSuchCheckException("Check with id does not exist: " + object.getCheckId()));
         return new Experience(object.getId(), check, object.getXpAmount());
     }
 

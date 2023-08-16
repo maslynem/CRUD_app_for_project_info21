@@ -1,4 +1,4 @@
-package ru.s21school.controller;
+package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TimeTrackingDto;
+import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.TimeTrackingService;
 import ru.s21school.util.validator.timeTrackinkValidator.TimeTrackingSaveEditValidator;
 
@@ -38,21 +39,12 @@ public class TimeTrackingController {
                                         Model model) {
         Page<TimeTrackingDto> pageTimeTrackingDto = timeTrackingService.findAllWithPaginationAndSorting(page, pageSize, sortField, sortDir);
         model.addAttribute("entities", pageTimeTrackingDto.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageTimeTrackingDto.getTotalPages());
-        model.addAttribute("totalItems", pageTimeTrackingDto.getTotalElements());
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        ControllerUtil.setModelPagination(model, pageTimeTrackingDto, page, pageSize, sortField, sortDir);
+
         log.info("GET /time-tracking/page-{}?pageSize={}&sortField={}&sortDir={}", page, pageSize, sortField, sortDir);
         return "/timeTracking/time-tracking";
     }
-
-//    todo there is no view for transferredPoint_page. May be add later.
-//    @GetMapping("/{id}")
-//    public String findById(@PathVariable Long id, Model model) {
-//    }
 
     @GetMapping("/new")
     public String newTimeTracking(Model model) {

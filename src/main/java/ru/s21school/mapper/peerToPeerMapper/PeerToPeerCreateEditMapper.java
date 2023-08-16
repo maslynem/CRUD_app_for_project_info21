@@ -6,6 +6,8 @@ import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.entity.Check;
 import ru.s21school.entity.Peer;
 import ru.s21school.entity.PeerToPeer;
+import ru.s21school.exceptions.NoSuchCheckException;
+import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.CheckRepository;
 import ru.s21school.repository.PeerRepository;
@@ -20,10 +22,10 @@ public class PeerToPeerCreateEditMapper implements Mapper<PeerToPeerDto, PeerToP
     public PeerToPeer map(PeerToPeerDto object) {
         Check check = checkRepository
                 .findById(object.getCheckId())
-                .orElseThrow(() -> new RuntimeException("Check with this id does not exist: " + object.getCheckId()));
+                .orElseThrow(() -> new NoSuchCheckException("Check with this id does not exist: " + object.getCheckId()));
         Peer peer = peerRepository
                 .findById(object.getCheckingPeerNickname())
-                .orElseThrow(() -> new RuntimeException("Peer with this nickname does not exist: " + object.getCheckId()));
+                .orElseThrow(() -> new NoSuchPeerException("Peer with this nickname does not exist: " + object.getCheckingPeerNickname()));
 
         return new PeerToPeer(
                 object.getId(),

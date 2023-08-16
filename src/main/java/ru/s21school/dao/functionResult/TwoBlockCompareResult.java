@@ -1,4 +1,4 @@
-package ru.s21school.functionResult;
+package ru.s21school.dao.functionResult;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
