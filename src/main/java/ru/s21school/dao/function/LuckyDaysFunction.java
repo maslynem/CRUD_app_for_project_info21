@@ -21,7 +21,7 @@ public class LuckyDaysFunction {
         try {
             return jdbcTemplate.queryForList(sqlQuery, LocalDate.class, n);
         } catch (Exception e) {
-            log.warn("FAIL execute function ex03. Message: {}", e.getMessage());
+            log.warn("FAIL execute function ex13. Message: {}", e.getMessage());
             throw e;
         }
     }

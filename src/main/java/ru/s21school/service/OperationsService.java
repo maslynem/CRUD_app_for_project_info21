@@ -12,6 +12,7 @@ import ru.s21school.functionResult.*;
 import ru.s21school.mapper.transferredPointMapper.TransferedPointsHumanReadMapper;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,7 @@ public class OperationsService {
     private final TaskCountFunction taskCountFunction;
     private final LuckyDaysFunction luckyDaysFunction;
     private final TopPeerFunction topPeerFunction;
+    private final EarlyComingFunction earlyComingFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -98,4 +100,9 @@ public class OperationsService {
     public TopPeerResult executeTopPeerFunction() {
         return topPeerFunction.execute();
     }
+
+    public List<String> executeEarlyComingFunction(LocalTime time, Integer n) {
+        return earlyComingFunction.execute(time, n);
+    }
+
 }

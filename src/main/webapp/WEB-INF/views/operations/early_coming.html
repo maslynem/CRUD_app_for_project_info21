@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Operations</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>Определить пиров, приходивших раньше заданного времени не менее N раз за всё время.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры процедуры: время, количество раз N.</p>
+            <p>Формат вывода: список пиров</p>
+        </div>
+    </div>
+
+    <form action="/operations/early-coming" method="post">
+        <div class="form-group row mt-5">
+            <label for="time" class="col-sm-2 col-form-label">Time</label>
+            <input type="time" id="time" name="time" class="form-control mb-4 col-4">
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="n" class="col-sm-2 col-form-label">Count</label>
+            <input type="number" min="1" id="n" name="n"
+                   placeholder="Count of times" class="form-control mb-4 col-4">
+        </div>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
+    </form>
+
+    <th:block th:if="${entities} != null">
+        <table class="table table-bordered table-striped table-href">
+            <caption></caption>
+            <thead class="table-dark">
+            <tr>
+                <th class="text-center">
+                    Peer
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entity : ${entities}">
+                <td th:text="${entity}"/>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <div class="mt-5">
+        <a href="/operations/" class="btn btn-primary">Назад</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Operations');
+</script>
+</body>
+</html>

@@ -15,6 +15,7 @@ import ru.s21school.service.TaskService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Slf4j
 @Controller
@@ -254,6 +255,21 @@ public class OperationsController {
         log.info("POST /operations/top-peer");
         model.addAttribute("entity", operationsService.executeTopPeerFunction());
         return "/operations/top_peer";
+    }
+
+    @GetMapping("/early-coming")
+    String showEarlyComingPage() {
+        log.info("GET /operations/early-coming");
+        return "/operations/early_coming";
+    }
+
+    @PostMapping("/early-coming")
+    String executeFunctionEarlyComing(@RequestParam LocalTime time,
+                                      @RequestParam Integer n,
+                                      Model model) {
+        log.info("POST /operations/early-coming");
+        model.addAttribute("entities", operationsService.executeEarlyComingFunction(time, n));
+        return "/operations/early_coming";
     }
 
 
