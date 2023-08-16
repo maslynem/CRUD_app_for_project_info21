@@ -12,12 +12,12 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public abstract class BaseService<T, D, K> {
-    private final JpaRepository<T, K> repository;
-    private final Mapper<T, D> tdMapper;
-    private final Mapper<D, T> dtMapper;
+public abstract class BaseService<E, D, K> {
+    protected final JpaRepository<E, K> repository;
+    protected final Mapper<E, D> tdMapper;
+    protected final Mapper<D, E> dtMapper;
 
-    protected BaseService(JpaRepository<T, K> repository, Mapper<T, D> tdmapper, Mapper<D, T> dtMapper) {
+    protected BaseService(JpaRepository<E, K> repository, Mapper<E, D> tdmapper, Mapper<D, E> dtMapper) {
         this.repository = repository;
         this.tdMapper = tdmapper;
         this.dtMapper = dtMapper;

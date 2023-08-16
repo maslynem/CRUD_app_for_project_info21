@@ -12,12 +12,7 @@ let params = window
         {}
     );
 
-function onSelectionChange(select) {
-    let selectedOption = select.options[select.selectedIndex];
-    console.log(`/peers/page=0?pageSize=${selectedOption.value}`);
-    window.location.href = `/peers/page-0?pageSize=${selectedOption.value}`;
-}
-
+let path = '';
 function createSelector(totalPages, currentPage) {
     const element = document.querySelector(".selector");
 
@@ -33,8 +28,12 @@ function createSelector(totalPages, currentPage) {
     selector.value = params['pageSize'];
 }
 
+function onSelectionChange(select) {
+    let selectedOption = select.options[select.selectedIndex];
+    window.location.href = path + '0?pageSize=' + selectedOption.value;
+}
 
-function createPagination(page, pageSize, totalPages, path, sortField, sortDir) {
+function createPagination(page, pageSize, totalPages, sortField, sortDir) {
     const element = document.querySelector(".pagination ul");
     if (element == null) return;
     let urlEnd = '?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
@@ -47,21 +46,24 @@ function createPagination(page, pageSize, totalPages, path, sortField, sortDir) 
         liTag += `<li class="btn prev" onclick="window.location.href = '${url}'"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
     }
 
-    if (totalPages > 2) { //if page value is less than 2 then add 1 after the previous button
+    if (totalPages != 3 && page > 2) { //if page value is greater than 2 then add 1 after the previous button
         let url = path +'0?pageSize=' + pageSize  +'&sortField=' + sortField + '&sortDir=' + sortDir + '';
 
         liTag += `<li class="first numb" onclick="window.location.href = '${url}'"><span>1</span></li>`;
-        if (totalPages > 3) { //if page value is greater than 3 then add this (...) after the first li or page
+        if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }
     }
 
     // how many pages or li show before the current li
-    if (page == totalPages) {
+    if (totalPages == 2) {
+        beforePage = 1;
+    } else if (page == totalPages) {
         beforePage = beforePage - 2;
     } else if (page == totalPages - 1) {
         beforePage = beforePage - 1;
     }
+
     // how many pages or li show after the current li
     if (page == 1) {
         afterPage = afterPage + 2;
@@ -69,7 +71,7 @@ function createPagination(page, pageSize, totalPages, path, sortField, sortDir) 
         afterPage = afterPage + 1;
     }
 
-    for (var plength = beforePage; plength <= afterPage; plength++) {
+    for (let plength = beforePage; plength <= afterPage; plength++) {
         if (plength > totalPages) { //if plength is greater than totalPage length then continue
             continue;
         }
@@ -85,7 +87,7 @@ function createPagination(page, pageSize, totalPages, path, sortField, sortDir) 
         liTag += `<li class="numb ${active}" onclick="window.location.href = '${url}'"><span>${plength}</span></li>`;
     }
 
-    if (page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
+    if (totalPages != 3 && page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
         if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
             liTag += `<li class="dots"><span>...</span></li>`;
         }

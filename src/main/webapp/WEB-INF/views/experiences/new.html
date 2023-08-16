@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Check</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/experiences/new}" th:object="${experience}"
+          th:method="POST">
+
+        <div class="form-group row mt-5">
+            <label for="id" class="col-sm-2 col-form-label">Id</label>
+            <input type="text" id="id" th:field="*{id}"
+                   placeholder="Title" class="form-control mb-4 col-4">
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="checkId" class="col-sm-2 col-form-label">Check Id</label>
+            <input type="text" id="checkId" th:field="*{checkId}"
+                   placeholder="Check Id" class="form-control mb-4 col-4" aria-describedby="checkIdError">
+            <small class="error_message" id="checkIdError"
+                   th:if="${#fields.hasErrors('checkId')}" th:errors="*{checkId}">error checkId</small>
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="xpAmount" class="col-sm-2 col-form-label">Experience Amount</label>
+            <input type="number" id="xpAmount" th:field="*{xpAmount}"
+                   class="form-control mb-4 col-4" aria-describedby="xpAmountError">
+            <small class=" error_message " id="xpAmountError"
+                   th:if="${#fields.hasErrors('xpAmount')}" th:errors="*{xpAmount}">error xpAmount</small>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()">Update</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/experiences/}"> Back to Experiences List</a>
+</div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Create Check');
+</script>
+</body>
+</html>

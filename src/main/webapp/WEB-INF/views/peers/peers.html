@@ -16,11 +16,13 @@
 </head>
 <body>
 
-<header> </header>
+<header></header>
 
 <hr>
 <div class="container-fluid">
+    <a th:href="@{/peers/new}" class="btn btn-primary btn-sm mb-3"> Add Peer </a>
     <table class="table table-bordered table-striped table-href">
+        <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
@@ -37,7 +39,7 @@
         </thead>
         <tbody>
         <tr th:each="person : ${peers}">
-            <td >
+            <td>
                 <a class="peer_ref" th:href="@{/peers/{nickname}(nickname=${person.getNickname()})}"
                    th:text="${person.getNickname()}"></a>
             </td>
@@ -54,15 +56,15 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/peers/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
 </div>
 
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
 <script th:inline="javascript">
+    path = '/peers/page-';
     createHeader('Peers')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
-    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], '/peers/page-', [[${sortField}]], [[${sortDir}]]);
+    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
 </script>
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Friend</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/friends/new}" th:object="${friend}"
+          th:method="POST">
+
+        <div class="form-group row mt-5">
+            <label for="peerOneNickname" class="col-sm-2 col-form-label">Peer One Nickname</label>
+            <input type="text" id="peerOneNickname" th:field="*{peerOneNickname}"
+                   placeholder="Peer One Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerOneNicknameError">
+            <small class="error_message" id="peerOneNicknameError"
+                   th:if="${#fields.hasErrors('peerOneNickname')}" th:errors="*{peerOneNickname}">error checkId</small>
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="peerTwoNickname" class="col-sm-2 col-form-label">Peer Two Nickname</label>
+            <input type="text" id="peerTwoNickname" th:field="*{peerTwoNickname}"
+                   placeholder="Peer Two Nickname" class="form-control mb-4 col-4"
+                   aria-describedby="peerTwoNicknameError">
+            <small class="error_message" id="peerTwoNicknameError"
+                   th:if="${#fields.hasErrors('peerTwoNickname')}" th:errors="*{peerTwoNickname}">error checkId</small>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_save()">Save</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/friends/}"> Back</a>
+</div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Create Friend');
+</script>
+</body>
+</html>

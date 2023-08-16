@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Peers</title>
+    <title>Tasks</title>
     <link rel="stylesheet" href="/resources/css/clearing.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -16,11 +16,13 @@
 </head>
 <body>
 
-<header> </header>
+<header></header>
 
 <hr>
 <div class="container-fluid">
+    <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Task </a>
     <table class="table table-bordered table-striped table-href">
+        <caption></caption>
         <thead class="table-dark">
         <tr>
             <th class="text-center">
@@ -38,16 +40,23 @@
                     Maximum Experience
                 </a>
             </th>
+            <th class="text-center" colspan="2"> Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="task : ${tasks}">
-            <td >
-                <a class="peer_ref" th:href="@{/tasks/{title}(title=${task.getTitle()})}"
-                   th:text="${task.getTitle()}"></a>
-            </td>
+            <td th:text="${task.getTitle()}"/>
             <td th:text="${task.getParentTaskTitle()}"/>
             <td th:text="${task.getMaxXp()}"/>
+            <td class="text-center">
+                <a th:href="@{/tasks/{title}/edit(title=${task.getTitle()})}" class="btn btn-primary">Update</a>
+            </td>
+            <td class="text-center">
+                <form action="#" th:method="DELETE" th:action="@{/tasks/{title}(title=${task.getTitle()})}"
+                      th:object="${task}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -60,15 +69,16 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
 </div>
 
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script type="text/javascript" src="/resources/js/pagination_script.js"></script>
 <script th:inline="javascript">
+    path = '/tasks/page-';
     createHeader('Tasks')
     createSelector([[${totalPages}]], [[${currentPage} +1]]);
-    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], '/tasks/page-', [[${sortField}]], [[${sortDir}]]);
+    createPagination([[${currentPage} +1]], [[${pageSize}]], [[${totalPages}]], [[${sortField}]], [[${sortDir}]]);
 </script>
 </body>
 </html>

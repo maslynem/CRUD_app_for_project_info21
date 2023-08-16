@@ -13,6 +13,7 @@ DROP SCHEMA IF EXISTS public CASCADE ;
 CREATE SCHEMA IF NOT EXISTS public;
 
 CREATE TYPE STATUS AS ENUM ('Start', 'Success', 'Failure');
+CREATE CAST (varchar AS status) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE Peers
 (
@@ -117,7 +118,7 @@ CREATE OR REPLACE FUNCTION fnc_trg_p2p_insert_check() RETURNS trigger AS $trg_p2
     END;
 $trg_p2p_insert_check$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_p2p_insert_check BEFORE INSERT OR UPDATE ON p2p
+CREATE TRIGGER trg_p2p_insert_check BEFORE INSERT ON p2p
     FOR EACH ROW EXECUTE FUNCTION fnc_trg_p2p_insert_check();
 
 -- Conditions for Verter:  1) 'Start' is first record
@@ -145,7 +146,7 @@ CREATE OR REPLACE FUNCTION fnc_trg_verter_insert_check() RETURNS trigger AS $trg
     END;
 $trg_verter_insert_check$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_verter_insert_check BEFORE INSERT OR UPDATE ON verter
+CREATE TRIGGER trg_verter_insert_check BEFORE INSERT ON verter
     FOR EACH ROW EXECUTE FUNCTION fnc_trg_verter_insert_check();
 
 CREATE OR REPLACE FUNCTION fnc_trg_p2p() RETURNS TRIGGER AS $p2p$

@@ -13,20 +13,20 @@ SELECT t1_checking_peer, t1_checked_peer, sum(t1_sum)
 FROM (SELECT checking_peer      AS t1_checking_peer,
              checked_peer       AS t1_checked_peer,
              sum(points_amount) AS t1_sum
-      FROM transferredpoints AS t1
+      FROM transferred_points AS t1
       GROUP BY checking_peer, checked_peer
       UNION ALL
       SELECT checked_peer           AS t1_checked_peer,
              checking_peer          AS t1_checking_peer,
              0 - sum(points_amount) AS t1_sum
-      FROM transferredpoints AS t2
+      FROM transferred_points AS t2
       GROUP BY checked_peer, checking_peer) AS t1
 GROUP BY t1_checking_peer, t1_checked_peer;
 $$
     LANGUAGE SQL;
 
 SELECT *
-from ex01();
+FROM ex01();
 
 
 -- 2) Написать функцию, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP
@@ -58,7 +58,7 @@ AS
 $$
 SELECT peer
 FROM (SELECT peer, count(state) AS in_out_count
-      FROM timetracking
+      FROM time_tracking
       WHERE date = day
       GROUP BY peer, date) AS t1
 WHERE t1.in_out_count = 2
@@ -82,12 +82,12 @@ $$
 SELECT t.checking_peer AS Peer, SUM(t.sum) AS PointsChange
 FROM (SELECT checking_peer,
              sum(points_amount) AS sum
-      FROM transferredpoints
+      FROM transferred_points
       GROUP BY checking_peer
       UNION ALL
       SELECT checked_peer,
              0 - sum(points_amount) AS sum
-      FROM transferredpoints
+      FROM transferred_points
       GROUP BY checked_peer) AS t
 GROUP BY t.checking_peer
 ORDER BY PointsChange DESC;
@@ -172,15 +172,18 @@ BEGIN
                  FROM checks AS c
                           LEFT JOIN verter v ON c.id = v.check_id
                           LEFT JOIN tasks t ON c.task = t.title
-                 WHERE v.state = 'Success'
-                   AND t.title = last_task
+                          LEFT JOIN p2p p on c.id = p.check_id
+
+                 WHERE t.title = last_task
+                   AND (v.state = 'Success' OR (v.state IS NULL AND p.state = 'Success'))
+
                  GROUP BY c.peer;
 END ;
 $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex07('C');
+FROM ex07('CPP');
 
 
 -- 8) Определить, к какому пиру стоит идти на проверку каждому обучающемуся
@@ -212,19 +215,19 @@ FROM ex08();
 CREATE OR REPLACE FUNCTION ex09(IN block1 VARCHAR, IN block2 VARCHAR)
     RETURNS TABLE
             (
-                StartedBlock1      NUMERIC,
-                StartedBlock2      NUMERIC,
-                StartedBothBlocks  NUMERIC,
-                DidntStartAnyBlock NUMERIC
+                StartedBlock1      BIGINT,
+                StartedBlock2      BIGINT,
+                StartedBothBlocks  BIGINT,
+                DidntStartAnyBlock BIGINT
             )
 AS
 $$
 DECLARE
-    n_peers            NUMERIC;
-    StartedBlock1      NUMERIC;
-    StartedBlock2      NUMERIC;
-    StartedBothBlocks  NUMERIC;
-    DidntStartAnyBlock NUMERIC;
+    n_peers            BIGINT;
+    StartedBlock1      BIGINT;
+    StartedBlock2      BIGINT;
+    StartedBothBlocks  BIGINT;
+    DidntStartAnyBlock BIGINT;
 BEGIN
     n_peers := (SELECT count(nickname) FROM peers);
     StartedBlock1 := count(t.nickname)
@@ -269,21 +272,21 @@ $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex09('SQL', 'CPP');
+FROM ex09('DO', 'DO');
 
 -- 10) Определить процент пиров, которые когда-либо успешно проходили проверку в свой день рождения
 CREATE OR REPLACE FUNCTION ex10()
     RETURNS TABLE
             (
-                SuccessfulChecks   NUMERIC,
-                UnsuccessfulChecks NUMERIC
+                SuccessfulChecks   INT,
+                UnsuccessfulChecks INT
             )
 AS
 $$
 DECLARE
     all_checks         INT;
-    SuccessfulChecks   NUMERIC;
-    UnsuccessfulChecks NUMERIC;
+    SuccessfulChecks   INT;
+    UnsuccessfulChecks INT;
 BEGIN
     all_checks := count(t.nickname)
                   FROM (SELECT DISTINCT ON (p.nickname) p.nickname, p.birthday, c.date
@@ -358,7 +361,7 @@ $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex11('D01_s21_Linux', 'D02_s21_Linux Network', 'CPP1_Matrix');
+FROM ex11('DO1_s21_Linux', 'DO2_s21_Linux_Network', 'CPP1_s21_matrix+');
 
 
 -- 12) Используя рекурсивное обобщенное табличное выражение, для каждой задачи вывести кол-во предшествующих ей задач
@@ -452,7 +455,7 @@ CREATE OR REPLACE FUNCTION ex15(in_time TIME, N INT)
 AS
 $$
 WITH t_first_in_time AS (SELECT peer, date, min(time) AS time
-                         FROM timetracking
+                         FROM time_tracking
                          WHERE state = 1
                            AND time < in_time
                          GROUP BY peer, date)
@@ -477,7 +480,7 @@ AS
 $$
 SELECT DISTINCT peer
 FROM (SELECT peer, count(state) - 1 AS in_out_count
-      FROM timetracking
+      FROM time_tracking
       WHERE date > CURRENT_DATE - N
         AND state = 2
       GROUP BY peer, date) AS t1
@@ -511,26 +514,26 @@ BEGIN
             early_number_entries := 0;
             FOR row in SELECT peer
                        FROM (SELECT peer, birthday
-                             FROM timetracking
-                                      LEFT JOIN peers p2 on timetracking.peer = p2.nickname
+                             FROM time_tracking
+                                      LEFT JOIN peers p2 on time_tracking.peer = p2.nickname
                              WHERE state = 1
                              GROUP BY peer, date, birthday) AS t1
                        WHERE date_part('month', t1.birthday) = i
                        GROUP BY peer
                 LOOP
-                    total_number_entries := total_number_entries + count(t.peer)
-                                            FROM (SELECT peer
-                                                  FROM timetracking
-                                                  WHERE state = 1
-                                                    AND peer = row.peer
-                                                  GROUP BY peer, date) as t;
-                    early_number_entries := early_number_entries + count(t.peer)
-                                            FROM (SELECT peer
-                                                  FROM timetracking
-                                                  WHERE state = 1
-                                                    AND peer = row.peer
-                                                    AND time < '12:00:00'
-                                                  GROUP BY peer, date) as t;
+                    total_number_entries := total_number_entries + (SELECT count(t.peer)
+                                                                    FROM (SELECT peer
+                                                                          FROM time_tracking
+                                                                          WHERE state = 1
+                                                                            AND peer = row.peer
+                                                                          GROUP BY peer, date) as t);
+                    early_number_entries := early_number_entries + (SELECT count(t.peer)
+                                                                    FROM (SELECT peer
+                                                                          FROM time_tracking
+                                                                          WHERE state = 1
+                                                                            AND peer = row.peer
+                                                                            AND time < '12:00:00'
+                                                                          GROUP BY peer, date) as t);
                 END LOOP;
 
             RETURN QUERY SELECT months[i],

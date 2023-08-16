@@ -11,13 +11,13 @@
 
 
 <a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
-    <input type="button" value="Редактировать" />
+    <input type="button" value="Редактировать"/>
 </a>
 
 <form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
-    <input type="submit" onclick="return confirmDelete(this)" value="Удалить запись"/>
+    <input type="submit" onclick="return confirm_delete()" value="Удалить запись"/>
 </form>
 
-<script type="text/javascript" src="/resources/js/confirmDelete.js"></script>
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 </body>
 </html>

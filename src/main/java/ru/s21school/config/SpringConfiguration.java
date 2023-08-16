@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -19,6 +21,8 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import ru.s21school.util.converter.StringToCheckStateConverter;
+import ru.s21school.util.converter.StringToTimeTrackingStateConverter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -98,6 +102,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
         return properties;
     }
 
+//    Hibernate
 //    @Bean
 //    public LocalSessionFactoryBean sessionFactory() {
 //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -106,8 +111,15 @@ public class SpringConfiguration implements WebMvcConfigurer {
 //        sessionFactory.setHibernateProperties(hibernateProperties());
 //        return sessionFactory;
 //    }
+//
+//    @Bean
+//    public HibernateTransactionManager hibernateTransactionManager() {
+//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(sessionFactory().getObject());
+//        return transactionManager;
+//    }
 
-
+//    Spring Data JPA
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -117,16 +129,8 @@ public class SpringConfiguration implements WebMvcConfigurer {
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(hibernateProperties());
-
         return em;
     }
-
-//    @Bean
-//    public HibernateTransactionManager hibernateTransactionManager() {
-//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(sessionFactory().getObject());
-//        return transactionManager;
-//    }
 
     @Bean
     public PlatformTransactionManager transactionManager() {
@@ -135,4 +139,14 @@ public class SpringConfiguration implements WebMvcConfigurer {
         return transactionManager;
     }
 
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToCheckStateConverter());
+        registry.addConverter(new StringToTimeTrackingStateConverter());
+    }
 }

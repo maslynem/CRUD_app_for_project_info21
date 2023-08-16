@@ -1,22 +1,21 @@
 package ru.s21school.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.s21school.entity.Peer;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "p2p")
-//@TypeDef(typeClass = EnumType.class, defaultForType = State.class)
 public class PeerToPeer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +24,34 @@ public class PeerToPeer  {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
     @NotNull
+    @ToString.Exclude
     private Check check;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checking_peer")
     @NotNull
+    @ToString.Exclude
     private Peer checkingPeer;
 
     @Column
     @Enumerated(EnumType.STRING)
     @NotNull
-    private State state;
+    private CheckState state;
 
     @Column
     @NotNull
     private LocalTime time;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        PeerToPeer that = (PeerToPeer) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

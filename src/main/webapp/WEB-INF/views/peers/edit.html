@@ -25,7 +25,7 @@
                    th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">error name</small>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mt-5">
             <label for="dateField" class="col-sm-2 col-form-label">Birthday</label>
             <input type="date" id="dateField" th:field="*{birthday}"
                    class="form-control mb-4 col-4" aria-describedby="birthdayError">
@@ -33,7 +33,7 @@
                    th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">error name</small>
         </div>
 
-        <button type="submit" class="btn btn-info col-2">Update</button>
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_update()">Update</button>
     </form>
 
     <hr>
@@ -42,6 +42,7 @@
 </div>
 
 
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
 <script type="text/javascript" src="/resources/js/birthday_script.js"></script>
 <script type="text/javascript" src="/resources/js/header_script.js"></script>
 <script th:inline="javascript">

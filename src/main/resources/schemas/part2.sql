@@ -4,7 +4,7 @@ CREATE OR REPLACE PROCEDURE add_p2p_check(
     checking_peer_to_add VARCHAR,
     checked_peer_to_add VARCHAR,
     task_title_to_add VARCHAR,
-    state_to_add STATUS,
+    state_to_add status,
     check_time_to_add TIME
 )
     LANGUAGE plpgsql
@@ -103,22 +103,3 @@ CREATE TRIGGER trg_xp
     ON xp
     FOR EACH ROW
 EXECUTE FUNCTION fnc_trg_xp();
-
--- 1, 3
-CALL add_p2p_check('maslynem', 'azathotp', 'A4_s21_Crypto', 'Start', '10:00:00');
-CALL add_p2p_check('maslynem', 'azathotp', 'A4_s21_Crypto', 'Success', '10:30:00');
-
--- 2
-CALL add_verter_check('azathotp', 'A4_s21_Crypto', 'Start', '10:00:00');
-CALL add_verter_check('azathotp', 'A4_s21_Crypto', 'Success', '10:00:00');
-
--- 4
--- error
-INSERT INTO XP (check_id, xp_amount)
-VALUES (3, 900);
--- error
-INSERT INTO XP (check_id, xp_amount)
-VALUES (79, 200);
--- okay
-INSERT INTO XP (check_id, xp_amount)
-VALUES (3, 250);
