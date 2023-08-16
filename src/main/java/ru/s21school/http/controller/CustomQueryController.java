@@ -2,12 +2,10 @@ package ru.s21school.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.s21school.service.CustomQueryService;
 
 import java.util.ArrayList;
@@ -20,6 +18,13 @@ import java.util.List;
 public class CustomQueryController {
     private final CustomQueryService customQueryService;
 
+    @ExceptionHandler(SQLGrammarException.class)
+    public String handleSQLGrammarException(SQLGrammarException exception, Model model) {
+        log.warn("handle exception: SQLGrammarException. Message: {}", exception.getMessage());
+        model.addAttribute("errorMessage", "SQL sent to the database server was invalid (syntax error, invalid object references, etc).");
+        return "customQuery/query";
+    }
+
     @GetMapping
     String showQueryPage(Model model) {
         model.addAttribute("query", "");
@@ -28,7 +33,7 @@ public class CustomQueryController {
 
     @PostMapping
     String executeQuery(@RequestParam("query") String query, Model model) {
-        log.info("POST /query QUERY is {}", query);
+        log.info("POST /query QUERY is [{}]", query);
         List<String> list = new ArrayList<>();
         int updateResult;
         if (query.toLowerCase().contains("select")) {
@@ -40,6 +45,7 @@ public class CustomQueryController {
         model.addAttribute("selectResults", list);
         model.addAttribute("updateResults", updateResult);
         model.addAttribute("query", query);
+        log.info("QUERY [{}] WAS EXECUTED", query);
         return "/customQuery/query";
     }
 }

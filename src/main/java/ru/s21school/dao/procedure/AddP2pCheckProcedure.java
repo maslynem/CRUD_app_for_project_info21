@@ -16,7 +16,7 @@ public class AddP2pCheckProcedure {
     private static final String sqlQuery = "CALL add_p2p_check(?, ?, ?, ?, ?)";
 
     public void execute(String checkingPeer, String checkedPeer, String taskTitle, String state, LocalTime checkTime) {
-        log.info("start execute procedure add_p2p_check");
+        log.info("start execute procedure add_p2p_check. Parameters: {{}, {}, {}, {}, {}}", checkingPeer, checkedPeer, taskTitle, state, checkTime);
         try {
             jdbcTemplate.update(sqlQuery, checkingPeer, checkedPeer, taskTitle, state, checkTime);
             log.info("procedure add_p2p_check was executed");

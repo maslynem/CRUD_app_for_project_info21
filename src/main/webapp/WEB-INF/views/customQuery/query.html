@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Execute SQL query</title>
@@ -17,7 +17,7 @@
 <header></header>
 <body>
 <div class="container">
-    <form action="/query" method="post">
+    <form action="/operations/query" method="post">
         <div class="form-group">
             <label for="query">Enter SQL query</label>
             <textarea class="form-control" id="query" name="query" rows="3" th:text="${query}"></textarea>
@@ -25,6 +25,10 @@
         <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
     </form>
 
+    <th:block th:if="${errorMessage} != null">
+        <small class="error_message" id="checkIdError"
+               th:text="${errorMessage}"></small>
+    </th:block>
     <hr>
     <div th:text="${updateResults}"></div>
     <table class="table table-bordered table-striped table-href">

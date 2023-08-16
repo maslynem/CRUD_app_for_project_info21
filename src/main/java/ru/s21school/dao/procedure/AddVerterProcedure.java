@@ -16,7 +16,7 @@ public class AddVerterProcedure {
     private static final String sqlQuery = "CALL add_verter_check(?, ?, ?, ?)";
 
     public void execute( String checkedPeer, String taskTitle, String state, LocalTime checkTime) {
-        log.info("start execute procedure add_verter_check");
+        log.info("start execute procedure add_verter_check. Parameters {{}, {}, {}, {}}", checkedPeer, taskTitle, state, checkTime);
         try {
             jdbcTemplate.update(sqlQuery, checkedPeer, taskTitle, state, checkTime);
             log.info("procedure add_verter_check was executed");

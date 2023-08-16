@@ -12,6 +12,8 @@ import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
 import ru.s21school.service.OperationsService;
 import ru.s21school.service.TaskService;
+import ru.s21school.util.validator.operationValidator.AddP2pCheckValidator;
+import ru.s21school.util.validator.operationValidator.AddVerterCheckValidator;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -24,6 +26,8 @@ import java.time.LocalTime;
 public class OperationsController {
     private final OperationsService operationsService;
     private final TaskService taskService;
+    private final AddP2pCheckValidator addP2pCheckValidator;
+    private final AddVerterCheckValidator addVerterCheckValidator;
 
     @GetMapping
     String showOperationsPage() {
@@ -34,6 +38,7 @@ public class OperationsController {
     @GetMapping("/add-p2p-check")
     String showAddP2pCheckPage(Model model) {
         log.info("GET /operations/add-p2p-check");
+        model.addAttribute("tasks", taskService.findAll());
         model.addAttribute("addP2pCheck", new AddP2pCheckParametersDto());
         return "/operations/add_p2p_check";
     }
@@ -41,6 +46,8 @@ public class OperationsController {
     @PostMapping("/add-p2p-check")
     String executeAddP2pCheckProcedure(@Valid @ModelAttribute("addP2pCheck") AddP2pCheckParametersDto addP2PCheckParametersDto, BindingResult bindingResult, Model model) {
         log.info("POST /operations/add-p2p-check");
+        model.addAttribute("tasks", taskService.findAll());
+        addP2pCheckValidator.validate(addP2PCheckParametersDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("bindingResult has errors: {}", bindingResult.getAllErrors());
             return "/operations/add_p2p_check";
@@ -54,12 +61,15 @@ public class OperationsController {
     String showAddVerterCheckPage(Model model) {
         log.info("GET /operations/add-verter-check");
         model.addAttribute("addVerterCheck", new AddVerterCheckParametersDto());
+        model.addAttribute("tasks", taskService.findAll());
         return "/operations/add_verter_check";
     }
 
     @PostMapping("/add-verter-check")
-    String executeAddVerterCheck(@Valid @ModelAttribute("AddVerterCheck") AddVerterCheckParametersDto addVerterCheckParametersDto, BindingResult bindingResult, Model model) {
+    String executeAddVerterCheck(@Valid @ModelAttribute("addVerterCheck") AddVerterCheckParametersDto addVerterCheckParametersDto, BindingResult bindingResult, Model model) {
         log.info("POST /operations/add-verter-check");
+        model.addAttribute("tasks", taskService.findAll());
+        addVerterCheckValidator.validate(addVerterCheckParametersDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("bindingResult has errors: {}", bindingResult.getAllErrors());
             return "/operations/add_verter_check";

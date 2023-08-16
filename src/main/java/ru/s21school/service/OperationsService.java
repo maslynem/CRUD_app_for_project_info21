@@ -39,6 +39,7 @@ public class OperationsService {
     private final CampusComingFunction campusComingFunction;
     private final LeavingFromCampusFunction leavingFromCampusFunction;
     private final EarlyComingFunction earlyComingFunction;
+
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
     }

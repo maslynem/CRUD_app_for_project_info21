@@ -37,13 +37,12 @@
                    th:if="${#fields.hasErrors('checkedPeer')}" th:errors="*{checkedPeer}">error checkingPeer</small>
         </div>
 
-        <div class="form-group row mt-2">
-            <label for="taskTitle" class="col-sm-2 col-form-label">Название задания</label>
-            <input type="text" id="taskTitle" th:field="*{taskTitle}"
-                   placeholder="Checked Peer Nickname" class="form-control mb-4 col-4"
-                   aria-describedby="taskTitleError">
-            <small class="error_message" id="taskTitleError"
-                   th:if="${#fields.hasErrors('taskTitle')}" th:errors="*{taskTitle}">error checkingPeer</small>
+        <div class="form-group row mt-5">
+            <label for="task" class="col-sm-2 col-form-label">Название задания</label>
+            <select id="task" th:field="*{taskTitle}">
+                <option th:each="task : ${tasks}" th:value="${task.getTitle()}" th:text="${task.getTitle()}">
+                </option>
+            </select>
         </div>
 
         <div class="form-group row mt-2">

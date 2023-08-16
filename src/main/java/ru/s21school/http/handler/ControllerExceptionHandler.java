@@ -2,6 +2,9 @@ package ru.s21school.http.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.SQLGrammarException;
+import org.postgresql.util.PSQLException;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +13,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.s21school.exceptions.NoSuchCheckException;
 import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.exceptions.NoSuchTaskException;
+
+import javax.servlet.ServletException;
 
 @Slf4j
 @ControllerAdvice
@@ -64,6 +69,22 @@ public class ControllerExceptionHandler {
         log.warn("handle exception: ConstraintViolationException. Message: {} Constraint: {}", exception.getMessage(), constraintName);
         model.addAttribute("messageError", exception.getMessage());
         model.addAttribute("reasonError", getErrorReasonByConstraint(constraintName));
+        return "errors/500";
+    }
+
+    @ExceptionHandler(PSQLException.class)
+    public String handleSQLGrammarException(PSQLException exception, Model model) {
+        log.warn("handle exception: PSQLException. Message: {}", exception.getMessage());
+        model.addAttribute("messageError", exception.getMessage());
+        return "errors/500";
+    }
+
+    @ExceptionHandler(UncategorizedSQLException.class)
+    public String handleUncategorizedSQLException(UncategorizedSQLException exception, Model model) {
+        log.warn("handle exception: UncategorizedSQLException. Message: {}", exception.getMessage());
+        String message = exception.getSQLException().getMessage();
+        message = message.substring(0, message.indexOf("Where"));
+        model.addAttribute("messageError", message);
         return "errors/500";
     }
 
