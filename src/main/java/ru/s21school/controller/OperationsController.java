@@ -257,6 +257,36 @@ public class OperationsController {
         return "/operations/top_peer";
     }
 
+    @GetMapping("/campus-coming")
+    String showCampusComingPage() {
+        log.info("GET /operations/campus-coming");
+        return "/operations/campus_coming";
+    }
+
+    @PostMapping("/campus-coming")
+    String executeFunctionCampusComing(@RequestParam LocalTime time,
+                                      @RequestParam Integer n,
+                                      Model model) {
+        log.info("POST /operations/campus-coming");
+        model.addAttribute("entities", operationsService.executeCampusComingFunction(time, n));
+        return "/operations/campus_coming";
+    }
+
+    @GetMapping("/campus-leaving")
+    String showCampusLeavingPage() {
+        log.info("GET /operations/campus-leaving");
+        return "/operations/campus_leaving";
+    }
+
+    @PostMapping("/campus-leaving")
+    String executeFunctionCampusLeaving(@RequestParam Integer n,
+                                      @RequestParam Integer m,
+                                      Model model) {
+        log.info("POST /operations/campus-leaving");
+        model.addAttribute("entities", operationsService.executeLeavingFromCampusFunction(n, m));
+        return "/operations/campus_leaving";
+    }
+
     @GetMapping("/early-coming")
     String showEarlyComingPage() {
         log.info("GET /operations/early-coming");
@@ -264,27 +294,10 @@ public class OperationsController {
     }
 
     @PostMapping("/early-coming")
-    String executeFunctionEarlyComing(@RequestParam LocalTime time,
-                                      @RequestParam Integer n,
-                                      Model model) {
+    String executeFunctionEarlyComing(Model model) {
         log.info("POST /operations/early-coming");
-        model.addAttribute("entities", operationsService.executeEarlyComingFunction(time, n));
+        model.addAttribute("entities", operationsService.executeEarlyComingFunction());
         return "/operations/early_coming";
-    }
-
-    @GetMapping("/campus-leaving")
-    String showCampusComingPage() {
-        log.info("GET /operations/campus-leaving");
-        return "/operations/campus_leaving";
-    }
-
-    @PostMapping("/campus-leaving")
-    String executeFunctionCampusComing(@RequestParam Integer n,
-                                      @RequestParam Integer m,
-                                      Model model) {
-        log.info("POST /operations/campus-leaving");
-        model.addAttribute("entities", operationsService.executeLeavingFromCampusFunction(n, m));
-        return "/operations/campus_leaving";
     }
 
 

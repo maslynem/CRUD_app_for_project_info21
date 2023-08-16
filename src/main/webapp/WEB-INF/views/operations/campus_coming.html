@@ -19,21 +19,27 @@
 <div class="container">
     <div class="row">
         <div class="col-15 mt-2">
-            <h5>Определить для каждого месяца процент ранних входов</h5>
+            <h5>Определить пиров, приходивших раньше заданного времени не менее N раз за всё время.</h5>
         </div>
     </div>
     <div class="row">
         <div>
-            <p>Для каждого месяца посчитать, сколько раз люди, родившиеся в этот месяц, приходили в кампус за всё время
-                (будем называть это общим числом входов).</p>
-            <p>Для каждого месяца посчитать, сколько раз люди, родившиеся в этот месяц, приходили в кампус раньше 12:00
-                за всё время (будем называть это числом ранних входов).</p>
-            <p>Для каждого месяца посчитать процент ранних входов в кампус относительно общего числа входов.</p>
-            <p>Формат вывода: месяц, процент ранних входов</p>
+            <p>Параметры процедуры: время, количество раз N.</p>
+            <p>Формат вывода: список пиров</p>
         </div>
     </div>
 
-    <form action="/operations/early-coming" method="post">
+    <form action="/operations/campus-coming" method="post">
+        <div class="form-group row mt-5">
+            <label for="time" class="col-sm-2 col-form-label">Time</label>
+            <input type="time" id="time" name="time" class="form-control mb-4 col-4">
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="n" class="col-sm-2 col-form-label">Count</label>
+            <input type="number" min="1" id="n" name="n"
+                   placeholder="Count of times" class="form-control mb-4 col-4">
+        </div>
         <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
     </form>
 
@@ -43,17 +49,13 @@
             <thead class="table-dark">
             <tr>
                 <th class="text-center">
-                    Month
-                </th>
-                <th class="text-center">
-                    Early Entries
+                    Peer
                 </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="entity : ${entities}">
-                <td th:text="${entity.getMonth()}"/>
-                <td th:text="${entity.getEarlyEntries()}"/>
+                <td th:text="${entity}"/>
             </tr>
             </tbody>
         </table>

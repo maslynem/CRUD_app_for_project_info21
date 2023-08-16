@@ -498,14 +498,14 @@ CREATE OR REPLACE FUNCTION ex17()
     RETURNS TABLE
             (
                 Month        VARCHAR,
-                EarlyEntries NUMERIC
+                EarlyEntries float8
             )
 AS
 $$
 DECLARE
     months               VARCHAR[12] := '{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}';
-    total_number_entries NUMERIC;
-    early_number_entries NUMERIC;
+    total_number_entries float8;
+    early_number_entries float8;
     row                  RECORD;
 BEGIN
     FOR i IN 1..12

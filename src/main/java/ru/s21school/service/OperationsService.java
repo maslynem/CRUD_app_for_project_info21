@@ -36,9 +36,9 @@ public class OperationsService {
     private final TaskCountFunction taskCountFunction;
     private final LuckyDaysFunction luckyDaysFunction;
     private final TopPeerFunction topPeerFunction;
-    private final EarlyComingFunction earlyComingFunction;
+    private final CampusComingFunction campusComingFunction;
     private final LeavingFromCampusFunction leavingFromCampusFunction;
-
+    private final EarlyComingFunction earlyComingFunction;
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
     }
@@ -102,12 +102,15 @@ public class OperationsService {
         return topPeerFunction.execute();
     }
 
-    public List<String> executeEarlyComingFunction(LocalTime time, Integer n) {
-        return earlyComingFunction.execute(time, n);
+    public List<String> executeCampusComingFunction(LocalTime time, Integer n) {
+        return campusComingFunction.execute(time, n);
     }
 
     public List<String> executeLeavingFromCampusFunction(Integer n, Integer m) {
         return leavingFromCampusFunction.execute(n, m);
+    }
+    public List<EarlyComingResult> executeEarlyComingFunction() {
+        return earlyComingFunction.execute();
     }
 
 }
