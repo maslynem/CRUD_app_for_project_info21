@@ -25,10 +25,6 @@ GROUP BY t1_checking_peer, t1_checked_peer;
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex01();
-
-
 -- 2) Написать функцию, которая возвращает таблицу вида: ник пользователя, название проверенного задания, кол-во полученного XP
 
 CREATE OR REPLACE FUNCTION ex02()
@@ -47,9 +43,6 @@ WHERE checks.id IN (SELECT check_id FROM verter WHERE state = 'Success');
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex02();
-
 -- 3) Написать функцию, определяющую пиров, которые не выходили из кампуса в течение всего дня
 
 CREATE OR REPLACE FUNCTION ex03(day DATE)
@@ -65,9 +58,6 @@ WHERE t1.in_out_count = 2
 
 $$
     LANGUAGE SQL;
-
-SELECT *
-FROM ex03('2023-02-15');
 
 --4) Посчитать изменение в количестве пир поинтов каждого пира по таблице TransferredPoints
 
@@ -94,10 +84,6 @@ ORDER BY PointsChange DESC;
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex04();
-
-
 -- 5) Посчитать изменение в количестве пир поинтов каждого пира по таблице, возвращаемой первой функцией из Part 3
 
 CREATE OR REPLACE FUNCTION ex05()
@@ -119,9 +105,6 @@ GROUP BY t.checking_peer
 ORDER BY PointsChange DESC;
 $$
     LANGUAGE SQL;
-
-SELECT *
-FROM ex05();
 
 -- 6) Определить самое часто проверяемое задание за каждый день
 
@@ -148,8 +131,6 @@ WHERE b.Count is NULL;
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex06();
 
 -- 7) Найти всех пиров, выполнивших весь заданный блок задач и дату завершения последнего задания
 
@@ -182,10 +163,6 @@ END ;
 $$
     LANGUAGE plpgsql;
 
-SELECT *
-FROM ex07('CPP');
-
-
 -- 8) Определить, к какому пиру стоит идти на проверку каждому обучающемуся
 
 CREATE OR REPLACE FUNCTION ex08()
@@ -205,10 +182,6 @@ GROUP BY p.nickname, r.recommended_peer
 ORDER BY p.nickname, count(recommended_peer) DESC
 $$
     LANGUAGE SQL;
-
-SELECT *
-FROM ex08();
-
 
 -- 9) Определить процент пиров, которые:
 
@@ -271,9 +244,6 @@ END;
 $$
     LANGUAGE plpgsql;
 
-SELECT *
-FROM ex09('DO', 'DO');
-
 -- 10) Определить процент пиров, которые когда-либо успешно проходили проверку в свой день рождения
 CREATE OR REPLACE FUNCTION ex10()
     RETURNS TABLE
@@ -318,9 +288,6 @@ END;
 $$
     LANGUAGE plpgsql;
 
-SELECT *
-FROM ex10();
-
 -- 11) Определить всех пиров, которые сдали заданные задания 1 и 2, но не сдали задание 3
 CREATE OR REPLACE FUNCTION ex11(task1 VARCHAR, task2 VARCHAR, task3 VARCHAR)
     RETURNS TABLE
@@ -360,9 +327,6 @@ END;
 $$
     LANGUAGE plpgsql;
 
-SELECT *
-FROM ex11('DO1_s21_Linux', 'DO2_s21_Linux_Network', 'CPP1_s21_matrix+');
-
 
 -- 12) Используя рекурсивное обобщенное табличное выражение, для каждой задачи вывести кол-во предшествующих ей задач
 CREATE OR REPLACE FUNCTION ex12()
@@ -385,9 +349,6 @@ FROM r
 ORDER BY title;
 $$
     LANGUAGE SQL;
-
-SELECT *
-FROM ex12();
 
 -- 13) Найти "удачные" для проверок дни. День считается "удачным", если в нем есть хотя бы N идущих подряд успешных проверки
 
@@ -416,10 +377,6 @@ HAVING max(counter) >= N;
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex13(3);
-
-
 -- 14) Определить пира с наибольшим количеством XP
 
 CREATE OR REPLACE FUNCTION ex14()
@@ -443,9 +400,6 @@ LIMIT 1;
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex14();
-
 -- 15) Определить пиров, приходивших раньше заданного времени не менее N раз за всё время
 CREATE OR REPLACE FUNCTION ex15(in_time TIME, N INT)
     RETURNS TABLE
@@ -467,9 +421,6 @@ HAVING count(date) >= N
 $$
     LANGUAGE SQL;
 
-SELECT *
-FROM ex15('10:00:00', 2);
-
 -- 16) Определить пиров, выходивших за последние N дней из кампуса больше M раз
 CREATE OR REPLACE FUNCTION ex16(N INT, M INT)
     RETURNS TABLE
@@ -488,9 +439,6 @@ WHERE t1.in_out_count > M
 
 $$
     LANGUAGE SQL;
-
-SELECT *
-FROM ex16(365, 1);
 
 -- 17) Определить для каждого месяца процент ранних входов
 
@@ -547,5 +495,3 @@ END;
 $$
     LANGUAGE plpgsql;
 
-SELECT *
-FROM ex17();
