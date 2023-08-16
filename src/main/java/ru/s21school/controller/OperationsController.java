@@ -216,6 +216,7 @@ public class OperationsController {
         model.addAttribute("tasks", taskService.findAll());
         return "/operations/completed_two_tasks";
     }
+
     @GetMapping("/task-count")
     String showTaskCountPage() {
         log.info("GET /operations/task-count");
@@ -227,6 +228,19 @@ public class OperationsController {
         log.info("POST /operations/task-count");
         model.addAttribute("entities", operationsService.executeTaskCountFunction());
         return "/operations/task_count";
+    }
+
+    @GetMapping("/lucky-days")
+    String showLuckyDaysPage() {
+        log.info("GET /operations/lucky-days");
+        return "/operations/lucky_days";
+    }
+
+    @PostMapping("/lucky-days")
+    String executeFunctionLuckyDays(@RequestParam Integer n, Model model) {
+        log.info("POST /operations/lucky-days");
+        model.addAttribute("entities", operationsService.executeLuckyDaysFunction(n));
+        return "/operations/lucky_days";
     }
 
 

@@ -33,6 +33,7 @@ public class OperationsService {
     private final BirthdayCheckFunction birthdayCheckFunction;
     private final CompletedTwoTaskWithoutThirdFunction completedTwoTaskWithoutThirdFunction;
     private final TaskCountFunction taskCountFunction;
+    private final LuckyDaysFunction luckyDaysFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -88,6 +89,9 @@ public class OperationsService {
     }
     public List<TaskCountResult> executeTaskCountFunction() {
         return taskCountFunction.execute();
+    }
+    public List<LocalDate> executeLuckyDaysFunction(Integer n) {
+        return luckyDaysFunction.execute(n);
     }
 
 }
