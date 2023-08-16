@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.s21school.dto.operationDto.AddP2pCheckParametersDto;
 import ru.s21school.dto.operationDto.AddVerterCheckParametersDto;
 import ru.s21school.service.OperationsService;
+import ru.s21school.service.TaskService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 @RequestMapping("/operations")
 public class OperationsController {
     private final OperationsService operationsService;
+    private final TaskService taskService;
 
     @GetMapping
     String showOperationsPage() {
@@ -194,6 +196,37 @@ public class OperationsController {
         log.info("POST /operations/birthday-check");
         model.addAttribute("entities", operationsService.executeBirthdayCheckFunction());
         return "/operations/birthday_check";
+    }
+
+    @GetMapping("/completed-two-tasks")
+    String showCompletedTwoTaskWithoutThird(Model model) {
+        log.info("GET /operations/completed-two-tasks");
+        model.addAttribute("tasks", taskService.findAll());
+        return "/operations/completed_two_tasks";
+    }
+
+    @PostMapping("/completed-two-tasks")
+    String executeFunctionCompletedTwoTaskWithoutThird(@RequestParam String firstTask,
+                                                       @RequestParam String secondTask,
+                                                       @RequestParam String thirdTask,
+                                                       Model model) {
+        log.info("POST /operations/birthday-check");
+        model.addAttribute("entities",
+                operationsService.executeCompletedTwoTaskWithoutThirdFunction(firstTask, secondTask, thirdTask));
+        model.addAttribute("tasks", taskService.findAll());
+        return "/operations/completed_two_tasks";
+    }
+    @GetMapping("/task-count")
+    String showTaskCountPage() {
+        log.info("GET /operations/task-count");
+        return "/operations/task_count";
+    }
+
+    @PostMapping("/task-count")
+    String executeFunctionTaskCount(Model model) {
+        log.info("POST /operations/task-count");
+        model.addAttribute("entities", operationsService.executeTaskCountFunction());
+        return "/operations/task_count";
     }
 
 

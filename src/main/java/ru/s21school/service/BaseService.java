@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public abstract class BaseService<E, D, K> {
-    private final JpaRepository<E, K> repository;
-    private final Mapper<E, D> tdMapper;
-    private final Mapper<D, E> dtMapper;
+    protected final JpaRepository<E, K> repository;
+    protected final Mapper<E, D> tdMapper;
+    protected final Mapper<D, E> dtMapper;
 
     protected BaseService(JpaRepository<E, K> repository, Mapper<E, D> tdmapper, Mapper<D, E> dtMapper) {
         this.repository = repository;

@@ -361,7 +361,7 @@ $$
     LANGUAGE plpgsql;
 
 SELECT *
-FROM ex11('D01_s21_Linux', 'D02_s21_Linux Network', 'CPP1_Matrix');
+FROM ex11('DO1_s21_Linux', 'DO2_s21_Linux_Network', 'CPP1_s21_matrix+');
 
 
 -- 12) Используя рекурсивное обобщенное табличное выражение, для каждой задачи вывести кол-во предшествующих ей задач

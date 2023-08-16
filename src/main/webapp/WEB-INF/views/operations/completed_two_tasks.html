@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Operations</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/error_msg.css">
+
+</head>
+<header></header>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>Определить всех пиров, которые сдали заданные задания 1 и 2, но не сдали задание 3</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p>Параметры функции: названия заданий 1, 2 и 3.</p>
+            <p>Формат вывода: список пиров.</p>
+        </div>
+    </div>
+
+    <form action="/operations/completed-two-tasks" method="post">
+        <div class="form-group row mt-5">
+            <label for="firstTask" class="col-sm-2 col-form-label">First Task</label>
+            <select id="firstTask" name="firstTask">
+                <option th:each="task : ${tasks}" th:value="${task.getTitle()}" th:text="${task.getTitle()}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="secondTask" class="col-sm-2 col-form-label">Second Task</label>
+            <select id="secondTask" name="secondTask">
+                <option th:each="task : ${tasks}" th:value="${task.getTitle()}" th:text="${task.getTitle()}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group row mt-5">
+            <label for="thirdTask" class="col-sm-2 col-form-label">Third Task</label>
+            <select id="thirdTask" name="thirdTask">
+                <option th:each="task : ${tasks}" th:value="${task.getTitle()}" th:text="${task.getTitle()}">
+                </option>
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-info col-2" onclick="return confirm_execute()">Execute</button>
+    </form>
+    <th:block th:if="${entities} != null">
+        <table class="table table-bordered table-striped table-href">
+            <caption></caption>
+            <thead class="table-dark">
+            <tr>
+                <th class="text-center">
+                    Peer Nickname
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entity : ${entities}">
+                <td th:text="${entity}"/>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <div class="mt-5">
+        <a href="/operations/" class="btn btn-primary">Назад</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Operations');
+</script>
+</body>
+</html>

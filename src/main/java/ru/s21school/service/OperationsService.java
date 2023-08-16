@@ -31,6 +31,8 @@ public class OperationsService {
     private final RecommendedPeerFunction recommendedPeerFunction;
     private final TwoBlockCompareFunction twoBlockCompareFunction;
     private final BirthdayCheckFunction birthdayCheckFunction;
+    private final CompletedTwoTaskWithoutThirdFunction completedTwoTaskWithoutThirdFunction;
+    private final TaskCountFunction taskCountFunction;
 
     public void executeAddP2pCheckProcedure(AddP2pCheckParametersDto dto) {
         addP2pCheckProcedure.execute(dto.getCheckingPeer(), dto.getCheckedPeer(), dto.getTaskTitle(), dto.getState(), dto.getCheckTime());
@@ -79,6 +81,13 @@ public class OperationsService {
 
     public List<BirthdayCheckResult> executeBirthdayCheckFunction() {
         return birthdayCheckFunction.execute();
+    }
+
+    public List<String> executeCompletedTwoTaskWithoutThirdFunction(String firstTask, String secondTask, String thirdTask) {
+        return completedTwoTaskWithoutThirdFunction.execute(firstTask, secondTask, thirdTask);
+    }
+    public List<TaskCountResult> executeTaskCountFunction() {
+        return taskCountFunction.execute();
     }
 
 }
