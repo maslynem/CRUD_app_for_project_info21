@@ -272,5 +272,20 @@ public class OperationsController {
         return "/operations/early_coming";
     }
 
+    @GetMapping("/campus-leaving")
+    String showCampusComingPage() {
+        log.info("GET /operations/campus-leaving");
+        return "/operations/campus_leaving";
+    }
+
+    @PostMapping("/campus-leaving")
+    String executeFunctionCampusComing(@RequestParam Integer n,
+                                      @RequestParam Integer m,
+                                      Model model) {
+        log.info("POST /operations/campus-leaving");
+        model.addAttribute("entities", operationsService.executeLeavingFromCampusFunction(n, m));
+        return "/operations/campus_leaving";
+    }
+
 
 }
