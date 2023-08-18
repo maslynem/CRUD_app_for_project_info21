@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.PeerToPeerDto;
 import ru.s21school.entity.CheckState;
@@ -15,7 +16,9 @@ import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.PeerToPeerService;
 import ru.s21school.util.validator.peerToPeerValidator.PeerToPeerSaveValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -106,6 +109,20 @@ public class PeerToPeerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /p2p/{} RECORD WITH ID {} WAS DELETED", id, id);
+        return "redirect:/p2p/";
+    }
+
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"peer_to_peers.csv\"");
+        peerToPeerService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        peerToPeerService.readFromCsv(file.getInputStream());
         return "redirect:/p2p/";
     }
 }

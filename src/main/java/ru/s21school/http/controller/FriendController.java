@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.FriendDto;
 import ru.s21school.entity.CheckState;
@@ -15,7 +16,9 @@ import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.FriendService;
 import ru.s21school.util.validator.friendValidator.FriendSaveEditValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -106,6 +109,19 @@ public class FriendController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /friends/{} RECORD WITH ID {} WAS DELETED", id, id);
+        return "redirect:/friends/";
+    }
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"friends.csv\"");
+        friendService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        friendService.readFromCsv(file.getInputStream());
         return "redirect:/friends/";
     }
 }

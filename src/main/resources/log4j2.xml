@@ -45,8 +45,15 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
+
         <RollingFile name="VerterControllerFile"
                      filePattern="${LOG_DIR}/verter_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+        </RollingFile>
+
+        <RollingFile name="OperationsFile"
+                     filePattern="${LOG_DIR}/operations_logs_%d{dd-MM-yy-HH-mm-ss}.log.gz">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
             <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
         </RollingFile>
@@ -89,6 +96,14 @@
 
         <Logger name="ru.s21school.http.controller.VerterController" level="info">
             <AppenderRef ref="VerterControllerFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.http.controller.OperationsController" level="info">
+            <AppenderRef ref="OperationsFile"/>
+        </Logger>
+
+        <Logger name="ru.s21school.dao" level="info">
+            <AppenderRef ref="OperationsFile"/>
         </Logger>
 
         <Root level="info">

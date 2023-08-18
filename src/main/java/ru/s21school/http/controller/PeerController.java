@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.PeerDto;
 import ru.s21school.http.controllerUtil.ControllerUtil;
@@ -15,7 +16,9 @@ import ru.s21school.service.PeerService;
 import ru.s21school.util.validator.peerValidator.PeerSaveValidator;
 import ru.s21school.util.validator.peerValidator.PeerUpdateValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -117,6 +120,19 @@ public class PeerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /tasks/{} RECORD WITH TITLE {} WAS DELETED", nickname, nickname);
+        return "redirect:/peers/";
+    }
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"peers.csv\"");
+        peerService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        peerService.readFromCsv(file.getInputStream());
         return "redirect:/peers/";
     }
 }

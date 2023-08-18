@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TaskDto;
 import ru.s21school.http.controllerUtil.ControllerUtil;
@@ -15,7 +16,9 @@ import ru.s21school.service.TaskService;
 import ru.s21school.util.validator.taskValidator.TaskSaveValidator;
 import ru.s21school.util.validator.taskValidator.TaskUpdateValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -104,6 +107,19 @@ public class TaskController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /tasks/{} RECORD WITH TITLE {} WAS DELETED", title, title);
+        return "redirect:/tasks/";
+    }
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"tasks.csv\"");
+        taskService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        taskService.readFromCsv(file.getInputStream());
         return "redirect:/tasks/";
     }
 }

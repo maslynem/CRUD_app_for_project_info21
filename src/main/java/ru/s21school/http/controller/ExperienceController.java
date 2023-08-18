@@ -8,20 +8,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.ExperienceDto;
 import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.ExperienceService;
 import ru.s21school.util.validator.experienceValidator.ExperienceSaveValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/experiences")
 public class ExperienceController {
-    private static final String REDIRECT_EXPERIENCES = "redirect:/experiences/";
     private final ExperienceService experienceService;
     private final ExperienceSaveValidator experienceSaveValidator;
 
@@ -59,7 +61,7 @@ public class ExperienceController {
         }
         experienceService.save(experienceDto);
         log.info("POST /experiences/new CREATED NEW RECORD: {}", experienceDto);
-        return REDIRECT_EXPERIENCES;
+        return "redirect:/experiences/";
     }
 
     @GetMapping("/{id}/edit")
@@ -85,7 +87,7 @@ public class ExperienceController {
         return experienceService.update(id, experienceDto)
                 .map(it -> {
                     log.info("POST /experiences/{} WAS UPDATED: {}", id, it);
-                    return REDIRECT_EXPERIENCES;
+                    return "redirect:/experiences/";
                 })
                 .orElseThrow(() -> {
                             log.warn("POST /experiences/{} RECORD WITH ID {} NOT FOUND", id, id);
@@ -101,6 +103,20 @@ public class ExperienceController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /experiences/{} RECORD WITH TITLE {} WAS DELETED", id, id);
-        return REDIRECT_EXPERIENCES;
+        return "redirect:/experiences/";
+    }
+
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"experiences.csv\"");
+        experienceService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        experienceService.readFromCsv(file.getInputStream());
+        return "redirect:/experiences/";
     }
 }

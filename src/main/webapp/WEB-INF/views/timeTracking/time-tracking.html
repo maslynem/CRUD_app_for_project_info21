@@ -21,6 +21,14 @@
 <hr>
 <div class="container-fluid">
     <a th:href="@{/time-tracking/new}" class="btn btn-primary btn-sm mb-3"> Add Time Tracking </a>
+
+    <a th:href="@{/time-tracking/export}" class="btn btn-primary btn-sm mb-3"> Export to CSV </a>
+    <form id="fileuploadForm" action="/time-tracking/import" method="POST" enctype="multipart/form-data">
+        <label for="file">File</label>
+        <input id="file" type="file" name="file" />
+        <p><button class="btn btn-primary btn-sm mb-3" type="submit">Import from CSV</button></p>
+    </form>
+
     <table class="table table-bordered table-striped table-href">
         <caption></caption>
         <thead class="table-dark">

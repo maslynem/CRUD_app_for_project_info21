@@ -8,13 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TimeTrackingDto;
 import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.TimeTrackingService;
 import ru.s21school.util.validator.timeTrackinkValidator.TimeTrackingSaveEditValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -107,6 +110,20 @@ public class TimeTrackingController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /time-tracking/{} RECORD WITH ID {} WAS DELETED", id, id);
+        return "redirect:/time-tracking/";
+    }
+
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"time_tracking.csv\"");
+        timeTrackingService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        timeTrackingService.readFromCsv(file.getInputStream());
         return "redirect:/time-tracking/";
     }
 

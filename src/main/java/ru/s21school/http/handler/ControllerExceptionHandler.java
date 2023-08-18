@@ -2,7 +2,6 @@ package ru.s21school.http.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.SQLGrammarException;
 import org.postgresql.util.PSQLException;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.ui.Model;
@@ -13,8 +12,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.s21school.exceptions.NoSuchCheckException;
 import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.exceptions.NoSuchTaskException;
-
-import javax.servlet.ServletException;
 
 @Slf4j
 @ControllerAdvice
@@ -85,6 +82,13 @@ public class ControllerExceptionHandler {
         String message = exception.getSQLException().getMessage();
         message = message.substring(0, message.indexOf("Where"));
         model.addAttribute("messageError", message);
+        return "errors/500";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleUncategorizedSQLException(Exception exception, Model model) {
+        log.warn("handle exception: Unknown exception. Message: {}", exception.getMessage());
+        model.addAttribute("messageError", "Unknown exception");
         return "errors/500";
     }
 

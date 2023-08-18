@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.s21school.dto.TaskDto;
 import ru.s21school.entity.Task;
-import ru.s21school.exceptions.NoSuchTaskException;
 import ru.s21school.mapper.Mapper;
 import ru.s21school.repository.TaskRepository;
 
@@ -27,8 +26,8 @@ public class TaskCreateEditMapper implements Mapper<TaskDto, Task> {
     private Task getParentTask(TaskDto taskDto) {
         String parentTaskTitle = taskDto.getParentTaskTitle();
         Task parentTask = null;
-        if (parentTaskTitle != null) {
-            parentTask = repository.findById(parentTaskTitle).orElseThrow(() -> new NoSuchTaskException("Task was not found. Title: " + parentTaskTitle));
+        if (parentTaskTitle != null && !parentTaskTitle.isEmpty()) {
+            parentTask = repository.findById(parentTaskTitle).orElse(Task.builder().title(parentTaskTitle).build());
         }
         return parentTask;
     }

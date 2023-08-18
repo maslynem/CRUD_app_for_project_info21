@@ -8,13 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import ru.s21school.dto.TransferredPointDto;
 import ru.s21school.http.controllerUtil.ControllerUtil;
 import ru.s21school.service.TransferredPointService;
 import ru.s21school.util.validator.transferedPointValidator.TransferredPointSaveEditValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -102,6 +105,20 @@ public class TransferredPointController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         log.info("DELETE /transferred-points/{} RECORD WITH ID {} WAS DELETED", id, id);
+        return "redirect:/transferred-points/";
+    }
+
+
+    @GetMapping("/export")
+    public void exportToCsv(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"transferred_points.csv\"");
+        transferredPointService.writeToCsv(servletResponse.getWriter());
+    }
+
+    @PostMapping("/import")
+    public String importFromCsv(@RequestParam MultipartFile file) throws IOException {
+        transferredPointService.readFromCsv(file.getInputStream());
         return "redirect:/transferred-points/";
     }
 }
