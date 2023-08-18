@@ -2,21 +2,24 @@ version: '3'
 
 services:
 
-  db-postgres:
-    image: postgres:15.4
-    volumes:
-      - ./postgres/scripts:/docker-entrypoint-initdb.d/
+  nginx:
+    build: ./nginx
+    restart: always
+    links:
+      - tomcat
+    ports:
+      - '8080:8080'
+    depends_on:
+      - tomcat
+  tomcat:
+    build: ./tomcat
+    restart: always
+    depends_on:
+      - postgres
+  postgres:
+    build: ./postgres
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    ports:
-      - 5432:5432
-
-  web:
-    image: tomcat
-    volumes:
-     - ./tomcat/war/info21.war:/usr/local/tomcat/webapps/info21.war
-    ports:
-      - '8082:8080'
-    entrypoint: ENTRYPOINT ["catalina.sh", "jpda", "run
+      - PGDATA=/var/lib/postgresql/data
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
