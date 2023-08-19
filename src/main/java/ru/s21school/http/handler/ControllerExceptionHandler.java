@@ -13,6 +13,8 @@ import ru.s21school.exceptions.NoSuchCheckException;
 import ru.s21school.exceptions.NoSuchPeerException;
 import ru.s21school.exceptions.NoSuchTaskException;
 
+import java.sql.BatchUpdateException;
+
 @Slf4j
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -68,6 +70,12 @@ public class ControllerExceptionHandler {
         model.addAttribute("reasonError", getErrorReasonByConstraint(constraintName));
         return "errors/500";
     }
+    @ExceptionHandler(BatchUpdateException.class)
+    public String handleConstraintViolationException(BatchUpdateException exception, Model model) {
+        log.warn("handle exception: ConstraintViolationException. Message: {} ", exception.getMessage());
+        model.addAttribute("messageError", exception.getMessage());
+        return "errors/500";
+    }
 
     @ExceptionHandler(PSQLException.class)
     public String handleSQLGrammarException(PSQLException exception, Model model) {
@@ -82,13 +90,6 @@ public class ControllerExceptionHandler {
         String message = exception.getSQLException().getMessage();
         message = message.substring(0, message.indexOf("Where"));
         model.addAttribute("messageError", message);
-        return "errors/500";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String handleUncategorizedSQLException(Exception exception, Model model) {
-        log.warn("handle exception: Unknown exception. Message: {}", exception.getMessage());
-        model.addAttribute("messageError", "Unknown exception");
         return "errors/500";
     }
 

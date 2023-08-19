@@ -3,21 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Peer</title>
+    <link rel="stylesheet" href="/resources/css/clearing.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn-app.sberdevices.ru/shared-static/0.0.0/styles/SBSansDisplay.0.1.0.css"/>
+    <link rel="stylesheet" href="/resources/css/header.css">
+
 </head>
 <body>
+<header></header>
+<div class="container">
+    <div class="row">
+        <div class="col-15 mt-2">
+            <h5>Информация о студенте</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <p th:text="${peer.getNickname()}">VALUE</p>
+            <p th:text="${peer.getBirthday()}">VALUE</p>
+        </div>
+    </div>
 
-<p th:text="${peer.getNickname()}">VALUE</p>
-<p th:text="${peer.getBirthday()}">VALUE</p>
+    <div class="row">
+        <a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}" class="btn btn-primary">Редактировать</a>
+        <form class="ml-2" action="#" th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
+            <button type="submit" class="btn btn-danger" onclick="return confirm_delete()">Delete</button>
+        </form>
+    </div>
+</div>
 
 
-<a th:href="@{/peers/{nickname}/edit(nickname=${peer.getNickname()})}">
-    <input type="button" value="Редактировать"/>
-</a>
 
-<form th:method="DELETE" th:action="@{/peers/{nickname}(nickname=${peer.getNickname()})}">
-    <input type="submit" onclick="return confirm_delete()" value="Удалить запись"/>
-</form>
 
 <script type="text/javascript" src="/resources/js/confirm_CUD.js"></script>
+<script type="text/javascript" src="/resources/js/header_script.js"></script>
+<script th:inline="javascript">
+    createHeader('Peer');
+</script>
 </body>
 </html>
